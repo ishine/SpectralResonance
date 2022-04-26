@@ -1,2 +1,2 @@
-# Audio-Analysis
-Audio Analysis Lua, Python Swig
+# SoundWave-Analysis
+Analysis
