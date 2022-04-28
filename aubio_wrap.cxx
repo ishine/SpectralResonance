@@ -456,7 +456,7 @@ SWIG_TypeCheck(const char *c, swig_type_info *ty) {
   Identical to SWIG_TypeCheck, except strcmp is replaced with a pointer comparison
 */
 SWIGRUNTIME swig_cast_info *
-SWIG_TypeCheckStruct(swig_type_info *from, swig_type_info *ty) {
+SWIG_TypeCheckStruct(const swig_type_info *from, swig_type_info *ty) {
   if (ty) {
     swig_cast_info *iter = ty->cast;
     while (iter) {
@@ -1064,7 +1064,7 @@ typedef struct {
 
 /* Contract support */
 #define SWIG_contract_assert(expr, msg)  \
-  if (!(expr)) { SWIG_Lua_pusherrstring(L, (char *) msg); goto fail; } else
+  do { if (!(expr)) { SWIG_Lua_pusherrstring(L, (char *) msg); goto fail; } } while (0)
 
 
 /* helper #defines */
@@ -1583,7 +1583,7 @@ SWIGINTERN int  SWIG_Lua_class_do_get_item(lua_State *L, swig_type_info *type, i
   /* NEW: looks for the __getitem() fn
   this is a user provided get fn */
   SWIG_Lua_get_table(L,"__getitem"); /* find the __getitem fn */
-  if (lua_iscfunction(L,-1))  /* if its there */
+  if (lua_iscfunction(L,-1))  /* if it's there */
   {  /* found it so call the fn & return its value */
     lua_pushvalue(L,substack_start+1);  /* the userdata */
     lua_pushvalue(L,substack_start+2);  /* the parameter */
@@ -1640,7 +1640,7 @@ SWIGINTERN int  SWIG_Lua_class_do_get(lua_State *L, swig_type_info *type, int SW
   lua_pushvalue(L,substack_start+2);  /* key */
   lua_rawget(L,-2);  /* look for the fn */
   lua_remove(L,-2); /* stack tidy, remove .fn table */
-  if (lua_isfunction(L,-1)) /* note: if its a C function or lua function */
+  if (lua_isfunction(L,-1)) /* note: if it's a C function or lua function */
   {  /* found it so return the fn & let lua call it */
     lua_remove(L,-2); /* stack tidy, remove metatable */
     if(ret)
@@ -1723,7 +1723,7 @@ SWIGINTERN int  SWIG_Lua_class_do_set(lua_State *L, swig_type_info *type, int fi
   /* NEW: looks for the __setitem() fn
   this is a user provided set fn */
   SWIG_Lua_get_table(L,"__setitem"); /* find the fn */
-  if (lua_iscfunction(L,-1))  /* if its there */
+  if (lua_iscfunction(L,-1))  /* if it's there */
   {  /* found it so call the fn & return its value */
     lua_pushvalue(L,substack_start+1);  /* the userdata */
     lua_pushvalue(L,substack_start+2);  /* the parameter */
@@ -2100,7 +2100,7 @@ SWIGINTERN void  SWIG_Lua_add_class_instance_details(lua_State *L, swig_lua_clas
 SWIGRUNTIME int SWIG_Lua_resolve_metamethod(lua_State *L); /*forward declaration*/
 
 /* The real function that resolves a metamethod.
- * Function searches given class and all it's bases(recursively) for first instance of something that is
+ * Function searches given class and all its bases (recursively) for first instance of something that is
  * not equal to SWIG_Lua_resolve_metamethod. (Almost always this 'something' is actual metamethod implementation
  * and it is a SWIG-generated C function.). It returns value on the top of the L and there is no garbage below the
  * answer.
@@ -2553,7 +2553,7 @@ SWIGRUNTIME int  SWIG_Lua_ConvertPtr(lua_State *L,int index,void **ptr,swig_type
 
 SWIGRUNTIME void* SWIG_Lua_MustGetPtr(lua_State *L,int index,swig_type_info *type,int flags,
        int argnum,const char *func_name){
-  void *result;
+  void *result = 0;
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,index,&result,type,flags))){
     luaL_error (L,"Error in %s, expected a %s at argument number %d\n",
 		func_name,(type && type->str)?type->str:"void*",argnum);
@@ -2714,69 +2714,102 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 
 /* -------- TYPES TABLE (BEGIN) -------- */
 
-#define SWIGTYPE_p_AWeighting swig_types[0]
-#define SWIGTYPE_p_AWhitening swig_types[1]
-#define SWIGTYPE_p_BeatTrack swig_types[2]
-#define SWIGTYPE_p_BiQuad swig_types[3]
-#define SWIGTYPE_p_CVec swig_types[4]
-#define SWIGTYPE_p_CWeighting swig_types[5]
-#define SWIGTYPE_p_DCT swig_types[6]
-#define SWIGTYPE_p_FFT swig_types[7]
-#define SWIGTYPE_p_FMat swig_types[8]
-#define SWIGTYPE_p_FVec swig_types[9]
-#define SWIGTYPE_p_Filter swig_types[10]
-#define SWIGTYPE_p_FilterBank swig_types[11]
-#define SWIGTYPE_p_LVec swig_types[12]
-#define SWIGTYPE_p_MFCC swig_types[13]
-#define SWIGTYPE_p_MelFilterBank swig_types[14]
-#define SWIGTYPE_p_PhaseVocoder swig_types[15]
-#define SWIGTYPE_p_Pitch swig_types[16]
-#define SWIGTYPE_p_Resampler swig_types[17]
-#define SWIGTYPE_p_Sampler swig_types[18]
-#define SWIGTYPE_p_Sink swig_types[19]
-#define SWIGTYPE_p_SourceSoundFile swig_types[20]
-#define SWIGTYPE_p_SpecDesc swig_types[21]
-#define SWIGTYPE_p_TSS swig_types[22]
-#define SWIGTYPE_p_Tempo swig_types[23]
-#define SWIGTYPE_p_aubio_beattracking_t swig_types[24]
-#define SWIGTYPE_p_aubio_dct_t swig_types[25]
-#define SWIGTYPE_p_aubio_fft_t swig_types[26]
-#define SWIGTYPE_p_aubio_filter_t swig_types[27]
-#define SWIGTYPE_p_aubio_filterbank_t swig_types[28]
-#define SWIGTYPE_p_aubio_mfcc_t swig_types[29]
-#define SWIGTYPE_p_aubio_pitch_t swig_types[30]
-#define SWIGTYPE_p_aubio_pvoc_t swig_types[31]
-#define SWIGTYPE_p_aubio_resampler_t swig_types[32]
-#define SWIGTYPE_p_aubio_sampler_t swig_types[33]
-#define SWIGTYPE_p_aubio_sink_t swig_types[34]
-#define SWIGTYPE_p_aubio_source_sndfile_t swig_types[35]
-#define SWIGTYPE_p_aubio_specdesc_t swig_types[36]
-#define SWIGTYPE_p_aubio_spectral_whitening_t swig_types[37]
-#define SWIGTYPE_p_aubio_tempo_t swig_types[38]
-#define SWIGTYPE_p_aubio_tss_t swig_types[39]
-#define SWIGTYPE_p_char swig_types[40]
-#define SWIGTYPE_p_cvec_t swig_types[41]
-#define SWIGTYPE_p_difference_type swig_types[42]
-#define SWIGTYPE_p_double swig_types[43]
-#define SWIGTYPE_p_float swig_types[44]
-#define SWIGTYPE_p_fmat_t swig_types[45]
-#define SWIGTYPE_p_fvec_t swig_types[46]
-#define SWIGTYPE_p_int swig_types[47]
-#define SWIGTYPE_p_long_long swig_types[48]
-#define SWIGTYPE_p_lvec_t swig_types[49]
-#define SWIGTYPE_p_short swig_types[50]
-#define SWIGTYPE_p_signed_char swig_types[51]
-#define SWIGTYPE_p_size_type swig_types[52]
-#define SWIGTYPE_p_std__vectorT_double_t swig_types[53]
-#define SWIGTYPE_p_std__vectorT_float_t swig_types[54]
-#define SWIGTYPE_p_std__vectorT_std__vectorT_float_t_t swig_types[55]
-#define SWIGTYPE_p_unsigned_char swig_types[56]
-#define SWIGTYPE_p_unsigned_int swig_types[57]
-#define SWIGTYPE_p_unsigned_long_long swig_types[58]
-#define SWIGTYPE_p_unsigned_short swig_types[59]
-#define SWIGTYPE_p_value_type swig_types[60]
-static swig_type_info *swig_types[62];
-static swig_module_info swig_module = {swig_types, 61, 0, 0, 0, 0};
+#define SWIGTYPE_p_Aubio__AWeighting swig_types[0]
+#define SWIGTYPE_p_Aubio__AWhitening swig_types[1]
+#define SWIGTYPE_p_Aubio__BeatTrack swig_types[2]
+#define SWIGTYPE_p_Aubio__BiQuad swig_types[3]
+#define SWIGTYPE_p_Aubio__BufferT_double_t swig_types[4]
+#define SWIGTYPE_p_Aubio__BufferT_float_t swig_types[5]
+#define SWIGTYPE_p_Aubio__CVec swig_types[6]
+#define SWIGTYPE_p_Aubio__CWeighting swig_types[7]
+#define SWIGTYPE_p_Aubio__DCT swig_types[8]
+#define SWIGTYPE_p_Aubio__FFT swig_types[9]
+#define SWIGTYPE_p_Aubio__FMat swig_types[10]
+#define SWIGTYPE_p_Aubio__FVec swig_types[11]
+#define SWIGTYPE_p_Aubio__Filter swig_types[12]
+#define SWIGTYPE_p_Aubio__FilterBank swig_types[13]
+#define SWIGTYPE_p_Aubio__Histogram swig_types[14]
+#define SWIGTYPE_p_Aubio__LVec swig_types[15]
+#define SWIGTYPE_p_Aubio__MFCC swig_types[16]
+#define SWIGTYPE_p_Aubio__MelFilterBank swig_types[17]
+#define SWIGTYPE_p_Aubio__Notes swig_types[18]
+#define SWIGTYPE_p_Aubio__Onset swig_types[19]
+#define SWIGTYPE_p_Aubio__PeakPicker swig_types[20]
+#define SWIGTYPE_p_Aubio__PhaseVocoder swig_types[21]
+#define SWIGTYPE_p_Aubio__Pitch swig_types[22]
+#define SWIGTYPE_p_Aubio__PitchFComb swig_types[23]
+#define SWIGTYPE_p_Aubio__PitchMComb swig_types[24]
+#define SWIGTYPE_p_Aubio__PitchSchmitt swig_types[25]
+#define SWIGTYPE_p_Aubio__PitchSpecACF swig_types[26]
+#define SWIGTYPE_p_Aubio__PitchYin swig_types[27]
+#define SWIGTYPE_p_Aubio__PitchYinFFT swig_types[28]
+#define SWIGTYPE_p_Aubio__PitchYinFast swig_types[29]
+#define SWIGTYPE_p_Aubio__Resampler swig_types[30]
+#define SWIGTYPE_p_Aubio__SampleBufferT_double_t swig_types[31]
+#define SWIGTYPE_p_Aubio__SampleBufferT_float_t swig_types[32]
+#define SWIGTYPE_p_Aubio__Sampler swig_types[33]
+#define SWIGTYPE_p_Aubio__Sink swig_types[34]
+#define SWIGTYPE_p_Aubio__SinkSoundFile swig_types[35]
+#define SWIGTYPE_p_Aubio__SinkWavWrite swig_types[36]
+#define SWIGTYPE_p_Aubio__Source swig_types[37]
+#define SWIGTYPE_p_Aubio__SourceSoundFile swig_types[38]
+#define SWIGTYPE_p_Aubio__SourceWavFile swig_types[39]
+#define SWIGTYPE_p_Aubio__SpecDesc swig_types[40]
+#define SWIGTYPE_p_Aubio__TSS swig_types[41]
+#define SWIGTYPE_p_Aubio__Tempo swig_types[42]
+#define SWIGTYPE_p_aubio_beattracking_t swig_types[43]
+#define SWIGTYPE_p_aubio_dct_t swig_types[44]
+#define SWIGTYPE_p_aubio_fft_t swig_types[45]
+#define SWIGTYPE_p_aubio_filter_t swig_types[46]
+#define SWIGTYPE_p_aubio_filterbank_t swig_types[47]
+#define SWIGTYPE_p_aubio_hist_t swig_types[48]
+#define SWIGTYPE_p_aubio_mfcc_t swig_types[49]
+#define SWIGTYPE_p_aubio_notes_t swig_types[50]
+#define SWIGTYPE_p_aubio_onset_t swig_types[51]
+#define SWIGTYPE_p_aubio_peakpicker_t swig_types[52]
+#define SWIGTYPE_p_aubio_pitch_t swig_types[53]
+#define SWIGTYPE_p_aubio_pitchfcomb_t swig_types[54]
+#define SWIGTYPE_p_aubio_pitchmcomb_t swig_types[55]
+#define SWIGTYPE_p_aubio_pitchschmitt_t swig_types[56]
+#define SWIGTYPE_p_aubio_pitchspecacf_t swig_types[57]
+#define SWIGTYPE_p_aubio_pitchyin_t swig_types[58]
+#define SWIGTYPE_p_aubio_pitchyinfast_t swig_types[59]
+#define SWIGTYPE_p_aubio_pitchyinfft_t swig_types[60]
+#define SWIGTYPE_p_aubio_pvoc_t swig_types[61]
+#define SWIGTYPE_p_aubio_resampler_t swig_types[62]
+#define SWIGTYPE_p_aubio_sampler_t swig_types[63]
+#define SWIGTYPE_p_aubio_sink_sndfile_t swig_types[64]
+#define SWIGTYPE_p_aubio_sink_t swig_types[65]
+#define SWIGTYPE_p_aubio_sink_wavwrite_t swig_types[66]
+#define SWIGTYPE_p_aubio_source_sndfile_t swig_types[67]
+#define SWIGTYPE_p_aubio_source_t swig_types[68]
+#define SWIGTYPE_p_aubio_source_wavread_t swig_types[69]
+#define SWIGTYPE_p_aubio_specdesc_t swig_types[70]
+#define SWIGTYPE_p_aubio_spectral_whitening_t swig_types[71]
+#define SWIGTYPE_p_aubio_tempo_t swig_types[72]
+#define SWIGTYPE_p_aubio_tss_t swig_types[73]
+#define SWIGTYPE_p_char swig_types[74]
+#define SWIGTYPE_p_cvec_t swig_types[75]
+#define SWIGTYPE_p_difference_type swig_types[76]
+#define SWIGTYPE_p_double swig_types[77]
+#define SWIGTYPE_p_float swig_types[78]
+#define SWIGTYPE_p_fmat_t swig_types[79]
+#define SWIGTYPE_p_fvec_t swig_types[80]
+#define SWIGTYPE_p_int swig_types[81]
+#define SWIGTYPE_p_long_long swig_types[82]
+#define SWIGTYPE_p_lvec_t swig_types[83]
+#define SWIGTYPE_p_short swig_types[84]
+#define SWIGTYPE_p_signed_char swig_types[85]
+#define SWIGTYPE_p_size_type swig_types[86]
+#define SWIGTYPE_p_std__vectorT_float_t swig_types[87]
+#define SWIGTYPE_p_std__vectorT_std__vectorT_float_t_t swig_types[88]
+#define SWIGTYPE_p_unsigned_char swig_types[89]
+#define SWIGTYPE_p_unsigned_int swig_types[90]
+#define SWIGTYPE_p_unsigned_long_long swig_types[91]
+#define SWIGTYPE_p_unsigned_short swig_types[92]
+#define SWIGTYPE_p_value_type swig_types[93]
+static swig_type_info *swig_types[95];
+static swig_module_info swig_module = {swig_types, 94, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2819,22 +2852,22 @@ using namespace std;
 
 #include <vector>
 
-SWIGINTERN float std_vector_Sl_float_Sg____getitem__(std::vector< float > *self,unsigned int idx){
+SWIGINTERN float std_vector_Sl_float_Sg____getitem____SWIG(std::vector< float > *self,unsigned int idx){
 				if (idx>=self->size())
 					throw std::out_of_range("in vector::__getitem__()");
 				return (*self)[idx];
 			}
-SWIGINTERN void std_vector_Sl_float_Sg____setitem__(std::vector< float > *self,unsigned int idx,float val){
+SWIGINTERN void std_vector_Sl_float_Sg____setitem____SWIG(std::vector< float > *self,unsigned int idx,float val){
 				if (idx>=self->size())
 					throw std::out_of_range("in vector::__setitem__()");
 				(*self)[idx]=val;
 			}
-SWIGINTERN std::vector< float > std_vector_Sl_std_vector_Sl_float_Sg__Sg____getitem__(std::vector< std::vector< float > > *self,unsigned int idx){
+SWIGINTERN std::vector< float > std_vector_Sl_std_vector_Sl_float_Sg__Sg____getitem____SWIG(std::vector< std::vector< float > > *self,unsigned int idx){
 				if (idx>=self->size())
 					throw std::out_of_range("in vector::__getitem__()");
 				return (*self)[idx];
 			}
-SWIGINTERN void std_vector_Sl_std_vector_Sl_float_Sg__Sg____setitem__(std::vector< std::vector< float > > *self,unsigned int idx,std::vector< float > val){
+SWIGINTERN void std_vector_Sl_std_vector_Sl_float_Sg__Sg____setitem____SWIG(std::vector< std::vector< float > > *self,unsigned int idx,std::vector< float > val){
 				if (idx>=self->size())
 					throw std::out_of_range("in vector::__setitem__()");
 				(*self)[idx]=val;
@@ -2874,7 +2907,7 @@ static int _wrap_new_float_vector__SWIG_1(lua_State* L) {
   
   SWIG_check_num_args("std::vector< float >::vector",1,1)
   if(!lua_isnumber(L,1)) SWIG_fail_arg("std::vector< float >::vector",1,"unsigned int");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
   arg1 = (unsigned int)lua_tonumber(L, 1);
   result = (std::vector< float > *)new std::vector< float >(arg1);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_std__vectorT_float_t,1); SWIG_arg++; 
@@ -2921,7 +2954,7 @@ static int _wrap_new_float_vector__SWIG_3(lua_State* L) {
   SWIG_check_num_args("std::vector< float >::vector",2,2)
   if(!lua_isnumber(L,1)) SWIG_fail_arg("std::vector< float >::vector",1,"unsigned int");
   if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< float >::vector",2,"float");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
   arg1 = (unsigned int)lua_tonumber(L, 1);
   arg2 = (float)lua_tonumber(L, 2);
   result = (std::vector< float > *)new std::vector< float >(arg1,arg2);
@@ -3200,10 +3233,10 @@ static int _wrap_float_vector___getitem(lua_State* L) {
     SWIG_fail_ptr("float_vector___getitem",1,SWIGTYPE_p_std__vectorT_float_t);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (unsigned int)lua_tonumber(L, 2);
   try {
-    result = (float)std_vector_Sl_float_Sg____getitem__(arg1,arg2);
+    result = (float)std_vector_Sl_float_Sg____getitem____SWIG(arg1,arg2);
   } catch(std::out_of_range &_e) {
     SWIG_exception(SWIG_IndexError, (&_e)->what());
   }
@@ -3233,11 +3266,11 @@ static int _wrap_float_vector___setitem(lua_State* L) {
     SWIG_fail_ptr("float_vector___setitem",1,SWIGTYPE_p_std__vectorT_float_t);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (unsigned int)lua_tonumber(L, 2);
   arg3 = (float)lua_tonumber(L, 3);
   try {
-    std_vector_Sl_float_Sg____setitem__(arg1,arg2,arg3);
+    std_vector_Sl_float_Sg____setitem____SWIG(arg1,arg2,arg3);
   } catch(std::out_of_range &_e) {
     SWIG_exception(SWIG_IndexError, (&_e)->what());
   }
@@ -3335,7 +3368,7 @@ static int _wrap_new_float_matrix__SWIG_1(lua_State* L) {
   
   SWIG_check_num_args("std::vector< std::vector< float > >::vector",1,1)
   if(!lua_isnumber(L,1)) SWIG_fail_arg("std::vector< std::vector< float > >::vector",1,"unsigned int");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
   arg1 = (unsigned int)lua_tonumber(L, 1);
   result = (std::vector< std::vector< float > > *)new std::vector< std::vector< float > >(arg1);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_std__vectorT_std__vectorT_float_t_t,1); SWIG_arg++; 
@@ -3383,7 +3416,7 @@ static int _wrap_new_float_matrix__SWIG_3(lua_State* L) {
   SWIG_check_num_args("std::vector< std::vector< float > >::vector",2,2)
   if(!lua_isnumber(L,1)) SWIG_fail_arg("std::vector< std::vector< float > >::vector",1,"unsigned int");
   if(!lua_isuserdata(L,2)) SWIG_fail_arg("std::vector< std::vector< float > >::vector",2,"std::vector< float >");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
   arg1 = (unsigned int)lua_tonumber(L, 1);
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_std__vectorT_float_t,0))){
@@ -3684,10 +3717,10 @@ static int _wrap_float_matrix___getitem(lua_State* L) {
     SWIG_fail_ptr("float_matrix___getitem",1,SWIGTYPE_p_std__vectorT_std__vectorT_float_t_t);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (unsigned int)lua_tonumber(L, 2);
   try {
-    result = std_vector_Sl_std_vector_Sl_float_Sg__Sg____getitem__(arg1,arg2);
+    result = std_vector_Sl_std_vector_Sl_float_Sg__Sg____getitem____SWIG(arg1,arg2);
   } catch(std::out_of_range &_e) {
     SWIG_exception(SWIG_IndexError, (&_e)->what());
   }
@@ -3721,7 +3754,7 @@ static int _wrap_float_matrix___setitem(lua_State* L) {
     SWIG_fail_ptr("float_matrix___setitem",1,SWIGTYPE_p_std__vectorT_std__vectorT_float_t_t);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (unsigned int)lua_tonumber(L, 2);
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_std__vectorT_float_t,0))){
@@ -3730,7 +3763,7 @@ static int _wrap_float_matrix___setitem(lua_State* L) {
   arg3 = *argp3;
   
   try {
-    std_vector_Sl_std_vector_Sl_float_Sg__Sg____setitem__(arg1,arg2,arg3);
+    std_vector_Sl_std_vector_Sl_float_Sg__Sg____setitem____SWIG(arg1,arg2,arg3);
   } catch(std::out_of_range &_e) {
     SWIG_exception(SWIG_IndexError, (&_e)->what());
   }
@@ -3806,15 +3839,15 @@ static swig_lua_class _wrap_class_float_matrix = { "float_matrix", "float_matrix
 
 static int _wrap_FVec_pvec_set(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   fvec_t *arg2 = (fvec_t *) 0 ;
   
-  SWIG_check_num_args("FVec::pvec",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::pvec",1,"FVec *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("FVec::pvec",2,"fvec_t *");
+  SWIG_check_num_args("Aubio::FVec::pvec",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::pvec",1,"Aubio::FVec *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::FVec::pvec",2,"fvec_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_pvec_set",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_pvec_set",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   
@@ -3836,14 +3869,14 @@ fail:
 
 static int _wrap_FVec_pvec_get(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   fvec_t *result = 0 ;
   
-  SWIG_check_num_args("FVec::pvec",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::pvec",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::pvec",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::pvec",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_pvec_get",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_pvec_get",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   result = (fvec_t *) ((arg1)->pvec);
@@ -3860,18 +3893,18 @@ fail:
 
 static int _wrap_new_FVec__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = 0 ;
-  FVec *result = 0 ;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::FVec *result = 0 ;
   
-  SWIG_check_num_args("FVec::FVec",1,1)
-  if(!lua_isuserdata(L,1)) SWIG_fail_arg("FVec::FVec",1,"FVec const &");
+  SWIG_check_num_args("Aubio::FVec::FVec",1,1)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::FVec::FVec",1,"Aubio::FVec const &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("new_FVec",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("new_FVec",1,SWIGTYPE_p_Aubio__FVec);
   }
   
-  result = (FVec *)new FVec((FVec const &)*arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_FVec,1); SWIG_arg++; 
+  result = (Aubio::FVec *)new Aubio::FVec((Aubio::FVec const &)*arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__FVec,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -3885,17 +3918,17 @@ fail:
 static int _wrap_new_FVec__SWIG_1(lua_State* L) {
   int SWIG_arg = 0;
   fvec_t *arg1 = (fvec_t *) 0 ;
-  FVec *result = 0 ;
+  Aubio::FVec *result = 0 ;
   
-  SWIG_check_num_args("FVec::FVec",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::FVec",1,"fvec_t *");
+  SWIG_check_num_args("Aubio::FVec::FVec",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::FVec",1,"fvec_t *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_fvec_t,0))){
     SWIG_fail_ptr("new_FVec",1,SWIGTYPE_p_fvec_t);
   }
   
-  result = (FVec *)new FVec(arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_FVec,1); SWIG_arg++; 
+  result = (Aubio::FVec *)new Aubio::FVec(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__FVec,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -3909,14 +3942,14 @@ fail:
 static int _wrap_new_FVec__SWIG_2(lua_State* L) {
   int SWIG_arg = 0;
   size_t arg1 ;
-  FVec *result = 0 ;
+  Aubio::FVec *result = 0 ;
   
-  SWIG_check_num_args("FVec::FVec",1,1)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("FVec::FVec",1,"size_t");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
+  SWIG_check_num_args("Aubio::FVec::FVec",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::FVec::FVec",1,"size_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
   arg1 = (size_t)lua_tonumber(L, 1);
-  result = (FVec *)new FVec(arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_FVec,1); SWIG_arg++; 
+  result = (Aubio::FVec *)new Aubio::FVec(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__FVec,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -3938,7 +3971,7 @@ static int _wrap_new_FVec(lua_State* L) {
     int _v = 0;
     {
       void *ptr;
-      if (lua_isuserdata(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_FVec, SWIG_POINTER_NO_NULL)) {
+      if (lua_isuserdata(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Aubio__FVec, SWIG_POINTER_NO_NULL)) {
         _v = 0;
       } else {
         _v = 1;
@@ -3974,32 +4007,32 @@ static int _wrap_new_FVec(lua_State* L) {
   
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'new_FVec'\n"
     "  Possible C/C++ prototypes are:\n"
-    "    FVec::FVec(FVec const &)\n"
-    "    FVec::FVec(fvec_t *)\n"
-    "    FVec::FVec(size_t)\n");
+    "    Aubio::FVec::FVec(Aubio::FVec const &)\n"
+    "    Aubio::FVec::FVec(fvec_t *)\n"
+    "    Aubio::FVec::FVec(size_t)\n");
   lua_error(L);return 0;
 }
 
 
 static int _wrap_FVec_copy(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
-  FVec *arg2 = 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
   
-  SWIG_check_num_args("FVec::copy",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::copy",1,"FVec *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FVec::copy",2,"FVec const &");
+  SWIG_check_num_args("Aubio::FVec::copy",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::copy",1,"Aubio::FVec *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FVec::copy",2,"Aubio::FVec const &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_copy",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_copy",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_copy",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_copy",2,SWIGTYPE_p_Aubio__FVec);
   }
   
-  (arg1)->copy((FVec const &)*arg2);
+  (arg1)->copy((Aubio::FVec const &)*arg2);
   
   return SWIG_arg;
   
@@ -4013,30 +4046,30 @@ fail:
 
 static int _wrap_FVec_weighted_copy(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
-  FVec *arg2 = 0 ;
-  FVec *arg3 = 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
   
-  SWIG_check_num_args("FVec::weighted_copy",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::weighted_copy",1,"FVec *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FVec::weighted_copy",2,"FVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("FVec::weighted_copy",3,"FVec const &");
+  SWIG_check_num_args("Aubio::FVec::weighted_copy",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::weighted_copy",1,"Aubio::FVec *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FVec::weighted_copy",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::FVec::weighted_copy",3,"Aubio::FVec const &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_weighted_copy",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_weighted_copy",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_weighted_copy",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_weighted_copy",2,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_weighted_copy",3,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_weighted_copy",3,SWIGTYPE_p_Aubio__FVec);
   }
   
-  (arg1)->weighted_copy((FVec const &)*arg2,(FVec const &)*arg3);
+  (arg1)->weighted_copy((Aubio::FVec const &)*arg2,(Aubio::FVec const &)*arg3);
   
   return SWIG_arg;
   
@@ -4050,21 +4083,21 @@ fail:
 
 static int _wrap_FVec_get_sample(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   uint_t arg2 ;
-  smpl_t result;
+  Aubio::Sample result;
   
-  SWIG_check_num_args("FVec::get_sample",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::get_sample",1,"FVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FVec::get_sample",2,"uint_t");
+  SWIG_check_num_args("Aubio::FVec::get_sample",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::get_sample",1,"Aubio::FVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FVec::get_sample",2,"uint_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_get_sample",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_get_sample",1,SWIGTYPE_p_Aubio__FVec);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (uint_t)lua_tonumber(L, 2);
-  result = (smpl_t)(arg1)->get_sample(arg2);
+  result = (Aubio::Sample)(arg1)->get_sample(arg2);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -4078,22 +4111,22 @@ fail:
 
 static int _wrap_FVec_set_sample(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   uint_t arg2 ;
-  float arg3 ;
+  Aubio::Sample arg3 ;
   
-  SWIG_check_num_args("FVec::set_sample",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::set_sample",1,"FVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FVec::set_sample",2,"uint_t");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("FVec::set_sample",3,"float");
+  SWIG_check_num_args("Aubio::FVec::set_sample",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::set_sample",1,"Aubio::FVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FVec::set_sample",2,"uint_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::FVec::set_sample",3,"Aubio::Sample");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_set_sample",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_set_sample",1,SWIGTYPE_p_Aubio__FVec);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (uint_t)lua_tonumber(L, 2);
-  arg3 = (float)lua_tonumber(L, 3);
+  arg3 = (Aubio::Sample)lua_tonumber(L, 3);
   (arg1)->set_sample(arg2,arg3);
   
   return SWIG_arg;
@@ -4108,21 +4141,21 @@ fail:
 
 static int _wrap_FVec___getitem(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   size_t arg2 ;
-  float result;
+  Aubio::Sample result;
   
-  SWIG_check_num_args("FVec::__getitem",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::__getitem",1,"FVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FVec::__getitem",2,"size_t");
+  SWIG_check_num_args("Aubio::FVec::__getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::__getitem",1,"Aubio::FVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FVec::__getitem",2,"size_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec___getitem",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec___getitem",1,SWIGTYPE_p_Aubio__FVec);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
-  result = (float)(arg1)->__getitem(arg2);
+  result = (Aubio::Sample)(arg1)->__getitem(arg2);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -4136,23 +4169,74 @@ fail:
 
 static int _wrap_FVec___setitem(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   size_t arg2 ;
-  float arg3 ;
+  Aubio::Sample arg3 ;
   
-  SWIG_check_num_args("FVec::__setitem",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::__setitem",1,"FVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FVec::__setitem",2,"size_t");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("FVec::__setitem",3,"float");
+  SWIG_check_num_args("Aubio::FVec::__setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::__setitem",1,"Aubio::FVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FVec::__setitem",2,"size_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::FVec::__setitem",3,"Aubio::Sample");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec___setitem",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec___setitem",1,SWIGTYPE_p_Aubio__FVec);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
-  arg3 = (float)lua_tonumber(L, 3);
+  arg3 = (Aubio::Sample)lua_tonumber(L, 3);
   (arg1)->__setitem(arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_FVec_size(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
+  size_t result;
+  
+  SWIG_check_num_args("Aubio::FVec::size",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::size",1,"Aubio::FVec const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_size",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  result = ((Aubio::FVec const *)arg1)->size();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_FVec_resize(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
+  size_t arg2 ;
+  
+  SWIG_check_num_args("Aubio::FVec::resize",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::resize",1,"Aubio::FVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FVec::resize",2,"size_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_resize",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  (arg1)->resize(arg2);
   
   return SWIG_arg;
   
@@ -4166,21 +4250,81 @@ fail:
 
 static int _wrap_FVec_get_data(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
-  std::vector< float > result;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
+  SwigValueWrapper< Aubio::Buffer< float > > result;
   
-  SWIG_check_num_args("FVec::get_data",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::get_data",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::get_data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::get_data",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_get_data",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_get_data",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   result = (arg1)->get_data();
   {
-    std::vector< float > * resultptr = new std::vector< float >((const std::vector< float > &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_std__vectorT_float_t,1); SWIG_arg++;
+    Aubio::Buffer< Aubio::Sample > * resultptr = new Aubio::Buffer< Aubio::Sample >((const Aubio::Buffer< Aubio::Sample > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_Aubio__BufferT_float_t,1); SWIG_arg++;
   }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_FVec_set_data__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
+  Aubio::Buffer< Aubio::Sample > *arg2 = 0 ;
+  
+  SWIG_check_num_args("Aubio::FVec::set_data",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::set_data",1,"Aubio::FVec *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FVec::set_data",2,"Aubio::Buffer< Aubio::Sample > const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_set_data",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__BufferT_float_t,0))){
+    SWIG_fail_ptr("FVec_set_data",2,SWIGTYPE_p_Aubio__BufferT_float_t);
+  }
+  
+  (arg1)->set_data((Aubio::Buffer< Aubio::Sample > const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_FVec_set_data__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
+  Aubio::SampleBuffer< Aubio::Sample > *arg2 = 0 ;
+  
+  SWIG_check_num_args("Aubio::FVec::set_data",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::set_data",1,"Aubio::FVec *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FVec::set_data",2,"Aubio::SampleBuffer< Aubio::Sample > const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_set_data",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__SampleBufferT_float_t,0))){
+    SWIG_fail_ptr("FVec_set_data",2,SWIGTYPE_p_Aubio__SampleBufferT_float_t);
+  }
+  
+  (arg1)->set_data((Aubio::SampleBuffer< Aubio::Sample > const &)*arg2);
+  
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -4192,44 +4336,78 @@ fail:
 
 
 static int _wrap_FVec_set_data(lua_State* L) {
-  int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
-  std::vector< float > *arg2 = 0 ;
+  int argc;
+  int argv[3]={
+    1,2,3
+  };
   
-  SWIG_check_num_args("FVec::set_data",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::set_data",1,"FVec *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FVec::set_data",2,"std::vector< float > const &");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_set_data",1,SWIGTYPE_p_FVec);
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v = 0;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Aubio__FVec, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_Aubio__BufferT_float_t, SWIG_POINTER_NO_NULL)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_FVec_set_data__SWIG_0(L);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v = 0;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Aubio__FVec, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_Aubio__SampleBufferT_float_t, SWIG_POINTER_NO_NULL)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_FVec_set_data__SWIG_1(L);
+      }
+    }
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_std__vectorT_float_t,0))){
-    SWIG_fail_ptr("FVec_set_data",2,SWIGTYPE_p_std__vectorT_float_t);
-  }
-  
-  (arg1)->set_data((std::vector< float > const &)*arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'FVec_set_data'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Aubio::FVec::set_data(Aubio::Buffer< Aubio::Sample > const &)\n"
+    "    Aubio::FVec::set_data(Aubio::SampleBuffer< Aubio::Sample > const &)\n");
+  lua_error(L);return 0;
 }
 
 
 static int _wrap_FVec_print(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   
-  SWIG_check_num_args("FVec::print",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::print",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::print",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::print",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_print",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_print",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   (arg1)->print();
@@ -4246,18 +4424,18 @@ fail:
 
 static int _wrap_FVec_setall(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
-  float arg2 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
+  Aubio::Sample arg2 ;
   
-  SWIG_check_num_args("FVec::setall",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::setall",1,"FVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FVec::setall",2,"float");
+  SWIG_check_num_args("Aubio::FVec::setall",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::setall",1,"Aubio::FVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FVec::setall",2,"Aubio::Sample");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_setall",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_setall",1,SWIGTYPE_p_Aubio__FVec);
   }
   
-  arg2 = (float)lua_tonumber(L, 2);
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
   (arg1)->setall(arg2);
   
   return SWIG_arg;
@@ -4272,13 +4450,13 @@ fail:
 
 static int _wrap_FVec_zeros(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   
-  SWIG_check_num_args("FVec::zeros",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::zeros",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::zeros",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::zeros",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_zeros",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_zeros",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   (arg1)->zeros();
@@ -4295,13 +4473,13 @@ fail:
 
 static int _wrap_FVec_ones(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   
-  SWIG_check_num_args("FVec::ones",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::ones",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::ones",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::ones",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_ones",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_ones",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   (arg1)->ones();
@@ -4318,13 +4496,13 @@ fail:
 
 static int _wrap_FVec_reverse(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   
-  SWIG_check_num_args("FVec::reverse",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::reverse",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::reverse",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::reverse",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_reverse",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_reverse",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   (arg1)->reverse();
@@ -4341,20 +4519,20 @@ fail:
 
 static int _wrap_FVec_weight(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
-  FVec *arg2 = 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
   
-  SWIG_check_num_args("FVec::weight",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::weight",1,"FVec *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FVec::weight",2,"FVec &");
+  SWIG_check_num_args("Aubio::FVec::weight",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::weight",1,"Aubio::FVec *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FVec::weight",2,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_weight",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_weight",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_weight",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_weight",2,SWIGTYPE_p_Aubio__FVec);
   }
   
   (arg1)->weight(*arg2);
@@ -4371,17 +4549,17 @@ fail:
 
 static int _wrap_FVec_zero_crossing_rate(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
-  float result;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
+  Aubio::Sample result;
   
-  SWIG_check_num_args("FVec::zero_crossing_rate",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::zero_crossing_rate",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::zero_crossing_rate",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::zero_crossing_rate",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_zero_crossing_rate",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_zero_crossing_rate",1,SWIGTYPE_p_Aubio__FVec);
   }
   
-  result = (float)(arg1)->zero_crossing_rate();
+  result = (Aubio::Sample)(arg1)->zero_crossing_rate();
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -4395,17 +4573,17 @@ fail:
 
 static int _wrap_FVec_level_lin(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
-  float result;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
+  Aubio::Sample result;
   
-  SWIG_check_num_args("FVec::level_lin",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::level_lin",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::level_lin",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::level_lin",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_level_lin",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_level_lin",1,SWIGTYPE_p_Aubio__FVec);
   }
   
-  result = (float)(arg1)->level_lin();
+  result = (Aubio::Sample)(arg1)->level_lin();
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -4419,17 +4597,17 @@ fail:
 
 static int _wrap_FVec_db_spl(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
-  float result;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
+  Aubio::Sample result;
   
-  SWIG_check_num_args("FVec::db_spl",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::db_spl",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::db_spl",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::db_spl",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_db_spl",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_db_spl",1,SWIGTYPE_p_Aubio__FVec);
   }
   
-  result = (float)(arg1)->db_spl();
+  result = (Aubio::Sample)(arg1)->db_spl();
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -4443,19 +4621,19 @@ fail:
 
 static int _wrap_FVec_silence_detection(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
-  float arg2 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
+  Aubio::Sample arg2 ;
   size_t result;
   
-  SWIG_check_num_args("FVec::silence_detection",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::silence_detection",1,"FVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FVec::silence_detection",2,"float");
+  SWIG_check_num_args("Aubio::FVec::silence_detection",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::silence_detection",1,"Aubio::FVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FVec::silence_detection",2,"Aubio::Sample");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_silence_detection",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_silence_detection",1,SWIGTYPE_p_Aubio__FVec);
   }
   
-  arg2 = (float)lua_tonumber(L, 2);
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
   result = (arg1)->silence_detection(arg2);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
@@ -4470,20 +4648,20 @@ fail:
 
 static int _wrap_FVec_level_detection(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
-  float arg2 ;
-  float result;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
+  Aubio::Sample arg2 ;
+  Aubio::Sample result;
   
-  SWIG_check_num_args("FVec::level_detection",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::level_detection",1,"FVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FVec::level_detection",2,"float");
+  SWIG_check_num_args("Aubio::FVec::level_detection",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::level_detection",1,"Aubio::FVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FVec::level_detection",2,"Aubio::Sample");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_level_detection",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_level_detection",1,SWIGTYPE_p_Aubio__FVec);
   }
   
-  arg2 = (float)lua_tonumber(L, 2);
-  result = (float)(arg1)->level_detection(arg2);
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  result = (Aubio::Sample)(arg1)->level_detection(arg2);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -4497,18 +4675,18 @@ fail:
 
 static int _wrap_FVec_clamp(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
-  float arg2 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
+  Aubio::Sample arg2 ;
   
-  SWIG_check_num_args("FVec::clamp",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::clamp",1,"FVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FVec::clamp",2,"float");
+  SWIG_check_num_args("Aubio::FVec::clamp",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::clamp",1,"Aubio::FVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FVec::clamp",2,"Aubio::Sample");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_clamp",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_clamp",1,SWIGTYPE_p_Aubio__FVec);
   }
   
-  arg2 = (float)lua_tonumber(L, 2);
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
   (arg1)->clamp(arg2);
   
   return SWIG_arg;
@@ -4523,13 +4701,13 @@ fail:
 
 static int _wrap_FVec_exp(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   
-  SWIG_check_num_args("FVec::exp",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::exp",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::exp",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::exp",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_exp",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_exp",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   (arg1)->exp();
@@ -4546,13 +4724,13 @@ fail:
 
 static int _wrap_FVec_cos(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   
-  SWIG_check_num_args("FVec::cos",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::cos",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::cos",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::cos",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_cos",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_cos",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   (arg1)->cos();
@@ -4569,13 +4747,13 @@ fail:
 
 static int _wrap_FVec_sin(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   
-  SWIG_check_num_args("FVec::sin",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::sin",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::sin",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::sin",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_sin",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_sin",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   (arg1)->sin();
@@ -4592,13 +4770,13 @@ fail:
 
 static int _wrap_FVec_abs(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   
-  SWIG_check_num_args("FVec::abs",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::abs",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::abs",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::abs",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_abs",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_abs",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   (arg1)->abs();
@@ -4615,13 +4793,13 @@ fail:
 
 static int _wrap_FVec_sqrt(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   
-  SWIG_check_num_args("FVec::sqrt",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::sqrt",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::sqrt",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::sqrt",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_sqrt",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_sqrt",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   (arg1)->sqrt();
@@ -4638,13 +4816,13 @@ fail:
 
 static int _wrap_FVec_log10(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   
-  SWIG_check_num_args("FVec::log10",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::log10",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::log10",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::log10",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_log10",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_log10",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   (arg1)->log10();
@@ -4661,13 +4839,13 @@ fail:
 
 static int _wrap_FVec_log(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   
-  SWIG_check_num_args("FVec::log",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::log",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::log",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::log",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_log",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_log",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   (arg1)->log();
@@ -4684,13 +4862,13 @@ fail:
 
 static int _wrap_FVec_floor(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   
-  SWIG_check_num_args("FVec::floor",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::floor",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::floor",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::floor",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_floor",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_floor",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   (arg1)->floor();
@@ -4707,13 +4885,13 @@ fail:
 
 static int _wrap_FVec_ceil(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   
-  SWIG_check_num_args("FVec::ceil",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::ceil",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::ceil",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::ceil",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_ceil",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_ceil",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   (arg1)->ceil();
@@ -4730,13 +4908,13 @@ fail:
 
 static int _wrap_FVec_round(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
   
-  SWIG_check_num_args("FVec::round",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::round",1,"FVec *");
+  SWIG_check_num_args("Aubio::FVec::round",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::round",1,"Aubio::FVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_round",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_round",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   (arg1)->round();
@@ -4753,18 +4931,18 @@ fail:
 
 static int _wrap_FVec_pow(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = (FVec *) 0 ;
-  float arg2 ;
+  Aubio::FVec *arg1 = (Aubio::FVec *) 0 ;
+  Aubio::Sample arg2 ;
   
-  SWIG_check_num_args("FVec::pow",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FVec::pow",1,"FVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FVec::pow",2,"float");
+  SWIG_check_num_args("Aubio::FVec::pow",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FVec::pow",1,"Aubio::FVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FVec::pow",2,"Aubio::Sample");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FVec_pow",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FVec_pow",1,SWIGTYPE_p_Aubio__FVec);
   }
   
-  arg2 = (float)lua_tonumber(L, 2);
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
   (arg1)->pow(arg2);
   
   return SWIG_arg;
@@ -4778,7 +4956,7 @@ fail:
 
 
 static void swig_delete_FVec(void *obj) {
-FVec *arg1 = (FVec *) obj;
+Aubio::FVec *arg1 = (Aubio::FVec *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_FVec(lua_State *L) {
@@ -4800,6 +4978,8 @@ static swig_lua_method swig_FVec_methods[]= {
     { "set_sample", _wrap_FVec_set_sample},
     { "__getitem", _wrap_FVec___getitem},
     { "__setitem", _wrap_FVec___setitem},
+    { "size", _wrap_FVec_size},
+    { "resize", _wrap_FVec_resize},
     { "get_data", _wrap_FVec_get_data},
     { "set_data", _wrap_FVec_set_data},
     { "print", _wrap_FVec_print},
@@ -4856,19 +5036,19 @@ static swig_lua_namespace swig_FVec_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_FVec_bases[] = {0};
 static const char *swig_FVec_base_names[] = {0};
-static swig_lua_class _wrap_class_FVec = { "FVec", "FVec", &SWIGTYPE_p_FVec,_proxy__wrap_new_FVec, swig_delete_FVec, swig_FVec_methods, swig_FVec_attributes, &swig_FVec_Sf_SwigStatic, swig_FVec_meta, swig_FVec_bases, swig_FVec_base_names };
+static swig_lua_class _wrap_class_FVec = { "FVec", "FVec", &SWIGTYPE_p_Aubio__FVec,_proxy__wrap_new_FVec, swig_delete_FVec, swig_FVec_methods, swig_FVec_attributes, &swig_FVec_Sf_SwigStatic, swig_FVec_meta, swig_FVec_bases, swig_FVec_base_names };
 
 static int _wrap_CVec_cvec_set(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = (CVec *) 0 ;
+  Aubio::CVec *arg1 = (Aubio::CVec *) 0 ;
   cvec_t *arg2 = (cvec_t *) 0 ;
   
-  SWIG_check_num_args("CVec::cvec",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CVec::cvec",1,"CVec *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("CVec::cvec",2,"cvec_t *");
+  SWIG_check_num_args("Aubio::CVec::cvec",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CVec::cvec",1,"Aubio::CVec *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::CVec::cvec",2,"cvec_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("CVec_cvec_set",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("CVec_cvec_set",1,SWIGTYPE_p_Aubio__CVec);
   }
   
   
@@ -4890,14 +5070,14 @@ fail:
 
 static int _wrap_CVec_cvec_get(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = (CVec *) 0 ;
+  Aubio::CVec *arg1 = (Aubio::CVec *) 0 ;
   cvec_t *result = 0 ;
   
-  SWIG_check_num_args("CVec::cvec",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CVec::cvec",1,"CVec *");
+  SWIG_check_num_args("Aubio::CVec::cvec",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CVec::cvec",1,"Aubio::CVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("CVec_cvec_get",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("CVec_cvec_get",1,SWIGTYPE_p_Aubio__CVec);
   }
   
   result = (cvec_t *) ((arg1)->cvec);
@@ -4915,14 +5095,14 @@ fail:
 static int _wrap_new_CVec__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   size_t arg1 ;
-  CVec *result = 0 ;
+  Aubio::CVec *result = 0 ;
   
-  SWIG_check_num_args("CVec::CVec",1,1)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("CVec::CVec",1,"size_t");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
+  SWIG_check_num_args("Aubio::CVec::CVec",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::CVec::CVec",1,"size_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
   arg1 = (size_t)lua_tonumber(L, 1);
-  result = (CVec *)new CVec(arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_CVec,1); SWIG_arg++; 
+  result = (Aubio::CVec *)new Aubio::CVec(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__CVec,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -4936,17 +5116,17 @@ fail:
 static int _wrap_new_CVec__SWIG_1(lua_State* L) {
   int SWIG_arg = 0;
   cvec_t *arg1 = (cvec_t *) 0 ;
-  CVec *result = 0 ;
+  Aubio::CVec *result = 0 ;
   
-  SWIG_check_num_args("CVec::CVec",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CVec::CVec",1,"cvec_t *");
+  SWIG_check_num_args("Aubio::CVec::CVec",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CVec::CVec",1,"cvec_t *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_cvec_t,0))){
     SWIG_fail_ptr("new_CVec",1,SWIGTYPE_p_cvec_t);
   }
   
-  result = (CVec *)new CVec(arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_CVec,1); SWIG_arg++; 
+  result = (Aubio::CVec *)new Aubio::CVec(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__CVec,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -4990,31 +5170,31 @@ static int _wrap_new_CVec(lua_State* L) {
   
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'new_CVec'\n"
     "  Possible C/C++ prototypes are:\n"
-    "    CVec::CVec(size_t)\n"
-    "    CVec::CVec(cvec_t *)\n");
+    "    Aubio::CVec::CVec(size_t)\n"
+    "    Aubio::CVec::CVec(cvec_t *)\n");
   lua_error(L);return 0;
 }
 
 
 static int _wrap_CVec_copy(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = (CVec *) 0 ;
-  CVec *arg2 = 0 ;
+  Aubio::CVec *arg1 = (Aubio::CVec *) 0 ;
+  Aubio::CVec *arg2 = 0 ;
   
-  SWIG_check_num_args("CVec::copy",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CVec::copy",1,"CVec *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("CVec::copy",2,"CVec const &");
+  SWIG_check_num_args("Aubio::CVec::copy",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CVec::copy",1,"Aubio::CVec *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::CVec::copy",2,"Aubio::CVec const &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("CVec_copy",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("CVec_copy",1,SWIGTYPE_p_Aubio__CVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("CVec_copy",2,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("CVec_copy",2,SWIGTYPE_p_Aubio__CVec);
   }
   
-  (arg1)->copy((CVec const &)*arg2);
+  (arg1)->copy((Aubio::CVec const &)*arg2);
   
   return SWIG_arg;
   
@@ -5028,13 +5208,13 @@ fail:
 
 static int _wrap_CVec_norm_zeros(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = (CVec *) 0 ;
+  Aubio::CVec *arg1 = (Aubio::CVec *) 0 ;
   
-  SWIG_check_num_args("CVec::norm_zeros",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CVec::norm_zeros",1,"CVec *");
+  SWIG_check_num_args("Aubio::CVec::norm_zeros",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CVec::norm_zeros",1,"Aubio::CVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("CVec_norm_zeros",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("CVec_norm_zeros",1,SWIGTYPE_p_Aubio__CVec);
   }
   
   (arg1)->norm_zeros();
@@ -5051,13 +5231,13 @@ fail:
 
 static int _wrap_CVec_norm_ones(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = (CVec *) 0 ;
+  Aubio::CVec *arg1 = (Aubio::CVec *) 0 ;
   
-  SWIG_check_num_args("CVec::norm_ones",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CVec::norm_ones",1,"CVec *");
+  SWIG_check_num_args("Aubio::CVec::norm_ones",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CVec::norm_ones",1,"Aubio::CVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("CVec_norm_ones",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("CVec_norm_ones",1,SWIGTYPE_p_Aubio__CVec);
   }
   
   (arg1)->norm_ones();
@@ -5074,18 +5254,18 @@ fail:
 
 static int _wrap_CVec_phas_set_all(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = (CVec *) 0 ;
-  float arg2 ;
+  Aubio::CVec *arg1 = (Aubio::CVec *) 0 ;
+  Aubio::Sample arg2 ;
   
-  SWIG_check_num_args("CVec::phas_set_all",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CVec::phas_set_all",1,"CVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("CVec::phas_set_all",2,"float");
+  SWIG_check_num_args("Aubio::CVec::phas_set_all",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CVec::phas_set_all",1,"Aubio::CVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::CVec::phas_set_all",2,"Aubio::Sample");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("CVec_phas_set_all",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("CVec_phas_set_all",1,SWIGTYPE_p_Aubio__CVec);
   }
   
-  arg2 = (float)lua_tonumber(L, 2);
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
   (arg1)->phas_set_all(arg2);
   
   return SWIG_arg;
@@ -5100,13 +5280,13 @@ fail:
 
 static int _wrap_CVec_phas_zeros(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = (CVec *) 0 ;
+  Aubio::CVec *arg1 = (Aubio::CVec *) 0 ;
   
-  SWIG_check_num_args("CVec::phas_zeros",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CVec::phas_zeros",1,"CVec *");
+  SWIG_check_num_args("Aubio::CVec::phas_zeros",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CVec::phas_zeros",1,"Aubio::CVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("CVec_phas_zeros",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("CVec_phas_zeros",1,SWIGTYPE_p_Aubio__CVec);
   }
   
   (arg1)->phas_zeros();
@@ -5123,13 +5303,13 @@ fail:
 
 static int _wrap_CVec_phas_ones(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = (CVec *) 0 ;
+  Aubio::CVec *arg1 = (Aubio::CVec *) 0 ;
   
-  SWIG_check_num_args("CVec::phas_ones",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CVec::phas_ones",1,"CVec *");
+  SWIG_check_num_args("Aubio::CVec::phas_ones",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CVec::phas_ones",1,"Aubio::CVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("CVec_phas_ones",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("CVec_phas_ones",1,SWIGTYPE_p_Aubio__CVec);
   }
   
   (arg1)->phas_ones();
@@ -5146,13 +5326,13 @@ fail:
 
 static int _wrap_CVec_zeros(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = (CVec *) 0 ;
+  Aubio::CVec *arg1 = (Aubio::CVec *) 0 ;
   
-  SWIG_check_num_args("CVec::zeros",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CVec::zeros",1,"CVec *");
+  SWIG_check_num_args("Aubio::CVec::zeros",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CVec::zeros",1,"Aubio::CVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("CVec_zeros",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("CVec_zeros",1,SWIGTYPE_p_Aubio__CVec);
   }
   
   (arg1)->zeros();
@@ -5169,18 +5349,18 @@ fail:
 
 static int _wrap_CVec_logmag(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = (CVec *) 0 ;
-  float arg2 ;
+  Aubio::CVec *arg1 = (Aubio::CVec *) 0 ;
+  Aubio::Sample arg2 ;
   
-  SWIG_check_num_args("CVec::logmag",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CVec::logmag",1,"CVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("CVec::logmag",2,"float");
+  SWIG_check_num_args("Aubio::CVec::logmag",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CVec::logmag",1,"Aubio::CVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::CVec::logmag",2,"Aubio::Sample");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("CVec_logmag",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("CVec_logmag",1,SWIGTYPE_p_Aubio__CVec);
   }
   
-  arg2 = (float)lua_tonumber(L, 2);
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
   (arg1)->logmag(arg2);
   
   return SWIG_arg;
@@ -5193,23 +5373,47 @@ fail:
 }
 
 
-static int _wrap_CVec_norm_set_sample(lua_State* L) {
+static int _wrap_CVec_size(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = (CVec *) 0 ;
-  float arg2 ;
-  size_t arg3 ;
+  Aubio::CVec *arg1 = (Aubio::CVec *) 0 ;
+  size_t result;
   
-  SWIG_check_num_args("CVec::norm_set_sample",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CVec::norm_set_sample",1,"CVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("CVec::norm_set_sample",2,"float");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("CVec::norm_set_sample",3,"size_t");
+  SWIG_check_num_args("Aubio::CVec::size",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CVec::size",1,"Aubio::CVec const *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("CVec_norm_set_sample",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("CVec_size",1,SWIGTYPE_p_Aubio__CVec);
   }
   
-  arg2 = (float)lua_tonumber(L, 2);
-  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative")
+  result = ((Aubio::CVec const *)arg1)->size();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CVec_norm_set_sample(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::CVec *arg1 = (Aubio::CVec *) 0 ;
+  Aubio::Sample arg2 ;
+  size_t arg3 ;
+  
+  SWIG_check_num_args("Aubio::CVec::norm_set_sample",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CVec::norm_set_sample",1,"Aubio::CVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::CVec::norm_set_sample",2,"Aubio::Sample");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::CVec::norm_set_sample",3,"size_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("CVec_norm_set_sample",1,SWIGTYPE_p_Aubio__CVec);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
   arg3 = (size_t)lua_tonumber(L, 3);
   (arg1)->norm_set_sample(arg2,arg3);
   
@@ -5225,21 +5429,21 @@ fail:
 
 static int _wrap_CVec_phas_set_sample(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = (CVec *) 0 ;
-  float arg2 ;
+  Aubio::CVec *arg1 = (Aubio::CVec *) 0 ;
+  Aubio::Sample arg2 ;
   size_t arg3 ;
   
-  SWIG_check_num_args("CVec::phas_set_sample",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CVec::phas_set_sample",1,"CVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("CVec::phas_set_sample",2,"float");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("CVec::phas_set_sample",3,"size_t");
+  SWIG_check_num_args("Aubio::CVec::phas_set_sample",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CVec::phas_set_sample",1,"Aubio::CVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::CVec::phas_set_sample",2,"Aubio::Sample");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::CVec::phas_set_sample",3,"size_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("CVec_phas_set_sample",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("CVec_phas_set_sample",1,SWIGTYPE_p_Aubio__CVec);
   }
   
-  arg2 = (float)lua_tonumber(L, 2);
-  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative")
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
   arg3 = (size_t)lua_tonumber(L, 3);
   (arg1)->phas_set_sample(arg2,arg3);
   
@@ -5255,21 +5459,21 @@ fail:
 
 static int _wrap_CVec_norm_get_sample(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = (CVec *) 0 ;
+  Aubio::CVec *arg1 = (Aubio::CVec *) 0 ;
   size_t arg2 ;
-  float result;
+  Aubio::Sample result;
   
-  SWIG_check_num_args("CVec::norm_get_sample",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CVec::norm_get_sample",1,"CVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("CVec::norm_get_sample",2,"size_t");
+  SWIG_check_num_args("Aubio::CVec::norm_get_sample",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CVec::norm_get_sample",1,"Aubio::CVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::CVec::norm_get_sample",2,"size_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("CVec_norm_get_sample",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("CVec_norm_get_sample",1,SWIGTYPE_p_Aubio__CVec);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
-  result = (float)(arg1)->norm_get_sample(arg2);
+  result = (Aubio::Sample)(arg1)->norm_get_sample(arg2);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -5283,21 +5487,21 @@ fail:
 
 static int _wrap_CVec_phas_get_sample(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = (CVec *) 0 ;
+  Aubio::CVec *arg1 = (Aubio::CVec *) 0 ;
   size_t arg2 ;
-  float result;
+  Aubio::Sample result;
   
-  SWIG_check_num_args("CVec::phas_get_sample",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CVec::phas_get_sample",1,"CVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("CVec::phas_get_sample",2,"size_t");
+  SWIG_check_num_args("Aubio::CVec::phas_get_sample",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CVec::phas_get_sample",1,"Aubio::CVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::CVec::phas_get_sample",2,"size_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("CVec_phas_get_sample",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("CVec_phas_get_sample",1,SWIGTYPE_p_Aubio__CVec);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
-  result = (float)(arg1)->phas_get_sample(arg2);
+  result = (Aubio::Sample)(arg1)->phas_get_sample(arg2);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -5311,20 +5515,20 @@ fail:
 
 static int _wrap_CVec_norm_get_data(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = (CVec *) 0 ;
-  std::vector< float > result;
+  Aubio::CVec *arg1 = (Aubio::CVec *) 0 ;
+  SwigValueWrapper< Aubio::Buffer< float > > result;
   
-  SWIG_check_num_args("CVec::norm_get_data",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CVec::norm_get_data",1,"CVec *");
+  SWIG_check_num_args("Aubio::CVec::norm_get_data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CVec::norm_get_data",1,"Aubio::CVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("CVec_norm_get_data",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("CVec_norm_get_data",1,SWIGTYPE_p_Aubio__CVec);
   }
   
   result = (arg1)->norm_get_data();
   {
-    std::vector< float > * resultptr = new std::vector< float >((const std::vector< float > &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_std__vectorT_float_t,1); SWIG_arg++;
+    Aubio::Buffer< Aubio::Sample > * resultptr = new Aubio::Buffer< Aubio::Sample >((const Aubio::Buffer< Aubio::Sample > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_Aubio__BufferT_float_t,1); SWIG_arg++;
   }
   return SWIG_arg;
   
@@ -5338,20 +5542,20 @@ fail:
 
 static int _wrap_CVec_phas_get_data(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = (CVec *) 0 ;
-  std::vector< float > result;
+  Aubio::CVec *arg1 = (Aubio::CVec *) 0 ;
+  SwigValueWrapper< Aubio::Buffer< float > > result;
   
-  SWIG_check_num_args("CVec::phas_get_data",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CVec::phas_get_data",1,"CVec *");
+  SWIG_check_num_args("Aubio::CVec::phas_get_data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CVec::phas_get_data",1,"Aubio::CVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("CVec_phas_get_data",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("CVec_phas_get_data",1,SWIGTYPE_p_Aubio__CVec);
   }
   
   result = (arg1)->phas_get_data();
   {
-    std::vector< float > * resultptr = new std::vector< float >((const std::vector< float > &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_std__vectorT_float_t,1); SWIG_arg++;
+    Aubio::Buffer< Aubio::Sample > * resultptr = new Aubio::Buffer< Aubio::Sample >((const Aubio::Buffer< Aubio::Sample > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_Aubio__BufferT_float_t,1); SWIG_arg++;
   }
   return SWIG_arg;
   
@@ -5364,7 +5568,7 @@ fail:
 
 
 static void swig_delete_CVec(void *obj) {
-CVec *arg1 = (CVec *) obj;
+Aubio::CVec *arg1 = (Aubio::CVec *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_CVec(lua_State *L) {
@@ -5388,6 +5592,7 @@ static swig_lua_method swig_CVec_methods[]= {
     { "phas_ones", _wrap_CVec_phas_ones},
     { "zeros", _wrap_CVec_zeros},
     { "logmag", _wrap_CVec_logmag},
+    { "size", _wrap_CVec_size},
     { "norm_set_sample", _wrap_CVec_norm_set_sample},
     { "phas_set_sample", _wrap_CVec_phas_set_sample},
     { "norm_get_sample", _wrap_CVec_norm_get_sample},
@@ -5423,19 +5628,19 @@ static swig_lua_namespace swig_CVec_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_CVec_bases[] = {0};
 static const char *swig_CVec_base_names[] = {0};
-static swig_lua_class _wrap_class_CVec = { "CVec", "CVec", &SWIGTYPE_p_CVec,_proxy__wrap_new_CVec, swig_delete_CVec, swig_CVec_methods, swig_CVec_attributes, &swig_CVec_Sf_SwigStatic, swig_CVec_meta, swig_CVec_bases, swig_CVec_base_names };
+static swig_lua_class _wrap_class_CVec = { "CVec", "CVec", &SWIGTYPE_p_Aubio__CVec,_proxy__wrap_new_CVec, swig_delete_CVec, swig_CVec_methods, swig_CVec_attributes, &swig_CVec_Sf_SwigStatic, swig_CVec_meta, swig_CVec_bases, swig_CVec_base_names };
 
 static int _wrap_LVec_pvec_set(lua_State* L) {
   int SWIG_arg = 0;
-  LVec *arg1 = (LVec *) 0 ;
+  Aubio::LVec *arg1 = (Aubio::LVec *) 0 ;
   lvec_t *arg2 = (lvec_t *) 0 ;
   
-  SWIG_check_num_args("LVec::pvec",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LVec::pvec",1,"LVec *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("LVec::pvec",2,"lvec_t *");
+  SWIG_check_num_args("Aubio::LVec::pvec",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::LVec::pvec",1,"Aubio::LVec *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::LVec::pvec",2,"lvec_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_LVec,0))){
-    SWIG_fail_ptr("LVec_pvec_set",1,SWIGTYPE_p_LVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__LVec,0))){
+    SWIG_fail_ptr("LVec_pvec_set",1,SWIGTYPE_p_Aubio__LVec);
   }
   
   
@@ -5457,14 +5662,14 @@ fail:
 
 static int _wrap_LVec_pvec_get(lua_State* L) {
   int SWIG_arg = 0;
-  LVec *arg1 = (LVec *) 0 ;
+  Aubio::LVec *arg1 = (Aubio::LVec *) 0 ;
   lvec_t *result = 0 ;
   
-  SWIG_check_num_args("LVec::pvec",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LVec::pvec",1,"LVec *");
+  SWIG_check_num_args("Aubio::LVec::pvec",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::LVec::pvec",1,"Aubio::LVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_LVec,0))){
-    SWIG_fail_ptr("LVec_pvec_get",1,SWIGTYPE_p_LVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__LVec,0))){
+    SWIG_fail_ptr("LVec_pvec_get",1,SWIGTYPE_p_Aubio__LVec);
   }
   
   result = (lvec_t *) ((arg1)->pvec);
@@ -5482,14 +5687,14 @@ fail:
 static int _wrap_new_LVec__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   size_t arg1 ;
-  LVec *result = 0 ;
+  Aubio::LVec *result = 0 ;
   
-  SWIG_check_num_args("LVec::LVec",1,1)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("LVec::LVec",1,"size_t");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
+  SWIG_check_num_args("Aubio::LVec::LVec",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::LVec::LVec",1,"size_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
   arg1 = (size_t)lua_tonumber(L, 1);
-  result = (LVec *)new LVec(arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_LVec,1); SWIG_arg++; 
+  result = (Aubio::LVec *)new Aubio::LVec(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__LVec,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -5503,17 +5708,17 @@ fail:
 static int _wrap_new_LVec__SWIG_1(lua_State* L) {
   int SWIG_arg = 0;
   lvec_t *arg1 = (lvec_t *) 0 ;
-  LVec *result = 0 ;
+  Aubio::LVec *result = 0 ;
   
-  SWIG_check_num_args("LVec::LVec",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LVec::LVec",1,"lvec_t *");
+  SWIG_check_num_args("Aubio::LVec::LVec",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::LVec::LVec",1,"lvec_t *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_lvec_t,0))){
     SWIG_fail_ptr("new_LVec",1,SWIGTYPE_p_lvec_t);
   }
   
-  result = (LVec *)new LVec(arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_LVec,1); SWIG_arg++; 
+  result = (Aubio::LVec *)new Aubio::LVec(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__LVec,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -5557,27 +5762,27 @@ static int _wrap_new_LVec(lua_State* L) {
   
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'new_LVec'\n"
     "  Possible C/C++ prototypes are:\n"
-    "    LVec::LVec(size_t)\n"
-    "    LVec::LVec(lvec_t *)\n");
+    "    Aubio::LVec::LVec(size_t)\n"
+    "    Aubio::LVec::LVec(lvec_t *)\n");
   lua_error(L);return 0;
 }
 
 
 static int _wrap_LVec_get_sample(lua_State* L) {
   int SWIG_arg = 0;
-  LVec *arg1 = (LVec *) 0 ;
+  Aubio::LVec *arg1 = (Aubio::LVec *) 0 ;
   uint_t arg2 ;
   double result;
   
-  SWIG_check_num_args("LVec::get_sample",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LVec::get_sample",1,"LVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("LVec::get_sample",2,"uint_t");
+  SWIG_check_num_args("Aubio::LVec::get_sample",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::LVec::get_sample",1,"Aubio::LVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::LVec::get_sample",2,"uint_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_LVec,0))){
-    SWIG_fail_ptr("LVec_get_sample",1,SWIGTYPE_p_LVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__LVec,0))){
+    SWIG_fail_ptr("LVec_get_sample",1,SWIGTYPE_p_Aubio__LVec);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (uint_t)lua_tonumber(L, 2);
   result = (double)(arg1)->get_sample(arg2);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
@@ -5593,20 +5798,20 @@ fail:
 
 static int _wrap_LVec_set_sample(lua_State* L) {
   int SWIG_arg = 0;
-  LVec *arg1 = (LVec *) 0 ;
+  Aubio::LVec *arg1 = (Aubio::LVec *) 0 ;
   uint_t arg2 ;
   double arg3 ;
   
-  SWIG_check_num_args("LVec::set_sample",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LVec::set_sample",1,"LVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("LVec::set_sample",2,"uint_t");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("LVec::set_sample",3,"double");
+  SWIG_check_num_args("Aubio::LVec::set_sample",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::LVec::set_sample",1,"Aubio::LVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::LVec::set_sample",2,"uint_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::LVec::set_sample",3,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_LVec,0))){
-    SWIG_fail_ptr("LVec_set_sample",1,SWIGTYPE_p_LVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__LVec,0))){
+    SWIG_fail_ptr("LVec_set_sample",1,SWIGTYPE_p_Aubio__LVec);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (uint_t)lua_tonumber(L, 2);
   arg3 = (double)lua_tonumber(L, 3);
   (arg1)->set_sample(arg2,arg3);
@@ -5623,19 +5828,19 @@ fail:
 
 static int _wrap_LVec___getitem(lua_State* L) {
   int SWIG_arg = 0;
-  LVec *arg1 = (LVec *) 0 ;
+  Aubio::LVec *arg1 = (Aubio::LVec *) 0 ;
   size_t arg2 ;
   double result;
   
-  SWIG_check_num_args("LVec::__getitem",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LVec::__getitem",1,"LVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("LVec::__getitem",2,"size_t");
+  SWIG_check_num_args("Aubio::LVec::__getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::LVec::__getitem",1,"Aubio::LVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::LVec::__getitem",2,"size_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_LVec,0))){
-    SWIG_fail_ptr("LVec___getitem",1,SWIGTYPE_p_LVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__LVec,0))){
+    SWIG_fail_ptr("LVec___getitem",1,SWIGTYPE_p_Aubio__LVec);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
   result = (double)(arg1)->__getitem(arg2);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
@@ -5651,20 +5856,20 @@ fail:
 
 static int _wrap_LVec___setitem(lua_State* L) {
   int SWIG_arg = 0;
-  LVec *arg1 = (LVec *) 0 ;
+  Aubio::LVec *arg1 = (Aubio::LVec *) 0 ;
   size_t arg2 ;
   double arg3 ;
   
-  SWIG_check_num_args("LVec::__setitem",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LVec::__setitem",1,"LVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("LVec::__setitem",2,"size_t");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("LVec::__setitem",3,"double");
+  SWIG_check_num_args("Aubio::LVec::__setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::LVec::__setitem",1,"Aubio::LVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::LVec::__setitem",2,"size_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::LVec::__setitem",3,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_LVec,0))){
-    SWIG_fail_ptr("LVec___setitem",1,SWIGTYPE_p_LVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__LVec,0))){
+    SWIG_fail_ptr("LVec___setitem",1,SWIGTYPE_p_Aubio__LVec);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
   arg3 = (double)lua_tonumber(L, 3);
   (arg1)->__setitem(arg2,arg3);
@@ -5681,21 +5886,81 @@ fail:
 
 static int _wrap_LVec_get_data(lua_State* L) {
   int SWIG_arg = 0;
-  LVec *arg1 = (LVec *) 0 ;
-  SwigValueWrapper< std::vector< double > > result;
+  Aubio::LVec *arg1 = (Aubio::LVec *) 0 ;
+  SwigValueWrapper< Aubio::Buffer< double > > result;
   
-  SWIG_check_num_args("LVec::get_data",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LVec::get_data",1,"LVec *");
+  SWIG_check_num_args("Aubio::LVec::get_data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::LVec::get_data",1,"Aubio::LVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_LVec,0))){
-    SWIG_fail_ptr("LVec_get_data",1,SWIGTYPE_p_LVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__LVec,0))){
+    SWIG_fail_ptr("LVec_get_data",1,SWIGTYPE_p_Aubio__LVec);
   }
   
   result = (arg1)->get_data();
   {
-    std::vector< double > * resultptr = new std::vector< double >((const std::vector< double > &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_std__vectorT_double_t,1); SWIG_arg++;
+    Aubio::Buffer< double > * resultptr = new Aubio::Buffer< double >((const Aubio::Buffer< double > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_Aubio__BufferT_double_t,1); SWIG_arg++;
   }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_LVec_set_data__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::LVec *arg1 = (Aubio::LVec *) 0 ;
+  Aubio::Buffer< double > *arg2 = 0 ;
+  
+  SWIG_check_num_args("Aubio::LVec::set_data",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::LVec::set_data",1,"Aubio::LVec *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::LVec::set_data",2,"Aubio::Buffer< double > const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__LVec,0))){
+    SWIG_fail_ptr("LVec_set_data",1,SWIGTYPE_p_Aubio__LVec);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__BufferT_double_t,0))){
+    SWIG_fail_ptr("LVec_set_data",2,SWIGTYPE_p_Aubio__BufferT_double_t);
+  }
+  
+  (arg1)->set_data((Aubio::Buffer< double > const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_LVec_set_data__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::LVec *arg1 = (Aubio::LVec *) 0 ;
+  Aubio::SampleBuffer< double > *arg2 = 0 ;
+  
+  SWIG_check_num_args("Aubio::LVec::set_data",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::LVec::set_data",1,"Aubio::LVec *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::LVec::set_data",2,"Aubio::SampleBuffer< double > const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__LVec,0))){
+    SWIG_fail_ptr("LVec_set_data",1,SWIGTYPE_p_Aubio__LVec);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__SampleBufferT_double_t,0))){
+    SWIG_fail_ptr("LVec_set_data",2,SWIGTYPE_p_Aubio__SampleBufferT_double_t);
+  }
+  
+  (arg1)->set_data((Aubio::SampleBuffer< double > const &)*arg2);
+  
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -5707,44 +5972,78 @@ fail:
 
 
 static int _wrap_LVec_set_data(lua_State* L) {
-  int SWIG_arg = 0;
-  LVec *arg1 = (LVec *) 0 ;
-  std::vector< double > *arg2 = 0 ;
+  int argc;
+  int argv[3]={
+    1,2,3
+  };
   
-  SWIG_check_num_args("LVec::set_data",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LVec::set_data",1,"LVec *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("LVec::set_data",2,"std::vector< double > const &");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_LVec,0))){
-    SWIG_fail_ptr("LVec_set_data",1,SWIGTYPE_p_LVec);
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v = 0;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Aubio__LVec, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_Aubio__BufferT_double_t, SWIG_POINTER_NO_NULL)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_LVec_set_data__SWIG_0(L);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v = 0;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Aubio__LVec, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_Aubio__SampleBufferT_double_t, SWIG_POINTER_NO_NULL)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_LVec_set_data__SWIG_1(L);
+      }
+    }
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_std__vectorT_double_t,0))){
-    SWIG_fail_ptr("LVec_set_data",2,SWIGTYPE_p_std__vectorT_double_t);
-  }
-  
-  (arg1)->set_data((std::vector< double > const &)*arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'LVec_set_data'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Aubio::LVec::set_data(Aubio::Buffer< double > const &)\n"
+    "    Aubio::LVec::set_data(Aubio::SampleBuffer< double > const &)\n");
+  lua_error(L);return 0;
 }
 
 
 static int _wrap_LVec_print(lua_State* L) {
   int SWIG_arg = 0;
-  LVec *arg1 = (LVec *) 0 ;
+  Aubio::LVec *arg1 = (Aubio::LVec *) 0 ;
   
-  SWIG_check_num_args("LVec::print",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LVec::print",1,"LVec *");
+  SWIG_check_num_args("Aubio::LVec::print",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::LVec::print",1,"Aubio::LVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_LVec,0))){
-    SWIG_fail_ptr("LVec_print",1,SWIGTYPE_p_LVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__LVec,0))){
+    SWIG_fail_ptr("LVec_print",1,SWIGTYPE_p_Aubio__LVec);
   }
   
   (arg1)->print();
@@ -5761,15 +6060,15 @@ fail:
 
 static int _wrap_LVec_setall(lua_State* L) {
   int SWIG_arg = 0;
-  LVec *arg1 = (LVec *) 0 ;
+  Aubio::LVec *arg1 = (Aubio::LVec *) 0 ;
   double arg2 ;
   
-  SWIG_check_num_args("LVec::setall",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LVec::setall",1,"LVec *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("LVec::setall",2,"double");
+  SWIG_check_num_args("Aubio::LVec::setall",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::LVec::setall",1,"Aubio::LVec *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::LVec::setall",2,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_LVec,0))){
-    SWIG_fail_ptr("LVec_setall",1,SWIGTYPE_p_LVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__LVec,0))){
+    SWIG_fail_ptr("LVec_setall",1,SWIGTYPE_p_Aubio__LVec);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
@@ -5787,13 +6086,13 @@ fail:
 
 static int _wrap_LVec_zeros(lua_State* L) {
   int SWIG_arg = 0;
-  LVec *arg1 = (LVec *) 0 ;
+  Aubio::LVec *arg1 = (Aubio::LVec *) 0 ;
   
-  SWIG_check_num_args("LVec::zeros",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LVec::zeros",1,"LVec *");
+  SWIG_check_num_args("Aubio::LVec::zeros",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::LVec::zeros",1,"Aubio::LVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_LVec,0))){
-    SWIG_fail_ptr("LVec_zeros",1,SWIGTYPE_p_LVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__LVec,0))){
+    SWIG_fail_ptr("LVec_zeros",1,SWIGTYPE_p_Aubio__LVec);
   }
   
   (arg1)->zeros();
@@ -5810,13 +6109,13 @@ fail:
 
 static int _wrap_LVec_ones(lua_State* L) {
   int SWIG_arg = 0;
-  LVec *arg1 = (LVec *) 0 ;
+  Aubio::LVec *arg1 = (Aubio::LVec *) 0 ;
   
-  SWIG_check_num_args("LVec::ones",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LVec::ones",1,"LVec *");
+  SWIG_check_num_args("Aubio::LVec::ones",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::LVec::ones",1,"Aubio::LVec *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_LVec,0))){
-    SWIG_fail_ptr("LVec_ones",1,SWIGTYPE_p_LVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__LVec,0))){
+    SWIG_fail_ptr("LVec_ones",1,SWIGTYPE_p_Aubio__LVec);
   }
   
   (arg1)->ones();
@@ -5832,7 +6131,7 @@ fail:
 
 
 static void swig_delete_LVec(void *obj) {
-LVec *arg1 = (LVec *) obj;
+Aubio::LVec *arg1 = (Aubio::LVec *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_LVec(lua_State *L) {
@@ -5889,19 +6188,19 @@ static swig_lua_namespace swig_LVec_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_LVec_bases[] = {0};
 static const char *swig_LVec_base_names[] = {0};
-static swig_lua_class _wrap_class_LVec = { "LVec", "LVec", &SWIGTYPE_p_LVec,_proxy__wrap_new_LVec, swig_delete_LVec, swig_LVec_methods, swig_LVec_attributes, &swig_LVec_Sf_SwigStatic, swig_LVec_meta, swig_LVec_bases, swig_LVec_base_names };
+static swig_lua_class _wrap_class_LVec = { "LVec", "LVec", &SWIGTYPE_p_Aubio__LVec,_proxy__wrap_new_LVec, swig_delete_LVec, swig_LVec_methods, swig_LVec_attributes, &swig_LVec_Sf_SwigStatic, swig_LVec_meta, swig_LVec_bases, swig_LVec_base_names };
 
 static int _wrap_FMat_m_set(lua_State* L) {
   int SWIG_arg = 0;
-  FMat *arg1 = (FMat *) 0 ;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
   fmat_t *arg2 = (fmat_t *) 0 ;
   
-  SWIG_check_num_args("FMat::m",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FMat::m",1,"FMat *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("FMat::m",2,"fmat_t *");
+  SWIG_check_num_args("Aubio::FMat::m",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::m",1,"Aubio::FMat *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::FMat::m",2,"fmat_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat_m_set",1,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_m_set",1,SWIGTYPE_p_Aubio__FMat);
   }
   
   
@@ -5923,14 +6222,14 @@ fail:
 
 static int _wrap_FMat_m_get(lua_State* L) {
   int SWIG_arg = 0;
-  FMat *arg1 = (FMat *) 0 ;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
   fmat_t *result = 0 ;
   
-  SWIG_check_num_args("FMat::m",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FMat::m",1,"FMat *");
+  SWIG_check_num_args("Aubio::FMat::m",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::m",1,"Aubio::FMat *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat_m_get",1,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_m_get",1,SWIGTYPE_p_Aubio__FMat);
   }
   
   result = (fmat_t *) ((arg1)->m);
@@ -5949,17 +6248,17 @@ static int _wrap_new_FMat__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   size_t arg1 ;
   size_t arg2 ;
-  FMat *result = 0 ;
+  Aubio::FMat *result = 0 ;
   
-  SWIG_check_num_args("FMat::FMat",2,2)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("FMat::FMat",1,"size_t");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FMat::FMat",2,"size_t");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
+  SWIG_check_num_args("Aubio::FMat::FMat",2,2)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::FMat::FMat",1,"size_t");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FMat::FMat",2,"size_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
   arg1 = (size_t)lua_tonumber(L, 1);
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
-  result = (FMat *)new FMat(arg1,arg2);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_FMat,1); SWIG_arg++; 
+  result = (Aubio::FMat *)new Aubio::FMat(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__FMat,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -5973,17 +6272,17 @@ fail:
 static int _wrap_new_FMat__SWIG_1(lua_State* L) {
   int SWIG_arg = 0;
   fmat_t *arg1 = (fmat_t *) 0 ;
-  FMat *result = 0 ;
+  Aubio::FMat *result = 0 ;
   
-  SWIG_check_num_args("FMat::FMat",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FMat::FMat",1,"fmat_t *");
+  SWIG_check_num_args("Aubio::FMat::FMat",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::FMat",1,"fmat_t *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_fmat_t,0))){
     SWIG_fail_ptr("new_FMat",1,SWIGTYPE_p_fmat_t);
   }
   
-  result = (FMat *)new FMat(arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_FMat,1); SWIG_arg++; 
+  result = (Aubio::FMat *)new Aubio::FMat(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__FMat,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -6032,33 +6331,33 @@ static int _wrap_new_FMat(lua_State* L) {
   
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'new_FMat'\n"
     "  Possible C/C++ prototypes are:\n"
-    "    FMat::FMat(size_t,size_t)\n"
-    "    FMat::FMat(fmat_t *)\n");
+    "    Aubio::FMat::FMat(size_t,size_t)\n"
+    "    Aubio::FMat::FMat(fmat_t *)\n");
   lua_error(L);return 0;
 }
 
 
 static int _wrap_FMat_get_sample(lua_State* L) {
   int SWIG_arg = 0;
-  FMat *arg1 = (FMat *) 0 ;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
   size_t arg2 ;
   size_t arg3 ;
-  float result;
+  Aubio::Sample result;
   
-  SWIG_check_num_args("FMat::get_sample",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FMat::get_sample",1,"FMat *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FMat::get_sample",2,"size_t");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("FMat::get_sample",3,"size_t");
+  SWIG_check_num_args("Aubio::FMat::get_sample",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::get_sample",1,"Aubio::FMat *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FMat::get_sample",2,"size_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::FMat::get_sample",3,"size_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat_get_sample",1,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_get_sample",1,SWIGTYPE_p_Aubio__FMat);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
-  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
   arg3 = (size_t)lua_tonumber(L, 3);
-  result = (float)(arg1)->get_sample(arg2,arg3);
+  result = (Aubio::Sample)(arg1)->get_sample(arg2,arg3);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -6072,25 +6371,25 @@ fail:
 
 static int _wrap_FMat_set_sample(lua_State* L) {
   int SWIG_arg = 0;
-  FMat *arg1 = (FMat *) 0 ;
-  float arg2 ;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
+  Aubio::Sample arg2 ;
   size_t arg3 ;
   size_t arg4 ;
   
-  SWIG_check_num_args("FMat::set_sample",4,4)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FMat::set_sample",1,"FMat *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FMat::set_sample",2,"float");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("FMat::set_sample",3,"size_t");
-  if(!lua_isnumber(L,4)) SWIG_fail_arg("FMat::set_sample",4,"size_t");
+  SWIG_check_num_args("Aubio::FMat::set_sample",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::set_sample",1,"Aubio::FMat *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FMat::set_sample",2,"Aubio::Sample");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::FMat::set_sample",3,"size_t");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("Aubio::FMat::set_sample",4,"size_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat_set_sample",1,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_set_sample",1,SWIGTYPE_p_Aubio__FMat);
   }
   
-  arg2 = (float)lua_tonumber(L, 2);
-  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative")
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
   arg3 = (size_t)lua_tonumber(L, 3);
-  SWIG_contract_assert((lua_tonumber(L,4)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,4)>=0),"number must not be negative");
   arg4 = (size_t)lua_tonumber(L, 4);
   (arg1)->set_sample(arg2,arg3,arg4);
   
@@ -6106,24 +6405,24 @@ fail:
 
 static int _wrap_FMat_get_channel(lua_State* L) {
   int SWIG_arg = 0;
-  FMat *arg1 = (FMat *) 0 ;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
   size_t arg2 ;
-  FVec *arg3 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
   
-  SWIG_check_num_args("FMat::get_channel",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FMat::get_channel",1,"FMat *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FMat::get_channel",2,"size_t");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("FMat::get_channel",3,"FVec &");
+  SWIG_check_num_args("Aubio::FMat::get_channel",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::get_channel",1,"Aubio::FMat *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FMat::get_channel",2,"size_t");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::FMat::get_channel",3,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat_get_channel",1,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_get_channel",1,SWIGTYPE_p_Aubio__FMat);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FMat_get_channel",3,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FMat_get_channel",3,SWIGTYPE_p_Aubio__FVec);
   }
   
   (arg1)->get_channel(arg2,*arg3);
@@ -6138,26 +6437,168 @@ fail:
 }
 
 
-static int _wrap_FMat_get_channel_data(lua_State* L) {
+static int _wrap_FMat_set_channel_data__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
-  FMat *arg1 = (FMat *) 0 ;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
   size_t arg2 ;
-  std::vector< float > result;
+  Aubio::Buffer< Aubio::Sample > *arg3 = 0 ;
   
-  SWIG_check_num_args("FMat::get_channel_data",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FMat::get_channel_data",1,"FMat *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FMat::get_channel_data",2,"size_t");
+  SWIG_check_num_args("Aubio::FMat::set_channel_data",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::set_channel_data",1,"Aubio::FMat *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FMat::set_channel_data",2,"size_t");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::FMat::set_channel_data",3,"Aubio::Buffer< Aubio::Sample > const &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat_get_channel_data",1,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_set_channel_data",1,SWIGTYPE_p_Aubio__FMat);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__BufferT_float_t,0))){
+    SWIG_fail_ptr("FMat_set_channel_data",3,SWIGTYPE_p_Aubio__BufferT_float_t);
+  }
+  
+  (arg1)->set_channel_data(arg2,(Aubio::Buffer< Aubio::Sample > const &)*arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_FMat_set_channel_data__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
+  size_t arg2 ;
+  Aubio::SampleBuffer< Aubio::Sample > *arg3 = 0 ;
+  
+  SWIG_check_num_args("Aubio::FMat::set_channel_data",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::set_channel_data",1,"Aubio::FMat *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FMat::set_channel_data",2,"size_t");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::FMat::set_channel_data",3,"Aubio::SampleBuffer< Aubio::Sample > const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_set_channel_data",1,SWIGTYPE_p_Aubio__FMat);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__SampleBufferT_float_t,0))){
+    SWIG_fail_ptr("FMat_set_channel_data",3,SWIGTYPE_p_Aubio__SampleBufferT_float_t);
+  }
+  
+  (arg1)->set_channel_data(arg2,(Aubio::SampleBuffer< Aubio::Sample > const &)*arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_FMat_set_channel_data(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 3) {
+    int _v = 0;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Aubio__FMat, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_Aubio__BufferT_float_t, SWIG_POINTER_NO_NULL)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          return _wrap_FMat_set_channel_data__SWIG_0(L);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v = 0;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Aubio__FMat, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_Aubio__SampleBufferT_float_t, SWIG_POINTER_NO_NULL)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          return _wrap_FMat_set_channel_data__SWIG_1(L);
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'FMat_set_channel_data'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Aubio::FMat::set_channel_data(size_t,Aubio::Buffer< Aubio::Sample > const &)\n"
+    "    Aubio::FMat::set_channel_data(size_t,Aubio::SampleBuffer< Aubio::Sample > const &)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_FMat_get_channel_data(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
+  size_t arg2 ;
+  SwigValueWrapper< Aubio::Buffer< float > > result;
+  
+  SWIG_check_num_args("Aubio::FMat::get_channel_data",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::get_channel_data",1,"Aubio::FMat *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FMat::get_channel_data",2,"size_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_get_channel_data",1,SWIGTYPE_p_Aubio__FMat);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
   result = (arg1)->get_channel_data(arg2);
   {
-    std::vector< float > * resultptr = new std::vector< float >((const std::vector< float > &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_std__vectorT_float_t,1); SWIG_arg++;
+    Aubio::Buffer< Aubio::Sample > * resultptr = new Aubio::Buffer< Aubio::Sample >((const Aubio::Buffer< Aubio::Sample > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_Aubio__BufferT_float_t,1); SWIG_arg++;
   }
   return SWIG_arg;
   
@@ -6169,27 +6610,99 @@ fail:
 }
 
 
-static int _wrap_FMat_get_data(lua_State* L) {
+static int _wrap_FMat_size(lua_State* L) {
   int SWIG_arg = 0;
-  FMat *arg1 = (FMat *) 0 ;
-  std::vector< std::vector< float > > *arg2 = 0 ;
-  std::vector< std::vector< float > > *result = 0 ;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
+  size_t result;
   
-  SWIG_check_num_args("FMat::get_data",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FMat::get_data",1,"FMat *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FMat::get_data",2,"std::vector< std::vector< float > > &");
+  SWIG_check_num_args("Aubio::FMat::size",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::size",1,"Aubio::FMat const *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat_get_data",1,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_size",1,SWIGTYPE_p_Aubio__FMat);
   }
   
+  result = ((Aubio::FMat const *)arg1)->size();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_std__vectorT_std__vectorT_float_t_t,0))){
-    SWIG_fail_ptr("FMat_get_data",2,SWIGTYPE_p_std__vectorT_std__vectorT_float_t_t);
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_FMat_rows(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
+  size_t result;
+  
+  SWIG_check_num_args("Aubio::FMat::rows",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::rows",1,"Aubio::FMat const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_rows",1,SWIGTYPE_p_Aubio__FMat);
   }
   
-  result = (std::vector< std::vector< float > > *) &(arg1)->get_data(*arg2);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_std__vectorT_std__vectorT_float_t_t,0); SWIG_arg++; 
+  result = ((Aubio::FMat const *)arg1)->rows();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_FMat_cols(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
+  size_t result;
+  
+  SWIG_check_num_args("Aubio::FMat::cols",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::cols",1,"Aubio::FMat const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_cols",1,SWIGTYPE_p_Aubio__FMat);
+  }
+  
+  result = ((Aubio::FMat const *)arg1)->cols();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_FMat_resize(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
+  size_t arg2 ;
+  size_t arg3 ;
+  
+  SWIG_check_num_args("Aubio::FMat::resize",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::resize",1,"Aubio::FMat *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FMat::resize",2,"size_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::FMat::resize",3,"size_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_resize",1,SWIGTYPE_p_Aubio__FMat);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
+  arg3 = (size_t)lua_tonumber(L, 3);
+  (arg1)->resize(arg2,arg3);
+  
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -6202,13 +6715,13 @@ fail:
 
 static int _wrap_FMat_print(lua_State* L) {
   int SWIG_arg = 0;
-  FMat *arg1 = (FMat *) 0 ;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
   
-  SWIG_check_num_args("FMat::print",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FMat::print",1,"FMat *");
+  SWIG_check_num_args("Aubio::FMat::print",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::print",1,"Aubio::FMat *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat_print",1,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_print",1,SWIGTYPE_p_Aubio__FMat);
   }
   
   (arg1)->print();
@@ -6225,18 +6738,18 @@ fail:
 
 static int _wrap_FMat_set(lua_State* L) {
   int SWIG_arg = 0;
-  FMat *arg1 = (FMat *) 0 ;
-  float arg2 ;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
+  Aubio::Sample arg2 ;
   
-  SWIG_check_num_args("FMat::set",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FMat::set",1,"FMat *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FMat::set",2,"float");
+  SWIG_check_num_args("Aubio::FMat::set",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::set",1,"Aubio::FMat *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FMat::set",2,"Aubio::Sample");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat_set",1,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_set",1,SWIGTYPE_p_Aubio__FMat);
   }
   
-  arg2 = (float)lua_tonumber(L, 2);
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
   (arg1)->set(arg2);
   
   return SWIG_arg;
@@ -6251,13 +6764,13 @@ fail:
 
 static int _wrap_FMat_zeros(lua_State* L) {
   int SWIG_arg = 0;
-  FMat *arg1 = (FMat *) 0 ;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
   
-  SWIG_check_num_args("FMat::zeros",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FMat::zeros",1,"FMat *");
+  SWIG_check_num_args("Aubio::FMat::zeros",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::zeros",1,"Aubio::FMat *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat_zeros",1,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_zeros",1,SWIGTYPE_p_Aubio__FMat);
   }
   
   (arg1)->zeros();
@@ -6274,13 +6787,13 @@ fail:
 
 static int _wrap_FMat_ones(lua_State* L) {
   int SWIG_arg = 0;
-  FMat *arg1 = (FMat *) 0 ;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
   
-  SWIG_check_num_args("FMat::ones",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FMat::ones",1,"FMat *");
+  SWIG_check_num_args("Aubio::FMat::ones",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::ones",1,"Aubio::FMat *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat_ones",1,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_ones",1,SWIGTYPE_p_Aubio__FMat);
   }
   
   (arg1)->ones();
@@ -6297,13 +6810,13 @@ fail:
 
 static int _wrap_FMat_reverse(lua_State* L) {
   int SWIG_arg = 0;
-  FMat *arg1 = (FMat *) 0 ;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
   
-  SWIG_check_num_args("FMat::reverse",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FMat::reverse",1,"FMat *");
+  SWIG_check_num_args("Aubio::FMat::reverse",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::reverse",1,"Aubio::FMat *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat_reverse",1,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_reverse",1,SWIGTYPE_p_Aubio__FMat);
   }
   
   (arg1)->reverse();
@@ -6320,23 +6833,23 @@ fail:
 
 static int _wrap_FMat_weight(lua_State* L) {
   int SWIG_arg = 0;
-  FMat *arg1 = (FMat *) 0 ;
-  FMat *arg2 = 0 ;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
+  Aubio::FMat *arg2 = 0 ;
   
-  SWIG_check_num_args("FMat::weight",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FMat::weight",1,"FMat *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FMat::weight",2,"FMat const &");
+  SWIG_check_num_args("Aubio::FMat::weight",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::weight",1,"Aubio::FMat *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FMat::weight",2,"Aubio::FMat const &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat_weight",1,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_weight",1,SWIGTYPE_p_Aubio__FMat);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat_weight",2,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_weight",2,SWIGTYPE_p_Aubio__FMat);
   }
   
-  (arg1)->weight((FMat const &)*arg2);
+  (arg1)->weight((Aubio::FMat const &)*arg2);
   
   return SWIG_arg;
   
@@ -6350,25 +6863,25 @@ fail:
 
 static int _wrap_FMat___call(lua_State* L) {
   int SWIG_arg = 0;
-  FMat *arg1 = (FMat *) 0 ;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
   size_t arg2 ;
   size_t arg3 ;
-  float result;
+  Aubio::Sample result;
   
-  SWIG_check_num_args("FMat::operator ()",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FMat::operator ()",1,"FMat *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FMat::operator ()",2,"size_t");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("FMat::operator ()",3,"size_t");
+  SWIG_check_num_args("Aubio::FMat::operator ()",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::operator ()",1,"Aubio::FMat *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FMat::operator ()",2,"size_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::FMat::operator ()",3,"size_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat___call",1,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat___call",1,SWIGTYPE_p_Aubio__FMat);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
-  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
   arg3 = (size_t)lua_tonumber(L, 3);
-  result = (float)(arg1)->operator ()(arg2,arg3);
+  result = (Aubio::Sample)(arg1)->operator ()(arg2,arg3);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -6382,23 +6895,23 @@ fail:
 
 static int _wrap_FMat_copy(lua_State* L) {
   int SWIG_arg = 0;
-  FMat *arg1 = (FMat *) 0 ;
-  FMat *arg2 = 0 ;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
+  Aubio::FMat *arg2 = 0 ;
   
-  SWIG_check_num_args("FMat::copy",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FMat::copy",1,"FMat *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FMat::copy",2,"FMat const &");
+  SWIG_check_num_args("Aubio::FMat::copy",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::copy",1,"Aubio::FMat *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FMat::copy",2,"Aubio::FMat const &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat_copy",1,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_copy",1,SWIGTYPE_p_Aubio__FMat);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat_copy",2,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_copy",2,SWIGTYPE_p_Aubio__FMat);
   }
   
-  (arg1)->copy((FMat const &)*arg2);
+  (arg1)->copy((Aubio::FMat const &)*arg2);
   
   return SWIG_arg;
   
@@ -6412,30 +6925,30 @@ fail:
 
 static int _wrap_FMat_vecmul(lua_State* L) {
   int SWIG_arg = 0;
-  FMat *arg1 = (FMat *) 0 ;
-  FVec *arg2 = 0 ;
-  FVec *arg3 = 0 ;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
   
-  SWIG_check_num_args("FMat::vecmul",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FMat::vecmul",1,"FMat *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FMat::vecmul",2,"FVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("FMat::vecmul",3,"FVec const &");
+  SWIG_check_num_args("Aubio::FMat::vecmul",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::vecmul",1,"Aubio::FMat *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FMat::vecmul",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::FMat::vecmul",3,"Aubio::FVec const &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat_vecmul",1,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat_vecmul",1,SWIGTYPE_p_Aubio__FMat);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FMat_vecmul",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FMat_vecmul",2,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FMat_vecmul",3,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FMat_vecmul",3,SWIGTYPE_p_Aubio__FVec);
   }
   
-  (arg1)->vecmul((FVec const &)*arg2,(FVec const &)*arg3);
+  (arg1)->vecmul((Aubio::FVec const &)*arg2,(Aubio::FVec const &)*arg3);
   
   return SWIG_arg;
   
@@ -6449,27 +6962,27 @@ fail:
 
 static int _wrap_FMat___mul(lua_State* L) {
   int SWIG_arg = 0;
-  FMat *arg1 = (FMat *) 0 ;
-  FVec *arg2 = 0 ;
-  SwigValueWrapper< FVec > result;
+  Aubio::FMat *arg1 = (Aubio::FMat *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  SwigValueWrapper< Aubio::FVec > result;
   
-  SWIG_check_num_args("FMat::operator *",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FMat::operator *",1,"FMat *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FMat::operator *",2,"FVec const &");
+  SWIG_check_num_args("Aubio::FMat::operator *",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FMat::operator *",1,"Aubio::FMat *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FMat::operator *",2,"Aubio::FVec const &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FMat___mul",1,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FMat___mul",1,SWIGTYPE_p_Aubio__FMat);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FMat___mul",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FMat___mul",2,SWIGTYPE_p_Aubio__FVec);
   }
   
-  result = (arg1)->operator *((FVec const &)*arg2);
+  result = (arg1)->operator *((Aubio::FVec const &)*arg2);
   {
-    FVec * resultptr = new FVec((const FVec &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_FVec,1); SWIG_arg++;
+    Aubio::FVec * resultptr = new Aubio::FVec((const Aubio::FVec &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_Aubio__FVec,1); SWIG_arg++;
   }
   return SWIG_arg;
   
@@ -6482,7 +6995,7 @@ fail:
 
 
 static void swig_delete_FMat(void *obj) {
-FMat *arg1 = (FMat *) obj;
+Aubio::FMat *arg1 = (Aubio::FMat *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_FMat(lua_State *L) {
@@ -6501,8 +7014,12 @@ static swig_lua_method swig_FMat_methods[]= {
     { "get_sample", _wrap_FMat_get_sample},
     { "set_sample", _wrap_FMat_set_sample},
     { "get_channel", _wrap_FMat_get_channel},
+    { "set_channel_data", _wrap_FMat_set_channel_data},
     { "get_channel_data", _wrap_FMat_get_channel_data},
-    { "get_data", _wrap_FMat_get_data},
+    { "size", _wrap_FMat_size},
+    { "rows", _wrap_FMat_rows},
+    { "cols", _wrap_FMat_cols},
+    { "resize", _wrap_FMat_resize},
     { "print", _wrap_FMat_print},
     { "set", _wrap_FMat_set},
     { "zeros", _wrap_FMat_zeros},
@@ -6544,22 +7061,22 @@ static swig_lua_namespace swig_FMat_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_FMat_bases[] = {0};
 static const char *swig_FMat_base_names[] = {0};
-static swig_lua_class _wrap_class_FMat = { "FMat", "FMat", &SWIGTYPE_p_FMat,_proxy__wrap_new_FMat, swig_delete_FMat, swig_FMat_methods, swig_FMat_attributes, &swig_FMat_Sf_SwigStatic, swig_FMat_meta, swig_FMat_bases, swig_FMat_base_names };
+static swig_lua_class _wrap_class_FMat = { "FMat", "FMat", &SWIGTYPE_p_Aubio__FMat,_proxy__wrap_new_FMat, swig_delete_FMat, swig_FMat_methods, swig_FMat_attributes, &swig_FMat_Sf_SwigStatic, swig_FMat_meta, swig_FMat_bases, swig_FMat_base_names };
 
 static int _wrap_new_window(lua_State* L) {
   int SWIG_arg = 0;
   char *arg1 = (char *) 0 ;
   size_t arg2 ;
-  FVec *result = 0 ;
+  Aubio::FVec *result = 0 ;
   
-  SWIG_check_num_args("new_window",2,2)
-  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("new_window",1,"char *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("new_window",2,"size_t");
+  SWIG_check_num_args("Aubio::new_window",2,2)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Aubio::new_window",1,"char *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::new_window",2,"size_t");
   arg1 = (char *)lua_tostring(L, 1);
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
-  result = (FVec *)new_window(arg1,arg2);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_FVec,0); SWIG_arg++; 
+  result = (Aubio::FVec *)Aubio::new_window(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__FVec,0); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -6572,20 +7089,20 @@ fail:
 
 static int _wrap_set_window(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = 0 ;
+  Aubio::FVec *arg1 = 0 ;
   char *arg2 = (char *) 0 ;
   size_t result;
   
-  SWIG_check_num_args("set_window",2,2)
-  if(!lua_isuserdata(L,1)) SWIG_fail_arg("set_window",1,"FVec &");
-  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("set_window",2,"char *");
+  SWIG_check_num_args("Aubio::set_window",2,2)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::set_window",1,"Aubio::FVec &");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Aubio::set_window",2,"char *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("set_window",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("set_window",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   arg2 = (char *)lua_tostring(L, 2);
-  result = set_window(*arg1,arg2);
+  result = Aubio::set_window(*arg1,arg2);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -6599,15 +7116,15 @@ fail:
 
 static int _wrap_Resampler_resampler_set(lua_State* L) {
   int SWIG_arg = 0;
-  Resampler *arg1 = (Resampler *) 0 ;
+  Aubio::Resampler *arg1 = (Aubio::Resampler *) 0 ;
   aubio_resampler_t *arg2 = (aubio_resampler_t *) 0 ;
   
-  SWIG_check_num_args("Resampler::resampler",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Resampler::resampler",1,"Resampler *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Resampler::resampler",2,"aubio_resampler_t *");
+  SWIG_check_num_args("Aubio::Resampler::resampler",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Resampler::resampler",1,"Aubio::Resampler *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::Resampler::resampler",2,"aubio_resampler_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Resampler,0))){
-    SWIG_fail_ptr("Resampler_resampler_set",1,SWIGTYPE_p_Resampler);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Resampler,0))){
+    SWIG_fail_ptr("Resampler_resampler_set",1,SWIGTYPE_p_Aubio__Resampler);
   }
   
   
@@ -6629,14 +7146,14 @@ fail:
 
 static int _wrap_Resampler_resampler_get(lua_State* L) {
   int SWIG_arg = 0;
-  Resampler *arg1 = (Resampler *) 0 ;
+  Aubio::Resampler *arg1 = (Aubio::Resampler *) 0 ;
   aubio_resampler_t *result = 0 ;
   
-  SWIG_check_num_args("Resampler::resampler",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Resampler::resampler",1,"Resampler *");
+  SWIG_check_num_args("Aubio::Resampler::resampler",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Resampler::resampler",1,"Aubio::Resampler *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Resampler,0))){
-    SWIG_fail_ptr("Resampler_resampler_get",1,SWIGTYPE_p_Resampler);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Resampler,0))){
+    SWIG_fail_ptr("Resampler_resampler_get",1,SWIGTYPE_p_Aubio__Resampler);
   }
   
   result = (aubio_resampler_t *) ((arg1)->resampler);
@@ -6653,18 +7170,17 @@ fail:
 
 static int _wrap_new_Resampler(lua_State* L) {
   int SWIG_arg = 0;
-  float arg1 ;
-  size_t arg2 ;
-  Resampler *result = 0 ;
+  Aubio::Sample arg1 ;
+  Aubio::ResamplerType arg2 ;
+  Aubio::Resampler *result = 0 ;
   
-  SWIG_check_num_args("Resampler::Resampler",2,2)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("Resampler::Resampler",1,"float");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("Resampler::Resampler",2,"size_t");
-  arg1 = (float)lua_tonumber(L, 1);
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
-  arg2 = (size_t)lua_tonumber(L, 2);
-  result = (Resampler *)new Resampler(arg1,arg2);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Resampler,1); SWIG_arg++; 
+  SWIG_check_num_args("Aubio::Resampler::Resampler",2,2)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::Resampler::Resampler",1,"Aubio::Sample");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Resampler::Resampler",2,"Aubio::ResamplerType");
+  arg1 = (Aubio::Sample)lua_tonumber(L, 1);
+  arg2 = (Aubio::ResamplerType)(int)lua_tonumber(L, 2);
+  result = (Aubio::Resampler *)new Aubio::Resampler(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__Resampler,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -6677,30 +7193,30 @@ fail:
 
 static int _wrap_Resampler_process(lua_State* L) {
   int SWIG_arg = 0;
-  Resampler *arg1 = (Resampler *) 0 ;
-  FVec *arg2 = 0 ;
-  FVec *arg3 = 0 ;
+  Aubio::Resampler *arg1 = (Aubio::Resampler *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
   
-  SWIG_check_num_args("Resampler::process",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Resampler::process",1,"Resampler *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Resampler::process",2,"FVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Resampler::process",3,"FVec const &");
+  SWIG_check_num_args("Aubio::Resampler::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Resampler::process",1,"Aubio::Resampler *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Resampler::process",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::Resampler::process",3,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Resampler,0))){
-    SWIG_fail_ptr("Resampler_process",1,SWIGTYPE_p_Resampler);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Resampler,0))){
+    SWIG_fail_ptr("Resampler_process",1,SWIGTYPE_p_Aubio__Resampler);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("Resampler_process",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Resampler_process",2,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("Resampler_process",3,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Resampler_process",3,SWIGTYPE_p_Aubio__FVec);
   }
   
-  (arg1)->process((FVec const &)*arg2,(FVec const &)*arg3);
+  (arg1)->process((Aubio::FVec const &)*arg2,*arg3);
   
   return SWIG_arg;
   
@@ -6713,7 +7229,7 @@ fail:
 
 
 static void swig_delete_Resampler(void *obj) {
-Resampler *arg1 = (Resampler *) obj;
+Aubio::Resampler *arg1 = (Aubio::Resampler *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_Resampler(lua_State *L) {
@@ -6759,19 +7275,19 @@ static swig_lua_namespace swig_Resampler_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_Resampler_bases[] = {0};
 static const char *swig_Resampler_base_names[] = {0};
-static swig_lua_class _wrap_class_Resampler = { "Resampler", "Resampler", &SWIGTYPE_p_Resampler,_proxy__wrap_new_Resampler, swig_delete_Resampler, swig_Resampler_methods, swig_Resampler_attributes, &swig_Resampler_Sf_SwigStatic, swig_Resampler_meta, swig_Resampler_bases, swig_Resampler_base_names };
+static swig_lua_class _wrap_class_Resampler = { "Resampler", "Resampler", &SWIGTYPE_p_Aubio__Resampler,_proxy__wrap_new_Resampler, swig_delete_Resampler, swig_Resampler_methods, swig_Resampler_attributes, &swig_Resampler_Sf_SwigStatic, swig_Resampler_meta, swig_Resampler_bases, swig_Resampler_base_names };
 
 static int _wrap_Filter_filter_set(lua_State* L) {
   int SWIG_arg = 0;
-  Filter *arg1 = (Filter *) 0 ;
+  Aubio::Filter *arg1 = (Aubio::Filter *) 0 ;
   aubio_filter_t *arg2 = (aubio_filter_t *) 0 ;
   
-  SWIG_check_num_args("Filter::filter",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Filter::filter",1,"Filter *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Filter::filter",2,"aubio_filter_t *");
+  SWIG_check_num_args("Aubio::Filter::filter",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Filter::filter",1,"Aubio::Filter *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::Filter::filter",2,"aubio_filter_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Filter,0))){
-    SWIG_fail_ptr("Filter_filter_set",1,SWIGTYPE_p_Filter);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Filter,0))){
+    SWIG_fail_ptr("Filter_filter_set",1,SWIGTYPE_p_Aubio__Filter);
   }
   
   
@@ -6793,14 +7309,14 @@ fail:
 
 static int _wrap_Filter_filter_get(lua_State* L) {
   int SWIG_arg = 0;
-  Filter *arg1 = (Filter *) 0 ;
+  Aubio::Filter *arg1 = (Aubio::Filter *) 0 ;
   aubio_filter_t *result = 0 ;
   
-  SWIG_check_num_args("Filter::filter",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Filter::filter",1,"Filter *");
+  SWIG_check_num_args("Aubio::Filter::filter",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Filter::filter",1,"Aubio::Filter *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Filter,0))){
-    SWIG_fail_ptr("Filter_filter_get",1,SWIGTYPE_p_Filter);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Filter,0))){
+    SWIG_fail_ptr("Filter_filter_get",1,SWIGTYPE_p_Aubio__Filter);
   }
   
   result = (aubio_filter_t *) ((arg1)->filter);
@@ -6817,11 +7333,11 @@ fail:
 
 static int _wrap_new_Filter__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
-  Filter *result = 0 ;
+  Aubio::Filter *result = 0 ;
   
-  SWIG_check_num_args("Filter::Filter",0,0)
-  result = (Filter *)new Filter();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Filter,1); SWIG_arg++; 
+  SWIG_check_num_args("Aubio::Filter::Filter",0,0)
+  result = (Aubio::Filter *)new Aubio::Filter();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__Filter,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -6834,15 +7350,15 @@ fail:
 
 static int _wrap_new_Filter__SWIG_1(lua_State* L) {
   int SWIG_arg = 0;
-  size_t arg1 ;
-  Filter *result = 0 ;
+  uint32_t arg1 ;
+  Aubio::Filter *result = 0 ;
   
-  SWIG_check_num_args("Filter::Filter",1,1)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("Filter::Filter",1,"size_t");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
-  arg1 = (size_t)lua_tonumber(L, 1);
-  result = (Filter *)new Filter(arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Filter,1); SWIG_arg++; 
+  SWIG_check_num_args("Aubio::Filter::Filter",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::Filter::Filter",1,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  result = (Aubio::Filter *)new Aubio::Filter(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__Filter,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -6875,28 +7391,28 @@ static int _wrap_new_Filter(lua_State* L) {
   
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'new_Filter'\n"
     "  Possible C/C++ prototypes are:\n"
-    "    Filter::Filter()\n"
-    "    Filter::Filter(size_t)\n");
+    "    Aubio::Filter::Filter()\n"
+    "    Aubio::Filter::Filter(uint32_t)\n");
   lua_error(L);return 0;
 }
 
 
 static int _wrap_Filter_process(lua_State* L) {
   int SWIG_arg = 0;
-  Filter *arg1 = (Filter *) 0 ;
-  FVec *arg2 = 0 ;
+  Aubio::Filter *arg1 = (Aubio::Filter *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
   
-  SWIG_check_num_args("Filter::process",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Filter::process",1,"Filter *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Filter::process",2,"FVec &");
+  SWIG_check_num_args("Aubio::Filter::process",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Filter::process",1,"Aubio::Filter *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Filter::process",2,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Filter,0))){
-    SWIG_fail_ptr("Filter_process",1,SWIGTYPE_p_Filter);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Filter,0))){
+    SWIG_fail_ptr("Filter_process",1,SWIGTYPE_p_Aubio__Filter);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("Filter_process",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Filter_process",2,SWIGTYPE_p_Aubio__FVec);
   }
   
   (arg1)->process(*arg2);
@@ -6913,30 +7429,30 @@ fail:
 
 static int _wrap_Filter_do_outplace(lua_State* L) {
   int SWIG_arg = 0;
-  Filter *arg1 = (Filter *) 0 ;
-  FVec *arg2 = 0 ;
-  FVec *arg3 = 0 ;
+  Aubio::Filter *arg1 = (Aubio::Filter *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
   
-  SWIG_check_num_args("Filter::do_outplace",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Filter::do_outplace",1,"Filter *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Filter::do_outplace",2,"FVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Filter::do_outplace",3,"FVec &");
+  SWIG_check_num_args("Aubio::Filter::do_outplace",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Filter::do_outplace",1,"Aubio::Filter *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Filter::do_outplace",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::Filter::do_outplace",3,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Filter,0))){
-    SWIG_fail_ptr("Filter_do_outplace",1,SWIGTYPE_p_Filter);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Filter,0))){
+    SWIG_fail_ptr("Filter_do_outplace",1,SWIGTYPE_p_Aubio__Filter);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("Filter_do_outplace",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Filter_do_outplace",2,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("Filter_do_outplace",3,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Filter_do_outplace",3,SWIGTYPE_p_Aubio__FVec);
   }
   
-  (arg1)->do_outplace((FVec const &)*arg2,*arg3);
+  (arg1)->do_outplace((Aubio::FVec const &)*arg2,*arg3);
   
   return SWIG_arg;
   
@@ -6950,27 +7466,27 @@ fail:
 
 static int _wrap_Filter_do_filtfilt(lua_State* L) {
   int SWIG_arg = 0;
-  Filter *arg1 = (Filter *) 0 ;
-  FVec *arg2 = 0 ;
-  FVec *arg3 = 0 ;
+  Aubio::Filter *arg1 = (Aubio::Filter *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
   
-  SWIG_check_num_args("Filter::do_filtfilt",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Filter::do_filtfilt",1,"Filter *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Filter::do_filtfilt",2,"FVec &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Filter::do_filtfilt",3,"FVec &");
+  SWIG_check_num_args("Aubio::Filter::do_filtfilt",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Filter::do_filtfilt",1,"Aubio::Filter *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Filter::do_filtfilt",2,"Aubio::FVec &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::Filter::do_filtfilt",3,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Filter,0))){
-    SWIG_fail_ptr("Filter_do_filtfilt",1,SWIGTYPE_p_Filter);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Filter,0))){
+    SWIG_fail_ptr("Filter_do_filtfilt",1,SWIGTYPE_p_Aubio__Filter);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("Filter_do_filtfilt",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Filter_do_filtfilt",2,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("Filter_do_filtfilt",3,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Filter_do_filtfilt",3,SWIGTYPE_p_Aubio__FVec);
   }
   
   (arg1)->do_filtfilt(*arg2,*arg3);
@@ -6987,25 +7503,25 @@ fail:
 
 static int _wrap_Filter_get_feedback(lua_State* L) {
   int SWIG_arg = 0;
-  Filter *arg1 = (Filter *) 0 ;
-  LVec *arg2 = 0 ;
-  LVec *result = 0 ;
+  Aubio::Filter *arg1 = (Aubio::Filter *) 0 ;
+  Aubio::LVec *arg2 = 0 ;
+  Aubio::LVec *result = 0 ;
   
-  SWIG_check_num_args("Filter::get_feedback",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Filter::get_feedback",1,"Filter *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Filter::get_feedback",2,"LVec &");
+  SWIG_check_num_args("Aubio::Filter::get_feedback",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Filter::get_feedback",1,"Aubio::Filter *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Filter::get_feedback",2,"Aubio::LVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Filter,0))){
-    SWIG_fail_ptr("Filter_get_feedback",1,SWIGTYPE_p_Filter);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Filter,0))){
+    SWIG_fail_ptr("Filter_get_feedback",1,SWIGTYPE_p_Aubio__Filter);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_LVec,0))){
-    SWIG_fail_ptr("Filter_get_feedback",2,SWIGTYPE_p_LVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__LVec,0))){
+    SWIG_fail_ptr("Filter_get_feedback",2,SWIGTYPE_p_Aubio__LVec);
   }
   
-  result = (LVec *) &(arg1)->get_feedback(*arg2);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_LVec,0); SWIG_arg++; 
+  result = (Aubio::LVec *) &(arg1)->get_feedback(*arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__LVec,0); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -7018,25 +7534,25 @@ fail:
 
 static int _wrap_Filter_get_feedforward(lua_State* L) {
   int SWIG_arg = 0;
-  Filter *arg1 = (Filter *) 0 ;
-  LVec *arg2 = 0 ;
-  LVec *result = 0 ;
+  Aubio::Filter *arg1 = (Aubio::Filter *) 0 ;
+  Aubio::LVec *arg2 = 0 ;
+  Aubio::LVec *result = 0 ;
   
-  SWIG_check_num_args("Filter::get_feedforward",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Filter::get_feedforward",1,"Filter *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Filter::get_feedforward",2,"LVec &");
+  SWIG_check_num_args("Aubio::Filter::get_feedforward",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Filter::get_feedforward",1,"Aubio::Filter *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Filter::get_feedforward",2,"Aubio::LVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Filter,0))){
-    SWIG_fail_ptr("Filter_get_feedforward",1,SWIGTYPE_p_Filter);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Filter,0))){
+    SWIG_fail_ptr("Filter_get_feedforward",1,SWIGTYPE_p_Aubio__Filter);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_LVec,0))){
-    SWIG_fail_ptr("Filter_get_feedforward",2,SWIGTYPE_p_LVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__LVec,0))){
+    SWIG_fail_ptr("Filter_get_feedforward",2,SWIGTYPE_p_Aubio__LVec);
   }
   
-  result = (LVec *) &(arg1)->get_feedforward(*arg2);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_LVec,0); SWIG_arg++; 
+  result = (Aubio::LVec *) &(arg1)->get_feedforward(*arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__LVec,0); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -7049,17 +7565,17 @@ fail:
 
 static int _wrap_Filter_get_order(lua_State* L) {
   int SWIG_arg = 0;
-  Filter *arg1 = (Filter *) 0 ;
-  size_t result;
+  Aubio::Filter *arg1 = (Aubio::Filter *) 0 ;
+  uint32_t result;
   
-  SWIG_check_num_args("Filter::get_order",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Filter::get_order",1,"Filter *");
+  SWIG_check_num_args("Aubio::Filter::get_order",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Filter::get_order",1,"Aubio::Filter *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Filter,0))){
-    SWIG_fail_ptr("Filter_get_order",1,SWIGTYPE_p_Filter);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Filter,0))){
+    SWIG_fail_ptr("Filter_get_order",1,SWIGTYPE_p_Aubio__Filter);
   }
   
-  result = (arg1)->get_order();
+  result = (uint32_t)(arg1)->get_order();
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -7073,17 +7589,17 @@ fail:
 
 static int _wrap_Filter_get_samplerate(lua_State* L) {
   int SWIG_arg = 0;
-  Filter *arg1 = (Filter *) 0 ;
-  size_t result;
+  Aubio::Filter *arg1 = (Aubio::Filter *) 0 ;
+  uint32_t result;
   
-  SWIG_check_num_args("Filter::get_samplerate",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Filter::get_samplerate",1,"Filter *");
+  SWIG_check_num_args("Aubio::Filter::get_samplerate",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Filter::get_samplerate",1,"Aubio::Filter *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Filter,0))){
-    SWIG_fail_ptr("Filter_get_samplerate",1,SWIGTYPE_p_Filter);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Filter,0))){
+    SWIG_fail_ptr("Filter_get_samplerate",1,SWIGTYPE_p_Aubio__Filter);
   }
   
-  result = (arg1)->get_samplerate();
+  result = (uint32_t)(arg1)->get_samplerate();
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -7097,19 +7613,19 @@ fail:
 
 static int _wrap_Filter_set_samplerate(lua_State* L) {
   int SWIG_arg = 0;
-  Filter *arg1 = (Filter *) 0 ;
-  size_t arg2 ;
+  Aubio::Filter *arg1 = (Aubio::Filter *) 0 ;
+  uint32_t arg2 ;
   
-  SWIG_check_num_args("Filter::set_samplerate",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Filter::set_samplerate",1,"Filter *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("Filter::set_samplerate",2,"size_t");
+  SWIG_check_num_args("Aubio::Filter::set_samplerate",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Filter::set_samplerate",1,"Aubio::Filter *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Filter::set_samplerate",2,"uint32_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Filter,0))){
-    SWIG_fail_ptr("Filter_set_samplerate",1,SWIGTYPE_p_Filter);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Filter,0))){
+    SWIG_fail_ptr("Filter_set_samplerate",1,SWIGTYPE_p_Aubio__Filter);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
-  arg2 = (size_t)lua_tonumber(L, 2);
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
   (arg1)->set_samplerate(arg2);
   
   return SWIG_arg;
@@ -7124,13 +7640,13 @@ fail:
 
 static int _wrap_Filter_do_reset(lua_State* L) {
   int SWIG_arg = 0;
-  Filter *arg1 = (Filter *) 0 ;
+  Aubio::Filter *arg1 = (Aubio::Filter *) 0 ;
   
-  SWIG_check_num_args("Filter::do_reset",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Filter::do_reset",1,"Filter *");
+  SWIG_check_num_args("Aubio::Filter::do_reset",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Filter::do_reset",1,"Aubio::Filter *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Filter,0))){
-    SWIG_fail_ptr("Filter_do_reset",1,SWIGTYPE_p_Filter);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Filter,0))){
+    SWIG_fail_ptr("Filter_do_reset",1,SWIGTYPE_p_Aubio__Filter);
   }
   
   (arg1)->do_reset();
@@ -7146,7 +7662,7 @@ fail:
 
 
 static void swig_delete_Filter(void *obj) {
-Filter *arg1 = (Filter *) obj;
+Aubio::Filter *arg1 = (Aubio::Filter *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_Filter(lua_State *L) {
@@ -7200,7 +7716,7 @@ static swig_lua_namespace swig_Filter_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_Filter_bases[] = {0};
 static const char *swig_Filter_base_names[] = {0};
-static swig_lua_class _wrap_class_Filter = { "Filter", "Filter", &SWIGTYPE_p_Filter,_proxy__wrap_new_Filter, swig_delete_Filter, swig_Filter_methods, swig_Filter_attributes, &swig_Filter_Sf_SwigStatic, swig_Filter_meta, swig_Filter_bases, swig_Filter_base_names };
+static swig_lua_class _wrap_class_Filter = { "Filter", "Filter", &SWIGTYPE_p_Aubio__Filter,_proxy__wrap_new_Filter, swig_delete_Filter, swig_Filter_methods, swig_Filter_attributes, &swig_Filter_Sf_SwigStatic, swig_Filter_meta, swig_Filter_bases, swig_Filter_base_names };
 
 static int _wrap_new_BiQuad(lua_State* L) {
   int SWIG_arg = 0;
@@ -7209,21 +7725,21 @@ static int _wrap_new_BiQuad(lua_State* L) {
   double arg3 ;
   double arg4 ;
   double arg5 ;
-  BiQuad *result = 0 ;
+  Aubio::BiQuad *result = 0 ;
   
-  SWIG_check_num_args("BiQuad::BiQuad",5,5)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("BiQuad::BiQuad",1,"double");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("BiQuad::BiQuad",2,"double");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("BiQuad::BiQuad",3,"double");
-  if(!lua_isnumber(L,4)) SWIG_fail_arg("BiQuad::BiQuad",4,"double");
-  if(!lua_isnumber(L,5)) SWIG_fail_arg("BiQuad::BiQuad",5,"double");
+  SWIG_check_num_args("Aubio::BiQuad::BiQuad",5,5)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::BiQuad::BiQuad",1,"double");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::BiQuad::BiQuad",2,"double");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::BiQuad::BiQuad",3,"double");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("Aubio::BiQuad::BiQuad",4,"double");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("Aubio::BiQuad::BiQuad",5,"double");
   arg1 = (double)lua_tonumber(L, 1);
   arg2 = (double)lua_tonumber(L, 2);
   arg3 = (double)lua_tonumber(L, 3);
   arg4 = (double)lua_tonumber(L, 4);
   arg5 = (double)lua_tonumber(L, 5);
-  result = (BiQuad *)new BiQuad(arg1,arg2,arg3,arg4,arg5);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_BiQuad,1); SWIG_arg++; 
+  result = (Aubio::BiQuad *)new Aubio::BiQuad(arg1,arg2,arg3,arg4,arg5);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__BiQuad,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -7236,23 +7752,23 @@ fail:
 
 static int _wrap_BiQuad_set_biquad(lua_State* L) {
   int SWIG_arg = 0;
-  BiQuad *arg1 = (BiQuad *) 0 ;
+  Aubio::BiQuad *arg1 = (Aubio::BiQuad *) 0 ;
   double arg2 ;
   double arg3 ;
   double arg4 ;
   double arg5 ;
   double arg6 ;
   
-  SWIG_check_num_args("BiQuad::set_biquad",6,6)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("BiQuad::set_biquad",1,"BiQuad *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("BiQuad::set_biquad",2,"double");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("BiQuad::set_biquad",3,"double");
-  if(!lua_isnumber(L,4)) SWIG_fail_arg("BiQuad::set_biquad",4,"double");
-  if(!lua_isnumber(L,5)) SWIG_fail_arg("BiQuad::set_biquad",5,"double");
-  if(!lua_isnumber(L,6)) SWIG_fail_arg("BiQuad::set_biquad",6,"double");
+  SWIG_check_num_args("Aubio::BiQuad::set_biquad",6,6)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::BiQuad::set_biquad",1,"Aubio::BiQuad *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::BiQuad::set_biquad",2,"double");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::BiQuad::set_biquad",3,"double");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("Aubio::BiQuad::set_biquad",4,"double");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("Aubio::BiQuad::set_biquad",5,"double");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("Aubio::BiQuad::set_biquad",6,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_BiQuad,0))){
-    SWIG_fail_ptr("BiQuad_set_biquad",1,SWIGTYPE_p_BiQuad);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__BiQuad,0))){
+    SWIG_fail_ptr("BiQuad_set_biquad",1,SWIGTYPE_p_Aubio__BiQuad);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
@@ -7273,7 +7789,7 @@ fail:
 
 
 static void swig_delete_BiQuad(void *obj) {
-BiQuad *arg1 = (BiQuad *) obj;
+Aubio::BiQuad *arg1 = (Aubio::BiQuad *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_BiQuad(lua_State *L) {
@@ -7317,20 +7833,20 @@ static swig_lua_namespace swig_BiQuad_Sf_SwigStatic = {
     0
 };
 static swig_lua_class *swig_BiQuad_bases[] = {0,0};
-static const char *swig_BiQuad_base_names[] = {"Filter *",0};
-static swig_lua_class _wrap_class_BiQuad = { "BiQuad", "BiQuad", &SWIGTYPE_p_BiQuad,_proxy__wrap_new_BiQuad, swig_delete_BiQuad, swig_BiQuad_methods, swig_BiQuad_attributes, &swig_BiQuad_Sf_SwigStatic, swig_BiQuad_meta, swig_BiQuad_bases, swig_BiQuad_base_names };
+static const char *swig_BiQuad_base_names[] = {"Aubio::Filter *",0};
+static swig_lua_class _wrap_class_BiQuad = { "BiQuad", "BiQuad", &SWIGTYPE_p_Aubio__BiQuad,_proxy__wrap_new_BiQuad, swig_delete_BiQuad, swig_BiQuad_methods, swig_BiQuad_attributes, &swig_BiQuad_Sf_SwigStatic, swig_BiQuad_meta, swig_BiQuad_bases, swig_BiQuad_base_names };
 
 static int _wrap_new_AWeighting(lua_State* L) {
   int SWIG_arg = 0;
-  size_t arg1 ;
-  AWeighting *result = 0 ;
+  uint32_t arg1 ;
+  Aubio::AWeighting *result = 0 ;
   
-  SWIG_check_num_args("AWeighting::AWeighting",1,1)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("AWeighting::AWeighting",1,"size_t");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
-  arg1 = (size_t)lua_tonumber(L, 1);
-  result = (AWeighting *)new AWeighting(arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_AWeighting,1); SWIG_arg++; 
+  SWIG_check_num_args("Aubio::AWeighting::AWeighting",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::AWeighting::AWeighting",1,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  result = (Aubio::AWeighting *)new Aubio::AWeighting(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__AWeighting,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -7343,20 +7859,20 @@ fail:
 
 static int _wrap_AWeighting_set_a_weighting(lua_State* L) {
   int SWIG_arg = 0;
-  AWeighting *arg1 = (AWeighting *) 0 ;
-  size_t arg2 ;
+  Aubio::AWeighting *arg1 = (Aubio::AWeighting *) 0 ;
+  uint32_t arg2 ;
   size_t result;
   
-  SWIG_check_num_args("AWeighting::set_a_weighting",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("AWeighting::set_a_weighting",1,"AWeighting *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("AWeighting::set_a_weighting",2,"size_t");
+  SWIG_check_num_args("Aubio::AWeighting::set_a_weighting",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::AWeighting::set_a_weighting",1,"Aubio::AWeighting *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::AWeighting::set_a_weighting",2,"uint32_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_AWeighting,0))){
-    SWIG_fail_ptr("AWeighting_set_a_weighting",1,SWIGTYPE_p_AWeighting);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__AWeighting,0))){
+    SWIG_fail_ptr("AWeighting_set_a_weighting",1,SWIGTYPE_p_Aubio__AWeighting);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
-  arg2 = (size_t)lua_tonumber(L, 2);
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
   result = (arg1)->set_a_weighting(arg2);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
@@ -7370,7 +7886,7 @@ fail:
 
 
 static void swig_delete_AWeighting(void *obj) {
-AWeighting *arg1 = (AWeighting *) obj;
+Aubio::AWeighting *arg1 = (Aubio::AWeighting *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_AWeighting(lua_State *L) {
@@ -7414,20 +7930,20 @@ static swig_lua_namespace swig_AWeighting_Sf_SwigStatic = {
     0
 };
 static swig_lua_class *swig_AWeighting_bases[] = {0,0};
-static const char *swig_AWeighting_base_names[] = {"Filter *",0};
-static swig_lua_class _wrap_class_AWeighting = { "AWeighting", "AWeighting", &SWIGTYPE_p_AWeighting,_proxy__wrap_new_AWeighting, swig_delete_AWeighting, swig_AWeighting_methods, swig_AWeighting_attributes, &swig_AWeighting_Sf_SwigStatic, swig_AWeighting_meta, swig_AWeighting_bases, swig_AWeighting_base_names };
+static const char *swig_AWeighting_base_names[] = {"Aubio::Filter *",0};
+static swig_lua_class _wrap_class_AWeighting = { "AWeighting", "AWeighting", &SWIGTYPE_p_Aubio__AWeighting,_proxy__wrap_new_AWeighting, swig_delete_AWeighting, swig_AWeighting_methods, swig_AWeighting_attributes, &swig_AWeighting_Sf_SwigStatic, swig_AWeighting_meta, swig_AWeighting_bases, swig_AWeighting_base_names };
 
 static int _wrap_new_CWeighting(lua_State* L) {
   int SWIG_arg = 0;
-  size_t arg1 ;
-  CWeighting *result = 0 ;
+  uint32_t arg1 ;
+  Aubio::CWeighting *result = 0 ;
   
-  SWIG_check_num_args("CWeighting::CWeighting",1,1)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("CWeighting::CWeighting",1,"size_t");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
-  arg1 = (size_t)lua_tonumber(L, 1);
-  result = (CWeighting *)new CWeighting(arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_CWeighting,1); SWIG_arg++; 
+  SWIG_check_num_args("Aubio::CWeighting::CWeighting",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::CWeighting::CWeighting",1,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  result = (Aubio::CWeighting *)new Aubio::CWeighting(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__CWeighting,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -7440,20 +7956,20 @@ fail:
 
 static int _wrap_CWeighting_set_c_weighting(lua_State* L) {
   int SWIG_arg = 0;
-  CWeighting *arg1 = (CWeighting *) 0 ;
-  size_t arg2 ;
+  Aubio::CWeighting *arg1 = (Aubio::CWeighting *) 0 ;
+  uint32_t arg2 ;
   size_t result;
   
-  SWIG_check_num_args("CWeighting::set_c_weighting",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CWeighting::set_c_weighting",1,"CWeighting *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("CWeighting::set_c_weighting",2,"size_t");
+  SWIG_check_num_args("Aubio::CWeighting::set_c_weighting",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::CWeighting::set_c_weighting",1,"Aubio::CWeighting *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::CWeighting::set_c_weighting",2,"uint32_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CWeighting,0))){
-    SWIG_fail_ptr("CWeighting_set_c_weighting",1,SWIGTYPE_p_CWeighting);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CWeighting,0))){
+    SWIG_fail_ptr("CWeighting_set_c_weighting",1,SWIGTYPE_p_Aubio__CWeighting);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
-  arg2 = (size_t)lua_tonumber(L, 2);
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
   result = (arg1)->set_c_weighting(arg2);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
@@ -7467,7 +7983,7 @@ fail:
 
 
 static void swig_delete_CWeighting(void *obj) {
-CWeighting *arg1 = (CWeighting *) obj;
+Aubio::CWeighting *arg1 = (Aubio::CWeighting *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_CWeighting(lua_State *L) {
@@ -7511,20 +8027,20 @@ static swig_lua_namespace swig_CWeighting_Sf_SwigStatic = {
     0
 };
 static swig_lua_class *swig_CWeighting_bases[] = {0,0};
-static const char *swig_CWeighting_base_names[] = {"Filter *",0};
-static swig_lua_class _wrap_class_CWeighting = { "CWeighting", "CWeighting", &SWIGTYPE_p_CWeighting,_proxy__wrap_new_CWeighting, swig_delete_CWeighting, swig_CWeighting_methods, swig_CWeighting_attributes, &swig_CWeighting_Sf_SwigStatic, swig_CWeighting_meta, swig_CWeighting_bases, swig_CWeighting_base_names };
+static const char *swig_CWeighting_base_names[] = {"Aubio::Filter *",0};
+static swig_lua_class _wrap_class_CWeighting = { "CWeighting", "CWeighting", &SWIGTYPE_p_Aubio__CWeighting,_proxy__wrap_new_CWeighting, swig_delete_CWeighting, swig_CWeighting_methods, swig_CWeighting_attributes, &swig_CWeighting_Sf_SwigStatic, swig_CWeighting_meta, swig_CWeighting_bases, swig_CWeighting_base_names };
 
 static int _wrap_FFT_fft_set(lua_State* L) {
   int SWIG_arg = 0;
-  FFT *arg1 = (FFT *) 0 ;
+  Aubio::FFT *arg1 = (Aubio::FFT *) 0 ;
   aubio_fft_t *arg2 = (aubio_fft_t *) 0 ;
   
-  SWIG_check_num_args("FFT::fft",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FFT::fft",1,"FFT *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("FFT::fft",2,"aubio_fft_t *");
+  SWIG_check_num_args("Aubio::FFT::fft",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FFT::fft",1,"Aubio::FFT *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::FFT::fft",2,"aubio_fft_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FFT,0))){
-    SWIG_fail_ptr("FFT_fft_set",1,SWIGTYPE_p_FFT);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FFT,0))){
+    SWIG_fail_ptr("FFT_fft_set",1,SWIGTYPE_p_Aubio__FFT);
   }
   
   
@@ -7546,14 +8062,14 @@ fail:
 
 static int _wrap_FFT_fft_get(lua_State* L) {
   int SWIG_arg = 0;
-  FFT *arg1 = (FFT *) 0 ;
+  Aubio::FFT *arg1 = (Aubio::FFT *) 0 ;
   aubio_fft_t *result = 0 ;
   
-  SWIG_check_num_args("FFT::fft",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FFT::fft",1,"FFT *");
+  SWIG_check_num_args("Aubio::FFT::fft",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FFT::fft",1,"Aubio::FFT *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FFT,0))){
-    SWIG_fail_ptr("FFT_fft_get",1,SWIGTYPE_p_FFT);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FFT,0))){
+    SWIG_fail_ptr("FFT_fft_get",1,SWIGTYPE_p_Aubio__FFT);
   }
   
   result = (aubio_fft_t *) ((arg1)->fft);
@@ -7570,15 +8086,15 @@ fail:
 
 static int _wrap_new_FFT(lua_State* L) {
   int SWIG_arg = 0;
-  size_t arg1 ;
-  FFT *result = 0 ;
+  uint32_t arg1 ;
+  Aubio::FFT *result = 0 ;
   
-  SWIG_check_num_args("FFT::FFT",1,1)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("FFT::FFT",1,"size_t");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
-  arg1 = (size_t)lua_tonumber(L, 1);
-  result = (FFT *)new FFT(arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_FFT,1); SWIG_arg++; 
+  SWIG_check_num_args("Aubio::FFT::FFT",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::FFT::FFT",1,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  result = (Aubio::FFT *)new Aubio::FFT(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__FFT,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -7591,30 +8107,30 @@ fail:
 
 static int _wrap_FFT_forward(lua_State* L) {
   int SWIG_arg = 0;
-  FFT *arg1 = (FFT *) 0 ;
-  FVec *arg2 = 0 ;
-  CVec *arg3 = 0 ;
+  Aubio::FFT *arg1 = (Aubio::FFT *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::CVec *arg3 = 0 ;
   
-  SWIG_check_num_args("FFT::forward",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FFT::forward",1,"FFT *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FFT::forward",2,"FVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("FFT::forward",3,"CVec &");
+  SWIG_check_num_args("Aubio::FFT::forward",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FFT::forward",1,"Aubio::FFT *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FFT::forward",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::FFT::forward",3,"Aubio::CVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FFT,0))){
-    SWIG_fail_ptr("FFT_forward",1,SWIGTYPE_p_FFT);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FFT,0))){
+    SWIG_fail_ptr("FFT_forward",1,SWIGTYPE_p_Aubio__FFT);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FFT_forward",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FFT_forward",2,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("FFT_forward",3,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("FFT_forward",3,SWIGTYPE_p_Aubio__CVec);
   }
   
-  (arg1)->forward((FVec const &)*arg2,*arg3);
+  (arg1)->forward((Aubio::FVec const &)*arg2,*arg3);
   
   return SWIG_arg;
   
@@ -7628,30 +8144,30 @@ fail:
 
 static int _wrap_FFT_reverse(lua_State* L) {
   int SWIG_arg = 0;
-  FFT *arg1 = (FFT *) 0 ;
-  CVec *arg2 = 0 ;
-  FVec *arg3 = 0 ;
+  Aubio::FFT *arg1 = (Aubio::FFT *) 0 ;
+  Aubio::CVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
   
-  SWIG_check_num_args("FFT::reverse",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FFT::reverse",1,"FFT *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FFT::reverse",2,"CVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("FFT::reverse",3,"FVec &");
+  SWIG_check_num_args("Aubio::FFT::reverse",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FFT::reverse",1,"Aubio::FFT *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FFT::reverse",2,"Aubio::CVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::FFT::reverse",3,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FFT,0))){
-    SWIG_fail_ptr("FFT_reverse",1,SWIGTYPE_p_FFT);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FFT,0))){
+    SWIG_fail_ptr("FFT_reverse",1,SWIGTYPE_p_Aubio__FFT);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("FFT_reverse",2,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("FFT_reverse",2,SWIGTYPE_p_Aubio__CVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FFT_reverse",3,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FFT_reverse",3,SWIGTYPE_p_Aubio__FVec);
   }
   
-  (arg1)->reverse((CVec const &)*arg2,*arg3);
+  (arg1)->reverse((Aubio::CVec const &)*arg2,*arg3);
   
   return SWIG_arg;
   
@@ -7665,30 +8181,30 @@ fail:
 
 static int _wrap_FFT_forward_complex(lua_State* L) {
   int SWIG_arg = 0;
-  FFT *arg1 = (FFT *) 0 ;
-  FVec *arg2 = 0 ;
-  FVec *arg3 = 0 ;
+  Aubio::FFT *arg1 = (Aubio::FFT *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
   
-  SWIG_check_num_args("FFT::forward_complex",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FFT::forward_complex",1,"FFT *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FFT::forward_complex",2,"FVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("FFT::forward_complex",3,"FVec &");
+  SWIG_check_num_args("Aubio::FFT::forward_complex",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FFT::forward_complex",1,"Aubio::FFT *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FFT::forward_complex",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::FFT::forward_complex",3,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FFT,0))){
-    SWIG_fail_ptr("FFT_forward_complex",1,SWIGTYPE_p_FFT);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FFT,0))){
+    SWIG_fail_ptr("FFT_forward_complex",1,SWIGTYPE_p_Aubio__FFT);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FFT_forward_complex",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FFT_forward_complex",2,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FFT_forward_complex",3,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FFT_forward_complex",3,SWIGTYPE_p_Aubio__FVec);
   }
   
-  (arg1)->forward_complex((FVec const &)*arg2,*arg3);
+  (arg1)->forward_complex((Aubio::FVec const &)*arg2,*arg3);
   
   return SWIG_arg;
   
@@ -7702,30 +8218,30 @@ fail:
 
 static int _wrap_FFT_inverse_complex(lua_State* L) {
   int SWIG_arg = 0;
-  FFT *arg1 = (FFT *) 0 ;
-  FVec *arg2 = 0 ;
-  FVec *arg3 = 0 ;
+  Aubio::FFT *arg1 = (Aubio::FFT *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
   
-  SWIG_check_num_args("FFT::inverse_complex",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FFT::inverse_complex",1,"FFT *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FFT::inverse_complex",2,"FVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("FFT::inverse_complex",3,"FVec &");
+  SWIG_check_num_args("Aubio::FFT::inverse_complex",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FFT::inverse_complex",1,"Aubio::FFT *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FFT::inverse_complex",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::FFT::inverse_complex",3,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FFT,0))){
-    SWIG_fail_ptr("FFT_inverse_complex",1,SWIGTYPE_p_FFT);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FFT,0))){
+    SWIG_fail_ptr("FFT_inverse_complex",1,SWIGTYPE_p_Aubio__FFT);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FFT_inverse_complex",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FFT_inverse_complex",2,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FFT_inverse_complex",3,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FFT_inverse_complex",3,SWIGTYPE_p_Aubio__FVec);
   }
   
-  (arg1)->inverse_complex((FVec const &)*arg2,*arg3);
+  (arg1)->inverse_complex((Aubio::FVec const &)*arg2,*arg3);
   
   return SWIG_arg;
   
@@ -7739,23 +8255,23 @@ fail:
 
 static int _wrap_FFT_get_spectrum(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = 0 ;
-  CVec *arg2 = 0 ;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::CVec *arg2 = 0 ;
   
-  SWIG_check_num_args("FFT::get_spectrum",2,2)
-  if(!lua_isuserdata(L,1)) SWIG_fail_arg("FFT::get_spectrum",1,"FVec const &");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FFT::get_spectrum",2,"CVec &");
+  SWIG_check_num_args("Aubio::FFT::get_spectrum",2,2)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::FFT::get_spectrum",1,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FFT::get_spectrum",2,"Aubio::CVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FFT_get_spectrum",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FFT_get_spectrum",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("FFT_get_spectrum",2,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("FFT_get_spectrum",2,SWIGTYPE_p_Aubio__CVec);
   }
   
-  FFT::get_spectrum((FVec const &)*arg1,*arg2);
+  Aubio::FFT::get_spectrum((Aubio::FVec const &)*arg1,*arg2);
   
   return SWIG_arg;
   
@@ -7769,23 +8285,23 @@ fail:
 
 static int _wrap_FFT_get_realimag(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = 0 ;
-  FVec *arg2 = 0 ;
+  Aubio::CVec *arg1 = 0 ;
+  Aubio::FVec *arg2 = 0 ;
   
-  SWIG_check_num_args("FFT::get_realimag",2,2)
-  if(!lua_isuserdata(L,1)) SWIG_fail_arg("FFT::get_realimag",1,"CVec const &");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FFT::get_realimag",2,"FVec &");
+  SWIG_check_num_args("Aubio::FFT::get_realimag",2,2)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::FFT::get_realimag",1,"Aubio::CVec const &");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FFT::get_realimag",2,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("FFT_get_realimag",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("FFT_get_realimag",1,SWIGTYPE_p_Aubio__CVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FFT_get_realimag",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FFT_get_realimag",2,SWIGTYPE_p_Aubio__FVec);
   }
   
-  FFT::get_realimag((CVec const &)*arg1,*arg2);
+  Aubio::FFT::get_realimag((Aubio::CVec const &)*arg1,*arg2);
   
   return SWIG_arg;
   
@@ -7799,23 +8315,23 @@ fail:
 
 static int _wrap_FFT_get_phase(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = 0 ;
-  CVec *arg2 = 0 ;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::CVec *arg2 = 0 ;
   
-  SWIG_check_num_args("FFT::get_phase",2,2)
-  if(!lua_isuserdata(L,1)) SWIG_fail_arg("FFT::get_phase",1,"FVec const &");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FFT::get_phase",2,"CVec &");
+  SWIG_check_num_args("Aubio::FFT::get_phase",2,2)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::FFT::get_phase",1,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FFT::get_phase",2,"Aubio::CVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FFT_get_phase",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FFT_get_phase",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("FFT_get_phase",2,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("FFT_get_phase",2,SWIGTYPE_p_Aubio__CVec);
   }
   
-  FFT::get_phase((FVec const &)*arg1,*arg2);
+  Aubio::FFT::get_phase((Aubio::FVec const &)*arg1,*arg2);
   
   return SWIG_arg;
   
@@ -7829,23 +8345,23 @@ fail:
 
 static int _wrap_FFT_get_imaginary(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = 0 ;
-  FVec *arg2 = 0 ;
+  Aubio::CVec *arg1 = 0 ;
+  Aubio::FVec *arg2 = 0 ;
   
-  SWIG_check_num_args("FFT::get_imaginary",2,2)
-  if(!lua_isuserdata(L,1)) SWIG_fail_arg("FFT::get_imaginary",1,"CVec const &");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FFT::get_imaginary",2,"FVec &");
+  SWIG_check_num_args("Aubio::FFT::get_imaginary",2,2)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::FFT::get_imaginary",1,"Aubio::CVec const &");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FFT::get_imaginary",2,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("FFT_get_imaginary",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("FFT_get_imaginary",1,SWIGTYPE_p_Aubio__CVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FFT_get_imaginary",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FFT_get_imaginary",2,SWIGTYPE_p_Aubio__FVec);
   }
   
-  FFT::get_imaginary((CVec const &)*arg1,*arg2);
+  Aubio::FFT::get_imaginary((Aubio::CVec const &)*arg1,*arg2);
   
   return SWIG_arg;
   
@@ -7859,23 +8375,23 @@ fail:
 
 static int _wrap_FFT_get_norm(lua_State* L) {
   int SWIG_arg = 0;
-  FVec *arg1 = 0 ;
-  CVec *arg2 = 0 ;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::CVec *arg2 = 0 ;
   
-  SWIG_check_num_args("FFT::get_norm",2,2)
-  if(!lua_isuserdata(L,1)) SWIG_fail_arg("FFT::get_norm",1,"FVec const &");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FFT::get_norm",2,"CVec &");
+  SWIG_check_num_args("Aubio::FFT::get_norm",2,2)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::FFT::get_norm",1,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FFT::get_norm",2,"Aubio::CVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FFT_get_norm",1,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FFT_get_norm",1,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("FFT_get_norm",2,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("FFT_get_norm",2,SWIGTYPE_p_Aubio__CVec);
   }
   
-  FFT::get_norm((FVec const &)*arg1,*arg2);
+  Aubio::FFT::get_norm((Aubio::FVec const &)*arg1,*arg2);
   
   return SWIG_arg;
   
@@ -7889,23 +8405,23 @@ fail:
 
 static int _wrap_FFT_get_real(lua_State* L) {
   int SWIG_arg = 0;
-  CVec *arg1 = 0 ;
-  FVec *arg2 = 0 ;
+  Aubio::CVec *arg1 = 0 ;
+  Aubio::FVec *arg2 = 0 ;
   
-  SWIG_check_num_args("FFT::get_real",2,2)
-  if(!lua_isuserdata(L,1)) SWIG_fail_arg("FFT::get_real",1,"CVec const &");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FFT::get_real",2,"FVec &");
+  SWIG_check_num_args("Aubio::FFT::get_real",2,2)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::FFT::get_real",1,"Aubio::CVec const &");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FFT::get_real",2,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("FFT_get_real",1,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("FFT_get_real",1,SWIGTYPE_p_Aubio__CVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FFT_get_real",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FFT_get_real",2,SWIGTYPE_p_Aubio__FVec);
   }
   
-  FFT::get_real((CVec const &)*arg1,*arg2);
+  Aubio::FFT::get_real((Aubio::CVec const &)*arg1,*arg2);
   
   return SWIG_arg;
   
@@ -7918,7 +8434,7 @@ fail:
 
 
 static void swig_delete_FFT(void *obj) {
-FFT *arg1 = (FFT *) obj;
+Aubio::FFT *arg1 = (Aubio::FFT *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_FFT(lua_State *L) {
@@ -7973,19 +8489,19 @@ static swig_lua_namespace swig_FFT_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_FFT_bases[] = {0};
 static const char *swig_FFT_base_names[] = {0};
-static swig_lua_class _wrap_class_FFT = { "FFT", "FFT", &SWIGTYPE_p_FFT,_proxy__wrap_new_FFT, swig_delete_FFT, swig_FFT_methods, swig_FFT_attributes, &swig_FFT_Sf_SwigStatic, swig_FFT_meta, swig_FFT_bases, swig_FFT_base_names };
+static swig_lua_class _wrap_class_FFT = { "FFT", "FFT", &SWIGTYPE_p_Aubio__FFT,_proxy__wrap_new_FFT, swig_delete_FFT, swig_FFT_methods, swig_FFT_attributes, &swig_FFT_Sf_SwigStatic, swig_FFT_meta, swig_FFT_bases, swig_FFT_base_names };
 
 static int _wrap_DCT_dct_set(lua_State* L) {
   int SWIG_arg = 0;
-  DCT *arg1 = (DCT *) 0 ;
+  Aubio::DCT *arg1 = (Aubio::DCT *) 0 ;
   aubio_dct_t *arg2 = (aubio_dct_t *) 0 ;
   
-  SWIG_check_num_args("DCT::dct",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("DCT::dct",1,"DCT *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("DCT::dct",2,"aubio_dct_t *");
+  SWIG_check_num_args("Aubio::DCT::dct",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::DCT::dct",1,"Aubio::DCT *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::DCT::dct",2,"aubio_dct_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_DCT,0))){
-    SWIG_fail_ptr("DCT_dct_set",1,SWIGTYPE_p_DCT);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__DCT,0))){
+    SWIG_fail_ptr("DCT_dct_set",1,SWIGTYPE_p_Aubio__DCT);
   }
   
   
@@ -8007,14 +8523,14 @@ fail:
 
 static int _wrap_DCT_dct_get(lua_State* L) {
   int SWIG_arg = 0;
-  DCT *arg1 = (DCT *) 0 ;
+  Aubio::DCT *arg1 = (Aubio::DCT *) 0 ;
   aubio_dct_t *result = 0 ;
   
-  SWIG_check_num_args("DCT::dct",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("DCT::dct",1,"DCT *");
+  SWIG_check_num_args("Aubio::DCT::dct",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::DCT::dct",1,"Aubio::DCT *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_DCT,0))){
-    SWIG_fail_ptr("DCT_dct_get",1,SWIGTYPE_p_DCT);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__DCT,0))){
+    SWIG_fail_ptr("DCT_dct_get",1,SWIGTYPE_p_Aubio__DCT);
   }
   
   result = (aubio_dct_t *) ((arg1)->dct);
@@ -8031,15 +8547,15 @@ fail:
 
 static int _wrap_new_DCT(lua_State* L) {
   int SWIG_arg = 0;
-  size_t arg1 ;
-  DCT *result = 0 ;
+  uint32_t arg1 ;
+  Aubio::DCT *result = 0 ;
   
-  SWIG_check_num_args("DCT::DCT",1,1)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("DCT::DCT",1,"size_t");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
-  arg1 = (size_t)lua_tonumber(L, 1);
-  result = (DCT *)new DCT(arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_DCT,1); SWIG_arg++; 
+  SWIG_check_num_args("Aubio::DCT::DCT",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::DCT::DCT",1,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  result = (Aubio::DCT *)new Aubio::DCT(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__DCT,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -8052,30 +8568,30 @@ fail:
 
 static int _wrap_DCT_forward(lua_State* L) {
   int SWIG_arg = 0;
-  DCT *arg1 = (DCT *) 0 ;
-  FVec *arg2 = 0 ;
-  FVec *arg3 = 0 ;
+  Aubio::DCT *arg1 = (Aubio::DCT *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
   
-  SWIG_check_num_args("DCT::forward",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("DCT::forward",1,"DCT *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("DCT::forward",2,"FVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("DCT::forward",3,"FVec const &");
+  SWIG_check_num_args("Aubio::DCT::forward",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::DCT::forward",1,"Aubio::DCT *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::DCT::forward",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::DCT::forward",3,"Aubio::FVec const &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_DCT,0))){
-    SWIG_fail_ptr("DCT_forward",1,SWIGTYPE_p_DCT);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__DCT,0))){
+    SWIG_fail_ptr("DCT_forward",1,SWIGTYPE_p_Aubio__DCT);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("DCT_forward",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("DCT_forward",2,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("DCT_forward",3,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("DCT_forward",3,SWIGTYPE_p_Aubio__FVec);
   }
   
-  (arg1)->forward((FVec const &)*arg2,(FVec const &)*arg3);
+  (arg1)->forward((Aubio::FVec const &)*arg2,(Aubio::FVec const &)*arg3);
   
   return SWIG_arg;
   
@@ -8089,30 +8605,30 @@ fail:
 
 static int _wrap_DCT_reverse(lua_State* L) {
   int SWIG_arg = 0;
-  DCT *arg1 = (DCT *) 0 ;
-  FVec *arg2 = 0 ;
-  FVec *arg3 = 0 ;
+  Aubio::DCT *arg1 = (Aubio::DCT *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
   
-  SWIG_check_num_args("DCT::reverse",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("DCT::reverse",1,"DCT *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("DCT::reverse",2,"FVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("DCT::reverse",3,"FVec const &");
+  SWIG_check_num_args("Aubio::DCT::reverse",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::DCT::reverse",1,"Aubio::DCT *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::DCT::reverse",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::DCT::reverse",3,"Aubio::FVec const &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_DCT,0))){
-    SWIG_fail_ptr("DCT_reverse",1,SWIGTYPE_p_DCT);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__DCT,0))){
+    SWIG_fail_ptr("DCT_reverse",1,SWIGTYPE_p_Aubio__DCT);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("DCT_reverse",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("DCT_reverse",2,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("DCT_reverse",3,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("DCT_reverse",3,SWIGTYPE_p_Aubio__FVec);
   }
   
-  (arg1)->reverse((FVec const &)*arg2,(FVec const &)*arg3);
+  (arg1)->reverse((Aubio::FVec const &)*arg2,(Aubio::FVec const &)*arg3);
   
   return SWIG_arg;
   
@@ -8125,7 +8641,7 @@ fail:
 
 
 static void swig_delete_DCT(void *obj) {
-DCT *arg1 = (DCT *) obj;
+Aubio::DCT *arg1 = (Aubio::DCT *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_DCT(lua_State *L) {
@@ -8172,19 +8688,19 @@ static swig_lua_namespace swig_DCT_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_DCT_bases[] = {0};
 static const char *swig_DCT_base_names[] = {0};
-static swig_lua_class _wrap_class_DCT = { "DCT", "DCT", &SWIGTYPE_p_DCT,_proxy__wrap_new_DCT, swig_delete_DCT, swig_DCT_methods, swig_DCT_attributes, &swig_DCT_Sf_SwigStatic, swig_DCT_meta, swig_DCT_bases, swig_DCT_base_names };
+static swig_lua_class _wrap_class_DCT = { "DCT", "DCT", &SWIGTYPE_p_Aubio__DCT,_proxy__wrap_new_DCT, swig_delete_DCT, swig_DCT_methods, swig_DCT_attributes, &swig_DCT_Sf_SwigStatic, swig_DCT_meta, swig_DCT_bases, swig_DCT_base_names };
 
 static int _wrap_PhaseVocoder_pvoc_set(lua_State* L) {
   int SWIG_arg = 0;
-  PhaseVocoder *arg1 = (PhaseVocoder *) 0 ;
+  Aubio::PhaseVocoder *arg1 = (Aubio::PhaseVocoder *) 0 ;
   aubio_pvoc_t *arg2 = (aubio_pvoc_t *) 0 ;
   
-  SWIG_check_num_args("PhaseVocoder::pvoc",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhaseVocoder::pvoc",1,"PhaseVocoder *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("PhaseVocoder::pvoc",2,"aubio_pvoc_t *");
+  SWIG_check_num_args("Aubio::PhaseVocoder::pvoc",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PhaseVocoder::pvoc",1,"Aubio::PhaseVocoder *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::PhaseVocoder::pvoc",2,"aubio_pvoc_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_PhaseVocoder,0))){
-    SWIG_fail_ptr("PhaseVocoder_pvoc_set",1,SWIGTYPE_p_PhaseVocoder);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PhaseVocoder,0))){
+    SWIG_fail_ptr("PhaseVocoder_pvoc_set",1,SWIGTYPE_p_Aubio__PhaseVocoder);
   }
   
   
@@ -8206,14 +8722,14 @@ fail:
 
 static int _wrap_PhaseVocoder_pvoc_get(lua_State* L) {
   int SWIG_arg = 0;
-  PhaseVocoder *arg1 = (PhaseVocoder *) 0 ;
+  Aubio::PhaseVocoder *arg1 = (Aubio::PhaseVocoder *) 0 ;
   aubio_pvoc_t *result = 0 ;
   
-  SWIG_check_num_args("PhaseVocoder::pvoc",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhaseVocoder::pvoc",1,"PhaseVocoder *");
+  SWIG_check_num_args("Aubio::PhaseVocoder::pvoc",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PhaseVocoder::pvoc",1,"Aubio::PhaseVocoder *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_PhaseVocoder,0))){
-    SWIG_fail_ptr("PhaseVocoder_pvoc_get",1,SWIGTYPE_p_PhaseVocoder);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PhaseVocoder,0))){
+    SWIG_fail_ptr("PhaseVocoder_pvoc_get",1,SWIGTYPE_p_Aubio__PhaseVocoder);
   }
   
   result = (aubio_pvoc_t *) ((arg1)->pvoc);
@@ -8230,19 +8746,19 @@ fail:
 
 static int _wrap_new_PhaseVocoder(lua_State* L) {
   int SWIG_arg = 0;
-  size_t arg1 ;
-  size_t arg2 ;
-  PhaseVocoder *result = 0 ;
+  uint32_t arg1 ;
+  uint32_t arg2 ;
+  Aubio::PhaseVocoder *result = 0 ;
   
-  SWIG_check_num_args("PhaseVocoder::PhaseVocoder",2,2)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("PhaseVocoder::PhaseVocoder",1,"size_t");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhaseVocoder::PhaseVocoder",2,"size_t");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
-  arg1 = (size_t)lua_tonumber(L, 1);
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
-  arg2 = (size_t)lua_tonumber(L, 2);
-  result = (PhaseVocoder *)new PhaseVocoder(arg1,arg2);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_PhaseVocoder,1); SWIG_arg++; 
+  SWIG_check_num_args("Aubio::PhaseVocoder::PhaseVocoder",2,2)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::PhaseVocoder::PhaseVocoder",1,"uint32_t");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::PhaseVocoder::PhaseVocoder",2,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (Aubio::PhaseVocoder *)new Aubio::PhaseVocoder(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__PhaseVocoder,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -8255,30 +8771,30 @@ fail:
 
 static int _wrap_PhaseVocoder_forward(lua_State* L) {
   int SWIG_arg = 0;
-  PhaseVocoder *arg1 = (PhaseVocoder *) 0 ;
-  FVec *arg2 = 0 ;
-  CVec *arg3 = 0 ;
+  Aubio::PhaseVocoder *arg1 = (Aubio::PhaseVocoder *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::CVec *arg3 = 0 ;
   
-  SWIG_check_num_args("PhaseVocoder::forward",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhaseVocoder::forward",1,"PhaseVocoder *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("PhaseVocoder::forward",2,"FVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("PhaseVocoder::forward",3,"CVec &");
+  SWIG_check_num_args("Aubio::PhaseVocoder::forward",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PhaseVocoder::forward",1,"Aubio::PhaseVocoder *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::PhaseVocoder::forward",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::PhaseVocoder::forward",3,"Aubio::CVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_PhaseVocoder,0))){
-    SWIG_fail_ptr("PhaseVocoder_forward",1,SWIGTYPE_p_PhaseVocoder);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PhaseVocoder,0))){
+    SWIG_fail_ptr("PhaseVocoder_forward",1,SWIGTYPE_p_Aubio__PhaseVocoder);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("PhaseVocoder_forward",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("PhaseVocoder_forward",2,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("PhaseVocoder_forward",3,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("PhaseVocoder_forward",3,SWIGTYPE_p_Aubio__CVec);
   }
   
-  (arg1)->forward((FVec const &)*arg2,*arg3);
+  (arg1)->forward((Aubio::FVec const &)*arg2,*arg3);
   
   return SWIG_arg;
   
@@ -8292,30 +8808,30 @@ fail:
 
 static int _wrap_PhaseVocoder_reverse(lua_State* L) {
   int SWIG_arg = 0;
-  PhaseVocoder *arg1 = (PhaseVocoder *) 0 ;
-  CVec *arg2 = 0 ;
-  FVec *arg3 = 0 ;
+  Aubio::PhaseVocoder *arg1 = (Aubio::PhaseVocoder *) 0 ;
+  Aubio::CVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
   
-  SWIG_check_num_args("PhaseVocoder::reverse",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhaseVocoder::reverse",1,"PhaseVocoder *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("PhaseVocoder::reverse",2,"CVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("PhaseVocoder::reverse",3,"FVec &");
+  SWIG_check_num_args("Aubio::PhaseVocoder::reverse",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PhaseVocoder::reverse",1,"Aubio::PhaseVocoder *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::PhaseVocoder::reverse",2,"Aubio::CVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::PhaseVocoder::reverse",3,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_PhaseVocoder,0))){
-    SWIG_fail_ptr("PhaseVocoder_reverse",1,SWIGTYPE_p_PhaseVocoder);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PhaseVocoder,0))){
+    SWIG_fail_ptr("PhaseVocoder_reverse",1,SWIGTYPE_p_Aubio__PhaseVocoder);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("PhaseVocoder_reverse",2,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("PhaseVocoder_reverse",2,SWIGTYPE_p_Aubio__CVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("PhaseVocoder_reverse",3,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("PhaseVocoder_reverse",3,SWIGTYPE_p_Aubio__FVec);
   }
   
-  (arg1)->reverse((CVec const &)*arg2,*arg3);
+  (arg1)->reverse((Aubio::CVec const &)*arg2,*arg3);
   
   return SWIG_arg;
   
@@ -8329,14 +8845,14 @@ fail:
 
 static int _wrap_PhaseVocoder_get_win(lua_State* L) {
   int SWIG_arg = 0;
-  PhaseVocoder *arg1 = (PhaseVocoder *) 0 ;
+  Aubio::PhaseVocoder *arg1 = (Aubio::PhaseVocoder *) 0 ;
   size_t result;
   
-  SWIG_check_num_args("PhaseVocoder::get_win",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhaseVocoder::get_win",1,"PhaseVocoder *");
+  SWIG_check_num_args("Aubio::PhaseVocoder::get_win",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PhaseVocoder::get_win",1,"Aubio::PhaseVocoder *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_PhaseVocoder,0))){
-    SWIG_fail_ptr("PhaseVocoder_get_win",1,SWIGTYPE_p_PhaseVocoder);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PhaseVocoder,0))){
+    SWIG_fail_ptr("PhaseVocoder_get_win",1,SWIGTYPE_p_Aubio__PhaseVocoder);
   }
   
   result = (arg1)->get_win();
@@ -8353,14 +8869,14 @@ fail:
 
 static int _wrap_PhaseVocoder_get_hop(lua_State* L) {
   int SWIG_arg = 0;
-  PhaseVocoder *arg1 = (PhaseVocoder *) 0 ;
+  Aubio::PhaseVocoder *arg1 = (Aubio::PhaseVocoder *) 0 ;
   size_t result;
   
-  SWIG_check_num_args("PhaseVocoder::get_hop",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhaseVocoder::get_hop",1,"PhaseVocoder *");
+  SWIG_check_num_args("Aubio::PhaseVocoder::get_hop",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PhaseVocoder::get_hop",1,"Aubio::PhaseVocoder *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_PhaseVocoder,0))){
-    SWIG_fail_ptr("PhaseVocoder_get_hop",1,SWIGTYPE_p_PhaseVocoder);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PhaseVocoder,0))){
+    SWIG_fail_ptr("PhaseVocoder_get_hop",1,SWIGTYPE_p_Aubio__PhaseVocoder);
   }
   
   result = (arg1)->get_hop();
@@ -8377,16 +8893,16 @@ fail:
 
 static int _wrap_PhaseVocoder_set_window(lua_State* L) {
   int SWIG_arg = 0;
-  PhaseVocoder *arg1 = (PhaseVocoder *) 0 ;
+  Aubio::PhaseVocoder *arg1 = (Aubio::PhaseVocoder *) 0 ;
   char *arg2 = (char *) 0 ;
   size_t result;
   
-  SWIG_check_num_args("PhaseVocoder::set_window",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhaseVocoder::set_window",1,"PhaseVocoder *");
-  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("PhaseVocoder::set_window",2,"char const *");
+  SWIG_check_num_args("Aubio::PhaseVocoder::set_window",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PhaseVocoder::set_window",1,"Aubio::PhaseVocoder *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Aubio::PhaseVocoder::set_window",2,"char const *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_PhaseVocoder,0))){
-    SWIG_fail_ptr("PhaseVocoder_set_window",1,SWIGTYPE_p_PhaseVocoder);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PhaseVocoder,0))){
+    SWIG_fail_ptr("PhaseVocoder_set_window",1,SWIGTYPE_p_Aubio__PhaseVocoder);
   }
   
   arg2 = (char *)lua_tostring(L, 2);
@@ -8403,7 +8919,7 @@ fail:
 
 
 static void swig_delete_PhaseVocoder(void *obj) {
-PhaseVocoder *arg1 = (PhaseVocoder *) obj;
+Aubio::PhaseVocoder *arg1 = (Aubio::PhaseVocoder *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_PhaseVocoder(lua_State *L) {
@@ -8453,19 +8969,19 @@ static swig_lua_namespace swig_PhaseVocoder_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_PhaseVocoder_bases[] = {0};
 static const char *swig_PhaseVocoder_base_names[] = {0};
-static swig_lua_class _wrap_class_PhaseVocoder = { "PhaseVocoder", "PhaseVocoder", &SWIGTYPE_p_PhaseVocoder,_proxy__wrap_new_PhaseVocoder, swig_delete_PhaseVocoder, swig_PhaseVocoder_methods, swig_PhaseVocoder_attributes, &swig_PhaseVocoder_Sf_SwigStatic, swig_PhaseVocoder_meta, swig_PhaseVocoder_bases, swig_PhaseVocoder_base_names };
+static swig_lua_class _wrap_class_PhaseVocoder = { "PhaseVocoder", "PhaseVocoder", &SWIGTYPE_p_Aubio__PhaseVocoder,_proxy__wrap_new_PhaseVocoder, swig_delete_PhaseVocoder, swig_PhaseVocoder_methods, swig_PhaseVocoder_attributes, &swig_PhaseVocoder_Sf_SwigStatic, swig_PhaseVocoder_meta, swig_PhaseVocoder_bases, swig_PhaseVocoder_base_names };
 
 static int _wrap_FilterBank_bank_set(lua_State* L) {
   int SWIG_arg = 0;
-  FilterBank *arg1 = (FilterBank *) 0 ;
+  Aubio::FilterBank *arg1 = (Aubio::FilterBank *) 0 ;
   aubio_filterbank_t *arg2 = (aubio_filterbank_t *) 0 ;
   
-  SWIG_check_num_args("FilterBank::bank",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FilterBank::bank",1,"FilterBank *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("FilterBank::bank",2,"aubio_filterbank_t *");
+  SWIG_check_num_args("Aubio::FilterBank::bank",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FilterBank::bank",1,"Aubio::FilterBank *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::FilterBank::bank",2,"aubio_filterbank_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FilterBank,0))){
-    SWIG_fail_ptr("FilterBank_bank_set",1,SWIGTYPE_p_FilterBank);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FilterBank,0))){
+    SWIG_fail_ptr("FilterBank_bank_set",1,SWIGTYPE_p_Aubio__FilterBank);
   }
   
   
@@ -8487,14 +9003,14 @@ fail:
 
 static int _wrap_FilterBank_bank_get(lua_State* L) {
   int SWIG_arg = 0;
-  FilterBank *arg1 = (FilterBank *) 0 ;
+  Aubio::FilterBank *arg1 = (Aubio::FilterBank *) 0 ;
   aubio_filterbank_t *result = 0 ;
   
-  SWIG_check_num_args("FilterBank::bank",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FilterBank::bank",1,"FilterBank *");
+  SWIG_check_num_args("Aubio::FilterBank::bank",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FilterBank::bank",1,"Aubio::FilterBank *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FilterBank,0))){
-    SWIG_fail_ptr("FilterBank_bank_get",1,SWIGTYPE_p_FilterBank);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FilterBank,0))){
+    SWIG_fail_ptr("FilterBank_bank_get",1,SWIGTYPE_p_Aubio__FilterBank);
   }
   
   result = (aubio_filterbank_t *) ((arg1)->bank);
@@ -8511,19 +9027,19 @@ fail:
 
 static int _wrap_new_FilterBank(lua_State* L) {
   int SWIG_arg = 0;
-  size_t arg1 ;
-  size_t arg2 ;
-  FilterBank *result = 0 ;
+  uint32_t arg1 ;
+  uint32_t arg2 ;
+  Aubio::FilterBank *result = 0 ;
   
-  SWIG_check_num_args("FilterBank::FilterBank",2,2)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("FilterBank::FilterBank",1,"size_t");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FilterBank::FilterBank",2,"size_t");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
-  arg1 = (size_t)lua_tonumber(L, 1);
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
-  arg2 = (size_t)lua_tonumber(L, 2);
-  result = (FilterBank *)new FilterBank(arg1,arg2);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_FilterBank,1); SWIG_arg++; 
+  SWIG_check_num_args("Aubio::FilterBank::FilterBank",2,2)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::FilterBank::FilterBank",1,"uint32_t");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FilterBank::FilterBank",2,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (Aubio::FilterBank *)new Aubio::FilterBank(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__FilterBank,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -8536,30 +9052,30 @@ fail:
 
 static int _wrap_FilterBank_process(lua_State* L) {
   int SWIG_arg = 0;
-  FilterBank *arg1 = (FilterBank *) 0 ;
-  CVec *arg2 = 0 ;
-  FVec *arg3 = 0 ;
+  Aubio::FilterBank *arg1 = (Aubio::FilterBank *) 0 ;
+  Aubio::CVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
   
-  SWIG_check_num_args("FilterBank::process",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FilterBank::process",1,"FilterBank *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FilterBank::process",2,"CVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("FilterBank::process",3,"FVec &");
+  SWIG_check_num_args("Aubio::FilterBank::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FilterBank::process",1,"Aubio::FilterBank *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FilterBank::process",2,"Aubio::CVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::FilterBank::process",3,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FilterBank,0))){
-    SWIG_fail_ptr("FilterBank_process",1,SWIGTYPE_p_FilterBank);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FilterBank,0))){
+    SWIG_fail_ptr("FilterBank_process",1,SWIGTYPE_p_Aubio__FilterBank);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("FilterBank_process",2,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("FilterBank_process",2,SWIGTYPE_p_Aubio__CVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("FilterBank_process",3,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("FilterBank_process",3,SWIGTYPE_p_Aubio__FVec);
   }
   
-  (arg1)->process((CVec const &)*arg2,*arg3);
+  (arg1)->process((Aubio::CVec const &)*arg2,*arg3);
   
   return SWIG_arg;
   
@@ -8573,20 +9089,20 @@ fail:
 
 static int _wrap_FilterBank_get_coeffs(lua_State* L) {
   int SWIG_arg = 0;
-  FilterBank *arg1 = (FilterBank *) 0 ;
-  SwigValueWrapper< FMat > result;
+  Aubio::FilterBank *arg1 = (Aubio::FilterBank *) 0 ;
+  SwigValueWrapper< Aubio::FMat > result;
   
-  SWIG_check_num_args("FilterBank::get_coeffs",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FilterBank::get_coeffs",1,"FilterBank *");
+  SWIG_check_num_args("Aubio::FilterBank::get_coeffs",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FilterBank::get_coeffs",1,"Aubio::FilterBank *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FilterBank,0))){
-    SWIG_fail_ptr("FilterBank_get_coeffs",1,SWIGTYPE_p_FilterBank);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FilterBank,0))){
+    SWIG_fail_ptr("FilterBank_get_coeffs",1,SWIGTYPE_p_Aubio__FilterBank);
   }
   
   result = (arg1)->get_coeffs();
   {
-    FMat * resultptr = new FMat((const FMat &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_FMat,1); SWIG_arg++;
+    Aubio::FMat * resultptr = new Aubio::FMat((const Aubio::FMat &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_Aubio__FMat,1); SWIG_arg++;
   }
   return SWIG_arg;
   
@@ -8600,24 +9116,24 @@ fail:
 
 static int _wrap_FilterBank_set_coeffs(lua_State* L) {
   int SWIG_arg = 0;
-  FilterBank *arg1 = (FilterBank *) 0 ;
-  FMat *arg2 = 0 ;
-  size_t result;
+  Aubio::FilterBank *arg1 = (Aubio::FilterBank *) 0 ;
+  Aubio::FMat *arg2 = 0 ;
+  uint32_t result;
   
-  SWIG_check_num_args("FilterBank::set_coeffs",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FilterBank::set_coeffs",1,"FilterBank *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("FilterBank::set_coeffs",2,"FMat &");
+  SWIG_check_num_args("Aubio::FilterBank::set_coeffs",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FilterBank::set_coeffs",1,"Aubio::FilterBank *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::FilterBank::set_coeffs",2,"Aubio::FMat &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FilterBank,0))){
-    SWIG_fail_ptr("FilterBank_set_coeffs",1,SWIGTYPE_p_FilterBank);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FilterBank,0))){
+    SWIG_fail_ptr("FilterBank_set_coeffs",1,SWIGTYPE_p_Aubio__FilterBank);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("FilterBank_set_coeffs",2,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("FilterBank_set_coeffs",2,SWIGTYPE_p_Aubio__FMat);
   }
   
-  result = (arg1)->set_coeffs(*arg2);
+  result = (uint32_t)(arg1)->set_coeffs(*arg2);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -8631,20 +9147,20 @@ fail:
 
 static int _wrap_FilterBank_set_norm(lua_State* L) {
   int SWIG_arg = 0;
-  FilterBank *arg1 = (FilterBank *) 0 ;
+  Aubio::FilterBank *arg1 = (Aubio::FilterBank *) 0 ;
   double arg2 ;
-  size_t result;
+  uint32_t result;
   
-  SWIG_check_num_args("FilterBank::set_norm",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FilterBank::set_norm",1,"FilterBank *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FilterBank::set_norm",2,"double");
+  SWIG_check_num_args("Aubio::FilterBank::set_norm",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FilterBank::set_norm",1,"Aubio::FilterBank *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FilterBank::set_norm",2,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FilterBank,0))){
-    SWIG_fail_ptr("FilterBank_set_norm",1,SWIGTYPE_p_FilterBank);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FilterBank,0))){
+    SWIG_fail_ptr("FilterBank_set_norm",1,SWIGTYPE_p_Aubio__FilterBank);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
-  result = (arg1)->set_norm(arg2);
+  result = (uint32_t)(arg1)->set_norm(arg2);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -8658,20 +9174,20 @@ fail:
 
 static int _wrap_FilterBank_set_power(lua_State* L) {
   int SWIG_arg = 0;
-  FilterBank *arg1 = (FilterBank *) 0 ;
+  Aubio::FilterBank *arg1 = (Aubio::FilterBank *) 0 ;
   double arg2 ;
-  size_t result;
+  uint32_t result;
   
-  SWIG_check_num_args("FilterBank::set_power",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FilterBank::set_power",1,"FilterBank *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("FilterBank::set_power",2,"double");
+  SWIG_check_num_args("Aubio::FilterBank::set_power",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FilterBank::set_power",1,"Aubio::FilterBank *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::FilterBank::set_power",2,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FilterBank,0))){
-    SWIG_fail_ptr("FilterBank_set_power",1,SWIGTYPE_p_FilterBank);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FilterBank,0))){
+    SWIG_fail_ptr("FilterBank_set_power",1,SWIGTYPE_p_Aubio__FilterBank);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
-  result = (arg1)->set_power(arg2);
+  result = (uint32_t)(arg1)->set_power(arg2);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -8685,14 +9201,14 @@ fail:
 
 static int _wrap_FilterBank_get_power(lua_State* L) {
   int SWIG_arg = 0;
-  FilterBank *arg1 = (FilterBank *) 0 ;
+  Aubio::FilterBank *arg1 = (Aubio::FilterBank *) 0 ;
   double result;
   
-  SWIG_check_num_args("FilterBank::get_power",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FilterBank::get_power",1,"FilterBank *");
+  SWIG_check_num_args("Aubio::FilterBank::get_power",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::FilterBank::get_power",1,"Aubio::FilterBank *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_FilterBank,0))){
-    SWIG_fail_ptr("FilterBank_get_power",1,SWIGTYPE_p_FilterBank);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FilterBank,0))){
+    SWIG_fail_ptr("FilterBank_get_power",1,SWIGTYPE_p_Aubio__FilterBank);
   }
   
   result = (double)(arg1)->get_power();
@@ -8708,7 +9224,7 @@ fail:
 
 
 static void swig_delete_FilterBank(void *obj) {
-FilterBank *arg1 = (FilterBank *) obj;
+Aubio::FilterBank *arg1 = (Aubio::FilterBank *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_FilterBank(lua_State *L) {
@@ -8759,19 +9275,19 @@ static swig_lua_namespace swig_FilterBank_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_FilterBank_bases[] = {0};
 static const char *swig_FilterBank_base_names[] = {0};
-static swig_lua_class _wrap_class_FilterBank = { "FilterBank", "FilterBank", &SWIGTYPE_p_FilterBank,_proxy__wrap_new_FilterBank, swig_delete_FilterBank, swig_FilterBank_methods, swig_FilterBank_attributes, &swig_FilterBank_Sf_SwigStatic, swig_FilterBank_meta, swig_FilterBank_bases, swig_FilterBank_base_names };
+static swig_lua_class _wrap_class_FilterBank = { "FilterBank", "FilterBank", &SWIGTYPE_p_Aubio__FilterBank,_proxy__wrap_new_FilterBank, swig_delete_FilterBank, swig_FilterBank_methods, swig_FilterBank_attributes, &swig_FilterBank_Sf_SwigStatic, swig_FilterBank_meta, swig_FilterBank_bases, swig_FilterBank_base_names };
 
 static int _wrap_MelFilterBank_fb_set(lua_State* L) {
   int SWIG_arg = 0;
-  MelFilterBank *arg1 = (MelFilterBank *) 0 ;
+  Aubio::MelFilterBank *arg1 = (Aubio::MelFilterBank *) 0 ;
   aubio_filterbank_t *arg2 = (aubio_filterbank_t *) 0 ;
   
-  SWIG_check_num_args("MelFilterBank::fb",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MelFilterBank::fb",1,"MelFilterBank *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("MelFilterBank::fb",2,"aubio_filterbank_t *");
+  SWIG_check_num_args("Aubio::MelFilterBank::fb",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::MelFilterBank::fb",1,"Aubio::MelFilterBank *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::MelFilterBank::fb",2,"aubio_filterbank_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_MelFilterBank,0))){
-    SWIG_fail_ptr("MelFilterBank_fb_set",1,SWIGTYPE_p_MelFilterBank);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__MelFilterBank,0))){
+    SWIG_fail_ptr("MelFilterBank_fb_set",1,SWIGTYPE_p_Aubio__MelFilterBank);
   }
   
   
@@ -8793,14 +9309,14 @@ fail:
 
 static int _wrap_MelFilterBank_fb_get(lua_State* L) {
   int SWIG_arg = 0;
-  MelFilterBank *arg1 = (MelFilterBank *) 0 ;
+  Aubio::MelFilterBank *arg1 = (Aubio::MelFilterBank *) 0 ;
   aubio_filterbank_t *result = 0 ;
   
-  SWIG_check_num_args("MelFilterBank::fb",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MelFilterBank::fb",1,"MelFilterBank *");
+  SWIG_check_num_args("Aubio::MelFilterBank::fb",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::MelFilterBank::fb",1,"Aubio::MelFilterBank *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_MelFilterBank,0))){
-    SWIG_fail_ptr("MelFilterBank_fb_get",1,SWIGTYPE_p_MelFilterBank);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__MelFilterBank,0))){
+    SWIG_fail_ptr("MelFilterBank_fb_get",1,SWIGTYPE_p_Aubio__MelFilterBank);
   }
   
   result = (aubio_filterbank_t *) ((arg1)->fb);
@@ -8817,19 +9333,19 @@ fail:
 
 static int _wrap_new_MelFilterBank(lua_State* L) {
   int SWIG_arg = 0;
-  size_t arg1 ;
-  size_t arg2 ;
-  MelFilterBank *result = 0 ;
+  uint32_t arg1 ;
+  uint32_t arg2 ;
+  Aubio::MelFilterBank *result = 0 ;
   
-  SWIG_check_num_args("MelFilterBank::MelFilterBank",2,2)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("MelFilterBank::MelFilterBank",1,"size_t");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("MelFilterBank::MelFilterBank",2,"size_t");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
-  arg1 = (size_t)lua_tonumber(L, 1);
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
-  arg2 = (size_t)lua_tonumber(L, 2);
-  result = (MelFilterBank *)new MelFilterBank(arg1,arg2);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_MelFilterBank,1); SWIG_arg++; 
+  SWIG_check_num_args("Aubio::MelFilterBank::MelFilterBank",2,2)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::MelFilterBank::MelFilterBank",1,"uint32_t");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::MelFilterBank::MelFilterBank",2,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (Aubio::MelFilterBank *)new Aubio::MelFilterBank(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__MelFilterBank,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -8842,27 +9358,27 @@ fail:
 
 static int _wrap_MelFilterBank_set_triangle_bands(lua_State* L) {
   int SWIG_arg = 0;
-  MelFilterBank *arg1 = (MelFilterBank *) 0 ;
-  FVec *arg2 = 0 ;
+  Aubio::MelFilterBank *arg1 = (Aubio::MelFilterBank *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
   double arg3 ;
   size_t result;
   
-  SWIG_check_num_args("MelFilterBank::set_triangle_bands",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MelFilterBank::set_triangle_bands",1,"MelFilterBank *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("MelFilterBank::set_triangle_bands",2,"FVec const &");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("MelFilterBank::set_triangle_bands",3,"double");
+  SWIG_check_num_args("Aubio::MelFilterBank::set_triangle_bands",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::MelFilterBank::set_triangle_bands",1,"Aubio::MelFilterBank *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::MelFilterBank::set_triangle_bands",2,"Aubio::FVec const &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::MelFilterBank::set_triangle_bands",3,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_MelFilterBank,0))){
-    SWIG_fail_ptr("MelFilterBank_set_triangle_bands",1,SWIGTYPE_p_MelFilterBank);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__MelFilterBank,0))){
+    SWIG_fail_ptr("MelFilterBank_set_triangle_bands",1,SWIGTYPE_p_Aubio__MelFilterBank);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("MelFilterBank_set_triangle_bands",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("MelFilterBank_set_triangle_bands",2,SWIGTYPE_p_Aubio__FVec);
   }
   
   arg3 = (double)lua_tonumber(L, 3);
-  result = (arg1)->set_triangle_bands((FVec const &)*arg2,arg3);
+  result = (arg1)->set_triangle_bands((Aubio::FVec const &)*arg2,arg3);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -8876,16 +9392,16 @@ fail:
 
 static int _wrap_MelFilterBank_set_mel_coeffs_slaney(lua_State* L) {
   int SWIG_arg = 0;
-  MelFilterBank *arg1 = (MelFilterBank *) 0 ;
+  Aubio::MelFilterBank *arg1 = (Aubio::MelFilterBank *) 0 ;
   double arg2 ;
   size_t result;
   
-  SWIG_check_num_args("MelFilterBank::set_mel_coeffs_slaney",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MelFilterBank::set_mel_coeffs_slaney",1,"MelFilterBank *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("MelFilterBank::set_mel_coeffs_slaney",2,"double");
+  SWIG_check_num_args("Aubio::MelFilterBank::set_mel_coeffs_slaney",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::MelFilterBank::set_mel_coeffs_slaney",1,"Aubio::MelFilterBank *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::MelFilterBank::set_mel_coeffs_slaney",2,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_MelFilterBank,0))){
-    SWIG_fail_ptr("MelFilterBank_set_mel_coeffs_slaney",1,SWIGTYPE_p_MelFilterBank);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__MelFilterBank,0))){
+    SWIG_fail_ptr("MelFilterBank_set_mel_coeffs_slaney",1,SWIGTYPE_p_Aubio__MelFilterBank);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
@@ -8903,20 +9419,20 @@ fail:
 
 static int _wrap_MelFilterBank_set_mel_coeffs(lua_State* L) {
   int SWIG_arg = 0;
-  MelFilterBank *arg1 = (MelFilterBank *) 0 ;
+  Aubio::MelFilterBank *arg1 = (Aubio::MelFilterBank *) 0 ;
   double arg2 ;
   double arg3 ;
   double arg4 ;
   size_t result;
   
-  SWIG_check_num_args("MelFilterBank::set_mel_coeffs",4,4)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MelFilterBank::set_mel_coeffs",1,"MelFilterBank *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("MelFilterBank::set_mel_coeffs",2,"double");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("MelFilterBank::set_mel_coeffs",3,"double");
-  if(!lua_isnumber(L,4)) SWIG_fail_arg("MelFilterBank::set_mel_coeffs",4,"double");
+  SWIG_check_num_args("Aubio::MelFilterBank::set_mel_coeffs",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::MelFilterBank::set_mel_coeffs",1,"Aubio::MelFilterBank *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::MelFilterBank::set_mel_coeffs",2,"double");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::MelFilterBank::set_mel_coeffs",3,"double");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("Aubio::MelFilterBank::set_mel_coeffs",4,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_MelFilterBank,0))){
-    SWIG_fail_ptr("MelFilterBank_set_mel_coeffs",1,SWIGTYPE_p_MelFilterBank);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__MelFilterBank,0))){
+    SWIG_fail_ptr("MelFilterBank_set_mel_coeffs",1,SWIGTYPE_p_Aubio__MelFilterBank);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
@@ -8936,20 +9452,20 @@ fail:
 
 static int _wrap_MelFilterBank_set_mel_coeffs_htk(lua_State* L) {
   int SWIG_arg = 0;
-  MelFilterBank *arg1 = (MelFilterBank *) 0 ;
+  Aubio::MelFilterBank *arg1 = (Aubio::MelFilterBank *) 0 ;
   double arg2 ;
   double arg3 ;
   double arg4 ;
   size_t result;
   
-  SWIG_check_num_args("MelFilterBank::set_mel_coeffs_htk",4,4)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MelFilterBank::set_mel_coeffs_htk",1,"MelFilterBank *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("MelFilterBank::set_mel_coeffs_htk",2,"double");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("MelFilterBank::set_mel_coeffs_htk",3,"double");
-  if(!lua_isnumber(L,4)) SWIG_fail_arg("MelFilterBank::set_mel_coeffs_htk",4,"double");
+  SWIG_check_num_args("Aubio::MelFilterBank::set_mel_coeffs_htk",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::MelFilterBank::set_mel_coeffs_htk",1,"Aubio::MelFilterBank *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::MelFilterBank::set_mel_coeffs_htk",2,"double");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::MelFilterBank::set_mel_coeffs_htk",3,"double");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("Aubio::MelFilterBank::set_mel_coeffs_htk",4,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_MelFilterBank,0))){
-    SWIG_fail_ptr("MelFilterBank_set_mel_coeffs_htk",1,SWIGTYPE_p_MelFilterBank);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__MelFilterBank,0))){
+    SWIG_fail_ptr("MelFilterBank_set_mel_coeffs_htk",1,SWIGTYPE_p_Aubio__MelFilterBank);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
@@ -8968,7 +9484,7 @@ fail:
 
 
 static void swig_delete_MelFilterBank(void *obj) {
-MelFilterBank *arg1 = (MelFilterBank *) obj;
+Aubio::MelFilterBank *arg1 = (Aubio::MelFilterBank *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_MelFilterBank(lua_State *L) {
@@ -9017,19 +9533,19 @@ static swig_lua_namespace swig_MelFilterBank_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_MelFilterBank_bases[] = {0};
 static const char *swig_MelFilterBank_base_names[] = {0};
-static swig_lua_class _wrap_class_MelFilterBank = { "MelFilterBank", "MelFilterBank", &SWIGTYPE_p_MelFilterBank,_proxy__wrap_new_MelFilterBank, swig_delete_MelFilterBank, swig_MelFilterBank_methods, swig_MelFilterBank_attributes, &swig_MelFilterBank_Sf_SwigStatic, swig_MelFilterBank_meta, swig_MelFilterBank_bases, swig_MelFilterBank_base_names };
+static swig_lua_class _wrap_class_MelFilterBank = { "MelFilterBank", "MelFilterBank", &SWIGTYPE_p_Aubio__MelFilterBank,_proxy__wrap_new_MelFilterBank, swig_delete_MelFilterBank, swig_MelFilterBank_methods, swig_MelFilterBank_attributes, &swig_MelFilterBank_Sf_SwigStatic, swig_MelFilterBank_meta, swig_MelFilterBank_bases, swig_MelFilterBank_base_names };
 
 static int _wrap_MFCC_mfcc_set(lua_State* L) {
   int SWIG_arg = 0;
-  MFCC *arg1 = (MFCC *) 0 ;
+  Aubio::MFCC *arg1 = (Aubio::MFCC *) 0 ;
   aubio_mfcc_t *arg2 = (aubio_mfcc_t *) 0 ;
   
-  SWIG_check_num_args("MFCC::mfcc",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MFCC::mfcc",1,"MFCC *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("MFCC::mfcc",2,"aubio_mfcc_t *");
+  SWIG_check_num_args("Aubio::MFCC::mfcc",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::MFCC::mfcc",1,"Aubio::MFCC *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::MFCC::mfcc",2,"aubio_mfcc_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_MFCC,0))){
-    SWIG_fail_ptr("MFCC_mfcc_set",1,SWIGTYPE_p_MFCC);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__MFCC,0))){
+    SWIG_fail_ptr("MFCC_mfcc_set",1,SWIGTYPE_p_Aubio__MFCC);
   }
   
   
@@ -9051,14 +9567,14 @@ fail:
 
 static int _wrap_MFCC_mfcc_get(lua_State* L) {
   int SWIG_arg = 0;
-  MFCC *arg1 = (MFCC *) 0 ;
+  Aubio::MFCC *arg1 = (Aubio::MFCC *) 0 ;
   aubio_mfcc_t *result = 0 ;
   
-  SWIG_check_num_args("MFCC::mfcc",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MFCC::mfcc",1,"MFCC *");
+  SWIG_check_num_args("Aubio::MFCC::mfcc",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::MFCC::mfcc",1,"Aubio::MFCC *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_MFCC,0))){
-    SWIG_fail_ptr("MFCC_mfcc_get",1,SWIGTYPE_p_MFCC);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__MFCC,0))){
+    SWIG_fail_ptr("MFCC_mfcc_get",1,SWIGTYPE_p_Aubio__MFCC);
   }
   
   result = (aubio_mfcc_t *) ((arg1)->mfcc);
@@ -9076,26 +9592,26 @@ fail:
 static int _wrap_new_MFCC(lua_State* L) {
   int SWIG_arg = 0;
   size_t arg1 ;
-  size_t arg2 ;
+  uint32_t arg2 ;
   size_t arg3 ;
-  size_t arg4 ;
-  MFCC *result = 0 ;
+  uint32_t arg4 ;
+  Aubio::MFCC *result = 0 ;
   
-  SWIG_check_num_args("MFCC::MFCC",4,4)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("MFCC::MFCC",1,"size_t");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("MFCC::MFCC",2,"size_t");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("MFCC::MFCC",3,"size_t");
-  if(!lua_isnumber(L,4)) SWIG_fail_arg("MFCC::MFCC",4,"size_t");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
+  SWIG_check_num_args("Aubio::MFCC::MFCC",4,4)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::MFCC::MFCC",1,"size_t");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::MFCC::MFCC",2,"uint32_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::MFCC::MFCC",3,"size_t");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("Aubio::MFCC::MFCC",4,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
   arg1 = (size_t)lua_tonumber(L, 1);
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
-  arg2 = (size_t)lua_tonumber(L, 2);
-  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
   arg3 = (size_t)lua_tonumber(L, 3);
-  SWIG_contract_assert((lua_tonumber(L,4)>=0),"number must not be negative")
-  arg4 = (size_t)lua_tonumber(L, 4);
-  result = (MFCC *)new MFCC(arg1,arg2,arg3,arg4);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_MFCC,1); SWIG_arg++; 
+  SWIG_contract_assert((lua_tonumber(L,4)>=0),"number must not be negative");
+  arg4 = (uint32_t)lua_tonumber(L, 4);
+  result = (Aubio::MFCC *)new Aubio::MFCC(arg1,arg2,arg3,arg4);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__MFCC,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -9108,30 +9624,30 @@ fail:
 
 static int _wrap_MFCC_process(lua_State* L) {
   int SWIG_arg = 0;
-  MFCC *arg1 = (MFCC *) 0 ;
-  CVec *arg2 = 0 ;
-  FVec *arg3 = 0 ;
+  Aubio::MFCC *arg1 = (Aubio::MFCC *) 0 ;
+  Aubio::CVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
   
-  SWIG_check_num_args("MFCC::process",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MFCC::process",1,"MFCC *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("MFCC::process",2,"CVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("MFCC::process",3,"FVec &");
+  SWIG_check_num_args("Aubio::MFCC::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::MFCC::process",1,"Aubio::MFCC *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::MFCC::process",2,"Aubio::CVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::MFCC::process",3,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_MFCC,0))){
-    SWIG_fail_ptr("MFCC_process",1,SWIGTYPE_p_MFCC);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__MFCC,0))){
+    SWIG_fail_ptr("MFCC_process",1,SWIGTYPE_p_Aubio__MFCC);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("MFCC_process",2,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("MFCC_process",2,SWIGTYPE_p_Aubio__CVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("MFCC_process",3,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("MFCC_process",3,SWIGTYPE_p_Aubio__FVec);
   }
   
-  (arg1)->process((CVec const &)*arg2,*arg3);
+  (arg1)->process((Aubio::CVec const &)*arg2,*arg3);
   
   return SWIG_arg;
   
@@ -9145,16 +9661,16 @@ fail:
 
 static int _wrap_MFCC_set_power(lua_State* L) {
   int SWIG_arg = 0;
-  MFCC *arg1 = (MFCC *) 0 ;
+  Aubio::MFCC *arg1 = (Aubio::MFCC *) 0 ;
   double arg2 ;
   size_t result;
   
-  SWIG_check_num_args("MFCC::set_power",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MFCC::set_power",1,"MFCC *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("MFCC::set_power",2,"double");
+  SWIG_check_num_args("Aubio::MFCC::set_power",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::MFCC::set_power",1,"Aubio::MFCC *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::MFCC::set_power",2,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_MFCC,0))){
-    SWIG_fail_ptr("MFCC_set_power",1,SWIGTYPE_p_MFCC);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__MFCC,0))){
+    SWIG_fail_ptr("MFCC_set_power",1,SWIGTYPE_p_Aubio__MFCC);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
@@ -9172,14 +9688,14 @@ fail:
 
 static int _wrap_MFCC_get_power(lua_State* L) {
   int SWIG_arg = 0;
-  MFCC *arg1 = (MFCC *) 0 ;
+  Aubio::MFCC *arg1 = (Aubio::MFCC *) 0 ;
   double result;
   
-  SWIG_check_num_args("MFCC::get_power",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MFCC::get_power",1,"MFCC *");
+  SWIG_check_num_args("Aubio::MFCC::get_power",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::MFCC::get_power",1,"Aubio::MFCC *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_MFCC,0))){
-    SWIG_fail_ptr("MFCC_get_power",1,SWIGTYPE_p_MFCC);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__MFCC,0))){
+    SWIG_fail_ptr("MFCC_get_power",1,SWIGTYPE_p_Aubio__MFCC);
   }
   
   result = (double)(arg1)->get_power();
@@ -9196,16 +9712,16 @@ fail:
 
 static int _wrap_MFCC_set_scale(lua_State* L) {
   int SWIG_arg = 0;
-  MFCC *arg1 = (MFCC *) 0 ;
+  Aubio::MFCC *arg1 = (Aubio::MFCC *) 0 ;
   double arg2 ;
   size_t result;
   
-  SWIG_check_num_args("MFCC::set_scale",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MFCC::set_scale",1,"MFCC *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("MFCC::set_scale",2,"double");
+  SWIG_check_num_args("Aubio::MFCC::set_scale",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::MFCC::set_scale",1,"Aubio::MFCC *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::MFCC::set_scale",2,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_MFCC,0))){
-    SWIG_fail_ptr("MFCC_set_scale",1,SWIGTYPE_p_MFCC);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__MFCC,0))){
+    SWIG_fail_ptr("MFCC_set_scale",1,SWIGTYPE_p_Aubio__MFCC);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
@@ -9223,14 +9739,14 @@ fail:
 
 static int _wrap_MFCC_get_scale(lua_State* L) {
   int SWIG_arg = 0;
-  MFCC *arg1 = (MFCC *) 0 ;
+  Aubio::MFCC *arg1 = (Aubio::MFCC *) 0 ;
   double result;
   
-  SWIG_check_num_args("MFCC::get_scale",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MFCC::get_scale",1,"MFCC *");
+  SWIG_check_num_args("Aubio::MFCC::get_scale",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::MFCC::get_scale",1,"Aubio::MFCC *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_MFCC,0))){
-    SWIG_fail_ptr("MFCC_get_scale",1,SWIGTYPE_p_MFCC);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__MFCC,0))){
+    SWIG_fail_ptr("MFCC_get_scale",1,SWIGTYPE_p_Aubio__MFCC);
   }
   
   result = (double)(arg1)->get_scale();
@@ -9247,18 +9763,18 @@ fail:
 
 static int _wrap_MFCC_set_mel_coeffs(lua_State* L) {
   int SWIG_arg = 0;
-  MFCC *arg1 = (MFCC *) 0 ;
+  Aubio::MFCC *arg1 = (Aubio::MFCC *) 0 ;
   double arg2 ;
   double arg3 ;
   size_t result;
   
-  SWIG_check_num_args("MFCC::set_mel_coeffs",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MFCC::set_mel_coeffs",1,"MFCC *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("MFCC::set_mel_coeffs",2,"double");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("MFCC::set_mel_coeffs",3,"double");
+  SWIG_check_num_args("Aubio::MFCC::set_mel_coeffs",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::MFCC::set_mel_coeffs",1,"Aubio::MFCC *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::MFCC::set_mel_coeffs",2,"double");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::MFCC::set_mel_coeffs",3,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_MFCC,0))){
-    SWIG_fail_ptr("MFCC_set_mel_coeffs",1,SWIGTYPE_p_MFCC);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__MFCC,0))){
+    SWIG_fail_ptr("MFCC_set_mel_coeffs",1,SWIGTYPE_p_Aubio__MFCC);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
@@ -9277,18 +9793,18 @@ fail:
 
 static int _wrap_MFCC_set_mel_coeffs_htk(lua_State* L) {
   int SWIG_arg = 0;
-  MFCC *arg1 = (MFCC *) 0 ;
+  Aubio::MFCC *arg1 = (Aubio::MFCC *) 0 ;
   double arg2 ;
   double arg3 ;
   size_t result;
   
-  SWIG_check_num_args("MFCC::set_mel_coeffs_htk",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MFCC::set_mel_coeffs_htk",1,"MFCC *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("MFCC::set_mel_coeffs_htk",2,"double");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("MFCC::set_mel_coeffs_htk",3,"double");
+  SWIG_check_num_args("Aubio::MFCC::set_mel_coeffs_htk",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::MFCC::set_mel_coeffs_htk",1,"Aubio::MFCC *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::MFCC::set_mel_coeffs_htk",2,"double");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::MFCC::set_mel_coeffs_htk",3,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_MFCC,0))){
-    SWIG_fail_ptr("MFCC_set_mel_coeffs_htk",1,SWIGTYPE_p_MFCC);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__MFCC,0))){
+    SWIG_fail_ptr("MFCC_set_mel_coeffs_htk",1,SWIGTYPE_p_Aubio__MFCC);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
@@ -9307,14 +9823,14 @@ fail:
 
 static int _wrap_MFCC_set_mel_coeffs_slaney(lua_State* L) {
   int SWIG_arg = 0;
-  MFCC *arg1 = (MFCC *) 0 ;
+  Aubio::MFCC *arg1 = (Aubio::MFCC *) 0 ;
   size_t result;
   
-  SWIG_check_num_args("MFCC::set_mel_coeffs_slaney",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MFCC::set_mel_coeffs_slaney",1,"MFCC *");
+  SWIG_check_num_args("Aubio::MFCC::set_mel_coeffs_slaney",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::MFCC::set_mel_coeffs_slaney",1,"Aubio::MFCC *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_MFCC,0))){
-    SWIG_fail_ptr("MFCC_set_mel_coeffs_slaney",1,SWIGTYPE_p_MFCC);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__MFCC,0))){
+    SWIG_fail_ptr("MFCC_set_mel_coeffs_slaney",1,SWIGTYPE_p_Aubio__MFCC);
   }
   
   result = (arg1)->set_mel_coeffs_slaney();
@@ -9330,7 +9846,7 @@ fail:
 
 
 static void swig_delete_MFCC(void *obj) {
-MFCC *arg1 = (MFCC *) obj;
+Aubio::MFCC *arg1 = (Aubio::MFCC *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_MFCC(lua_State *L) {
@@ -9383,19 +9899,19 @@ static swig_lua_namespace swig_MFCC_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_MFCC_bases[] = {0};
 static const char *swig_MFCC_base_names[] = {0};
-static swig_lua_class _wrap_class_MFCC = { "MFCC", "MFCC", &SWIGTYPE_p_MFCC,_proxy__wrap_new_MFCC, swig_delete_MFCC, swig_MFCC_methods, swig_MFCC_attributes, &swig_MFCC_Sf_SwigStatic, swig_MFCC_meta, swig_MFCC_bases, swig_MFCC_base_names };
+static swig_lua_class _wrap_class_MFCC = { "MFCC", "MFCC", &SWIGTYPE_p_Aubio__MFCC,_proxy__wrap_new_MFCC, swig_delete_MFCC, swig_MFCC_methods, swig_MFCC_attributes, &swig_MFCC_Sf_SwigStatic, swig_MFCC_meta, swig_MFCC_bases, swig_MFCC_base_names };
 
 static int _wrap_AWhitening_w_set(lua_State* L) {
   int SWIG_arg = 0;
-  AWhitening *arg1 = (AWhitening *) 0 ;
+  Aubio::AWhitening *arg1 = (Aubio::AWhitening *) 0 ;
   aubio_spectral_whitening_t *arg2 = (aubio_spectral_whitening_t *) 0 ;
   
-  SWIG_check_num_args("AWhitening::w",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("AWhitening::w",1,"AWhitening *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("AWhitening::w",2,"aubio_spectral_whitening_t *");
+  SWIG_check_num_args("Aubio::AWhitening::w",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::AWhitening::w",1,"Aubio::AWhitening *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::AWhitening::w",2,"aubio_spectral_whitening_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_AWhitening,0))){
-    SWIG_fail_ptr("AWhitening_w_set",1,SWIGTYPE_p_AWhitening);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__AWhitening,0))){
+    SWIG_fail_ptr("AWhitening_w_set",1,SWIGTYPE_p_Aubio__AWhitening);
   }
   
   
@@ -9417,14 +9933,14 @@ fail:
 
 static int _wrap_AWhitening_w_get(lua_State* L) {
   int SWIG_arg = 0;
-  AWhitening *arg1 = (AWhitening *) 0 ;
+  Aubio::AWhitening *arg1 = (Aubio::AWhitening *) 0 ;
   aubio_spectral_whitening_t *result = 0 ;
   
-  SWIG_check_num_args("AWhitening::w",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("AWhitening::w",1,"AWhitening *");
+  SWIG_check_num_args("Aubio::AWhitening::w",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::AWhitening::w",1,"Aubio::AWhitening *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_AWhitening,0))){
-    SWIG_fail_ptr("AWhitening_w_get",1,SWIGTYPE_p_AWhitening);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__AWhitening,0))){
+    SWIG_fail_ptr("AWhitening_w_get",1,SWIGTYPE_p_Aubio__AWhitening);
   }
   
   result = (aubio_spectral_whitening_t *) ((arg1)->w);
@@ -9442,22 +9958,22 @@ fail:
 static int _wrap_new_AWhitening(lua_State* L) {
   int SWIG_arg = 0;
   size_t arg1 ;
-  size_t arg2 ;
-  size_t arg3 ;
-  AWhitening *result = 0 ;
+  uint32_t arg2 ;
+  uint32_t arg3 ;
+  Aubio::AWhitening *result = 0 ;
   
-  SWIG_check_num_args("AWhitening::AWhitening",3,3)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("AWhitening::AWhitening",1,"size_t");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("AWhitening::AWhitening",2,"size_t");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("AWhitening::AWhitening",3,"size_t");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
+  SWIG_check_num_args("Aubio::AWhitening::AWhitening",3,3)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::AWhitening::AWhitening",1,"size_t");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::AWhitening::AWhitening",2,"uint32_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::AWhitening::AWhitening",3,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
   arg1 = (size_t)lua_tonumber(L, 1);
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
-  arg2 = (size_t)lua_tonumber(L, 2);
-  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative")
-  arg3 = (size_t)lua_tonumber(L, 3);
-  result = (AWhitening *)new AWhitening(arg1,arg2,arg3);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_AWhitening,1); SWIG_arg++; 
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
+  arg3 = (uint32_t)lua_tonumber(L, 3);
+  result = (Aubio::AWhitening *)new Aubio::AWhitening(arg1,arg2,arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__AWhitening,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -9470,13 +9986,13 @@ fail:
 
 static int _wrap_AWhitening_reset(lua_State* L) {
   int SWIG_arg = 0;
-  AWhitening *arg1 = (AWhitening *) 0 ;
+  Aubio::AWhitening *arg1 = (Aubio::AWhitening *) 0 ;
   
-  SWIG_check_num_args("AWhitening::reset",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("AWhitening::reset",1,"AWhitening *");
+  SWIG_check_num_args("Aubio::AWhitening::reset",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::AWhitening::reset",1,"Aubio::AWhitening *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_AWhitening,0))){
-    SWIG_fail_ptr("AWhitening_reset",1,SWIGTYPE_p_AWhitening);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__AWhitening,0))){
+    SWIG_fail_ptr("AWhitening_reset",1,SWIGTYPE_p_Aubio__AWhitening);
   }
   
   (arg1)->reset();
@@ -9493,15 +10009,15 @@ fail:
 
 static int _wrap_AWhitening_set_relax_time(lua_State* L) {
   int SWIG_arg = 0;
-  AWhitening *arg1 = (AWhitening *) 0 ;
+  Aubio::AWhitening *arg1 = (Aubio::AWhitening *) 0 ;
   double arg2 ;
   
-  SWIG_check_num_args("AWhitening::set_relax_time",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("AWhitening::set_relax_time",1,"AWhitening *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("AWhitening::set_relax_time",2,"double");
+  SWIG_check_num_args("Aubio::AWhitening::set_relax_time",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::AWhitening::set_relax_time",1,"Aubio::AWhitening *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::AWhitening::set_relax_time",2,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_AWhitening,0))){
-    SWIG_fail_ptr("AWhitening_set_relax_time",1,SWIGTYPE_p_AWhitening);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__AWhitening,0))){
+    SWIG_fail_ptr("AWhitening_set_relax_time",1,SWIGTYPE_p_Aubio__AWhitening);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
@@ -9519,14 +10035,14 @@ fail:
 
 static int _wrap_AWhitening_get_relax_time(lua_State* L) {
   int SWIG_arg = 0;
-  AWhitening *arg1 = (AWhitening *) 0 ;
+  Aubio::AWhitening *arg1 = (Aubio::AWhitening *) 0 ;
   double result;
   
-  SWIG_check_num_args("AWhitening::get_relax_time",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("AWhitening::get_relax_time",1,"AWhitening *");
+  SWIG_check_num_args("Aubio::AWhitening::get_relax_time",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::AWhitening::get_relax_time",1,"Aubio::AWhitening *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_AWhitening,0))){
-    SWIG_fail_ptr("AWhitening_get_relax_time",1,SWIGTYPE_p_AWhitening);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__AWhitening,0))){
+    SWIG_fail_ptr("AWhitening_get_relax_time",1,SWIGTYPE_p_Aubio__AWhitening);
   }
   
   result = (double)(arg1)->get_relax_time();
@@ -9543,15 +10059,15 @@ fail:
 
 static int _wrap_AWhitening_set_floor(lua_State* L) {
   int SWIG_arg = 0;
-  AWhitening *arg1 = (AWhitening *) 0 ;
+  Aubio::AWhitening *arg1 = (Aubio::AWhitening *) 0 ;
   double arg2 ;
   
-  SWIG_check_num_args("AWhitening::set_floor",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("AWhitening::set_floor",1,"AWhitening *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("AWhitening::set_floor",2,"double");
+  SWIG_check_num_args("Aubio::AWhitening::set_floor",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::AWhitening::set_floor",1,"Aubio::AWhitening *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::AWhitening::set_floor",2,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_AWhitening,0))){
-    SWIG_fail_ptr("AWhitening_set_floor",1,SWIGTYPE_p_AWhitening);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__AWhitening,0))){
+    SWIG_fail_ptr("AWhitening_set_floor",1,SWIGTYPE_p_Aubio__AWhitening);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
@@ -9569,14 +10085,14 @@ fail:
 
 static int _wrap_AWhitening_get_floor(lua_State* L) {
   int SWIG_arg = 0;
-  AWhitening *arg1 = (AWhitening *) 0 ;
+  Aubio::AWhitening *arg1 = (Aubio::AWhitening *) 0 ;
   double result;
   
-  SWIG_check_num_args("AWhitening::get_floor",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("AWhitening::get_floor",1,"AWhitening *");
+  SWIG_check_num_args("Aubio::AWhitening::get_floor",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::AWhitening::get_floor",1,"Aubio::AWhitening *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_AWhitening,0))){
-    SWIG_fail_ptr("AWhitening_get_floor",1,SWIGTYPE_p_AWhitening);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__AWhitening,0))){
+    SWIG_fail_ptr("AWhitening_get_floor",1,SWIGTYPE_p_Aubio__AWhitening);
   }
   
   result = (double)(arg1)->get_floor();
@@ -9592,7 +10108,7 @@ fail:
 
 
 static void swig_delete_AWhitening(void *obj) {
-AWhitening *arg1 = (AWhitening *) obj;
+Aubio::AWhitening *arg1 = (Aubio::AWhitening *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_AWhitening(lua_State *L) {
@@ -9642,19 +10158,19 @@ static swig_lua_namespace swig_AWhitening_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_AWhitening_bases[] = {0};
 static const char *swig_AWhitening_base_names[] = {0};
-static swig_lua_class _wrap_class_AWhitening = { "AWhitening", "AWhitening", &SWIGTYPE_p_AWhitening,_proxy__wrap_new_AWhitening, swig_delete_AWhitening, swig_AWhitening_methods, swig_AWhitening_attributes, &swig_AWhitening_Sf_SwigStatic, swig_AWhitening_meta, swig_AWhitening_bases, swig_AWhitening_base_names };
+static swig_lua_class _wrap_class_AWhitening = { "AWhitening", "AWhitening", &SWIGTYPE_p_Aubio__AWhitening,_proxy__wrap_new_AWhitening, swig_delete_AWhitening, swig_AWhitening_methods, swig_AWhitening_attributes, &swig_AWhitening_Sf_SwigStatic, swig_AWhitening_meta, swig_AWhitening_bases, swig_AWhitening_base_names };
 
 static int _wrap_TSS_tss_set(lua_State* L) {
   int SWIG_arg = 0;
-  TSS *arg1 = (TSS *) 0 ;
+  Aubio::TSS *arg1 = (Aubio::TSS *) 0 ;
   aubio_tss_t *arg2 = (aubio_tss_t *) 0 ;
   
-  SWIG_check_num_args("TSS::tss",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("TSS::tss",1,"TSS *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("TSS::tss",2,"aubio_tss_t *");
+  SWIG_check_num_args("Aubio::TSS::tss",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::TSS::tss",1,"Aubio::TSS *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::TSS::tss",2,"aubio_tss_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_TSS,0))){
-    SWIG_fail_ptr("TSS_tss_set",1,SWIGTYPE_p_TSS);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__TSS,0))){
+    SWIG_fail_ptr("TSS_tss_set",1,SWIGTYPE_p_Aubio__TSS);
   }
   
   
@@ -9676,14 +10192,14 @@ fail:
 
 static int _wrap_TSS_tss_get(lua_State* L) {
   int SWIG_arg = 0;
-  TSS *arg1 = (TSS *) 0 ;
+  Aubio::TSS *arg1 = (Aubio::TSS *) 0 ;
   aubio_tss_t *result = 0 ;
   
-  SWIG_check_num_args("TSS::tss",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("TSS::tss",1,"TSS *");
+  SWIG_check_num_args("Aubio::TSS::tss",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::TSS::tss",1,"Aubio::TSS *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_TSS,0))){
-    SWIG_fail_ptr("TSS_tss_get",1,SWIGTYPE_p_TSS);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__TSS,0))){
+    SWIG_fail_ptr("TSS_tss_get",1,SWIGTYPE_p_Aubio__TSS);
   }
   
   result = (aubio_tss_t *) ((arg1)->tss);
@@ -9701,18 +10217,18 @@ fail:
 static int _wrap_new_TSS(lua_State* L) {
   int SWIG_arg = 0;
   size_t arg1 ;
-  size_t arg2 ;
-  TSS *result = 0 ;
+  uint32_t arg2 ;
+  Aubio::TSS *result = 0 ;
   
-  SWIG_check_num_args("TSS::TSS",2,2)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("TSS::TSS",1,"size_t");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("TSS::TSS",2,"size_t");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
+  SWIG_check_num_args("Aubio::TSS::TSS",2,2)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::TSS::TSS",1,"size_t");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::TSS::TSS",2,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
   arg1 = (size_t)lua_tonumber(L, 1);
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
-  arg2 = (size_t)lua_tonumber(L, 2);
-  result = (TSS *)new TSS(arg1,arg2);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_TSS,1); SWIG_arg++; 
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (Aubio::TSS *)new Aubio::TSS(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__TSS,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -9725,37 +10241,37 @@ fail:
 
 static int _wrap_TSS_process(lua_State* L) {
   int SWIG_arg = 0;
-  TSS *arg1 = (TSS *) 0 ;
-  CVec *arg2 = 0 ;
-  CVec *arg3 = 0 ;
-  CVec *arg4 = 0 ;
+  Aubio::TSS *arg1 = (Aubio::TSS *) 0 ;
+  Aubio::CVec *arg2 = 0 ;
+  Aubio::CVec *arg3 = 0 ;
+  Aubio::CVec *arg4 = 0 ;
   
-  SWIG_check_num_args("TSS::process",4,4)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("TSS::process",1,"TSS *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("TSS::process",2,"CVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("TSS::process",3,"CVec &");
-  if(!lua_isuserdata(L,4)) SWIG_fail_arg("TSS::process",4,"CVec &");
+  SWIG_check_num_args("Aubio::TSS::process",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::TSS::process",1,"Aubio::TSS *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::TSS::process",2,"Aubio::CVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::TSS::process",3,"Aubio::CVec &");
+  if(!lua_isuserdata(L,4)) SWIG_fail_arg("Aubio::TSS::process",4,"Aubio::CVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_TSS,0))){
-    SWIG_fail_ptr("TSS_process",1,SWIGTYPE_p_TSS);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__TSS,0))){
+    SWIG_fail_ptr("TSS_process",1,SWIGTYPE_p_Aubio__TSS);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("TSS_process",2,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("TSS_process",2,SWIGTYPE_p_Aubio__CVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("TSS_process",3,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("TSS_process",3,SWIGTYPE_p_Aubio__CVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,4,(void**)&arg4,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("TSS_process",4,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,4,(void**)&arg4,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("TSS_process",4,SWIGTYPE_p_Aubio__CVec);
   }
   
-  (arg1)->process((CVec const &)*arg2,*arg3,*arg4);
+  (arg1)->process((Aubio::CVec const &)*arg2,*arg3,*arg4);
   
   return SWIG_arg;
   
@@ -9769,16 +10285,16 @@ fail:
 
 static int _wrap_TSS_set_threshold(lua_State* L) {
   int SWIG_arg = 0;
-  TSS *arg1 = (TSS *) 0 ;
+  Aubio::TSS *arg1 = (Aubio::TSS *) 0 ;
   double arg2 ;
   size_t result;
   
-  SWIG_check_num_args("TSS::set_threshold",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("TSS::set_threshold",1,"TSS *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("TSS::set_threshold",2,"double");
+  SWIG_check_num_args("Aubio::TSS::set_threshold",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::TSS::set_threshold",1,"Aubio::TSS *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::TSS::set_threshold",2,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_TSS,0))){
-    SWIG_fail_ptr("TSS_set_threshold",1,SWIGTYPE_p_TSS);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__TSS,0))){
+    SWIG_fail_ptr("TSS_set_threshold",1,SWIGTYPE_p_Aubio__TSS);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
@@ -9796,16 +10312,16 @@ fail:
 
 static int _wrap_TSS_set_alpha(lua_State* L) {
   int SWIG_arg = 0;
-  TSS *arg1 = (TSS *) 0 ;
+  Aubio::TSS *arg1 = (Aubio::TSS *) 0 ;
   double arg2 ;
   size_t result;
   
-  SWIG_check_num_args("TSS::set_alpha",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("TSS::set_alpha",1,"TSS *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("TSS::set_alpha",2,"double");
+  SWIG_check_num_args("Aubio::TSS::set_alpha",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::TSS::set_alpha",1,"Aubio::TSS *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::TSS::set_alpha",2,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_TSS,0))){
-    SWIG_fail_ptr("TSS_set_alpha",1,SWIGTYPE_p_TSS);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__TSS,0))){
+    SWIG_fail_ptr("TSS_set_alpha",1,SWIGTYPE_p_Aubio__TSS);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
@@ -9823,16 +10339,16 @@ fail:
 
 static int _wrap_TSS_set_beta(lua_State* L) {
   int SWIG_arg = 0;
-  TSS *arg1 = (TSS *) 0 ;
+  Aubio::TSS *arg1 = (Aubio::TSS *) 0 ;
   double arg2 ;
   size_t result;
   
-  SWIG_check_num_args("TSS::set_beta",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("TSS::set_beta",1,"TSS *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("TSS::set_beta",2,"double");
+  SWIG_check_num_args("Aubio::TSS::set_beta",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::TSS::set_beta",1,"Aubio::TSS *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::TSS::set_beta",2,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_TSS,0))){
-    SWIG_fail_ptr("TSS_set_beta",1,SWIGTYPE_p_TSS);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__TSS,0))){
+    SWIG_fail_ptr("TSS_set_beta",1,SWIGTYPE_p_Aubio__TSS);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
@@ -9849,7 +10365,7 @@ fail:
 
 
 static void swig_delete_TSS(void *obj) {
-TSS *arg1 = (TSS *) obj;
+Aubio::TSS *arg1 = (Aubio::TSS *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_TSS(lua_State *L) {
@@ -9898,19 +10414,19 @@ static swig_lua_namespace swig_TSS_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_TSS_bases[] = {0};
 static const char *swig_TSS_base_names[] = {0};
-static swig_lua_class _wrap_class_TSS = { "TSS", "TSS", &SWIGTYPE_p_TSS,_proxy__wrap_new_TSS, swig_delete_TSS, swig_TSS_methods, swig_TSS_attributes, &swig_TSS_Sf_SwigStatic, swig_TSS_meta, swig_TSS_bases, swig_TSS_base_names };
+static swig_lua_class _wrap_class_TSS = { "TSS", "TSS", &SWIGTYPE_p_Aubio__TSS,_proxy__wrap_new_TSS, swig_delete_TSS, swig_TSS_methods, swig_TSS_attributes, &swig_TSS_Sf_SwigStatic, swig_TSS_meta, swig_TSS_bases, swig_TSS_base_names };
 
 static int _wrap_SpecDesc_sd_set(lua_State* L) {
   int SWIG_arg = 0;
-  SpecDesc *arg1 = (SpecDesc *) 0 ;
+  Aubio::SpecDesc *arg1 = (Aubio::SpecDesc *) 0 ;
   aubio_specdesc_t *arg2 = (aubio_specdesc_t *) 0 ;
   
-  SWIG_check_num_args("SpecDesc::sd",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SpecDesc::sd",1,"SpecDesc *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("SpecDesc::sd",2,"aubio_specdesc_t *");
+  SWIG_check_num_args("Aubio::SpecDesc::sd",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SpecDesc::sd",1,"Aubio::SpecDesc *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::SpecDesc::sd",2,"aubio_specdesc_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_SpecDesc,0))){
-    SWIG_fail_ptr("SpecDesc_sd_set",1,SWIGTYPE_p_SpecDesc);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SpecDesc,0))){
+    SWIG_fail_ptr("SpecDesc_sd_set",1,SWIGTYPE_p_Aubio__SpecDesc);
   }
   
   
@@ -9932,14 +10448,14 @@ fail:
 
 static int _wrap_SpecDesc_sd_get(lua_State* L) {
   int SWIG_arg = 0;
-  SpecDesc *arg1 = (SpecDesc *) 0 ;
+  Aubio::SpecDesc *arg1 = (Aubio::SpecDesc *) 0 ;
   aubio_specdesc_t *result = 0 ;
   
-  SWIG_check_num_args("SpecDesc::sd",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SpecDesc::sd",1,"SpecDesc *");
+  SWIG_check_num_args("Aubio::SpecDesc::sd",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SpecDesc::sd",1,"Aubio::SpecDesc *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_SpecDesc,0))){
-    SWIG_fail_ptr("SpecDesc_sd_get",1,SWIGTYPE_p_SpecDesc);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SpecDesc,0))){
+    SWIG_fail_ptr("SpecDesc_sd_get",1,SWIGTYPE_p_Aubio__SpecDesc);
   }
   
   result = (aubio_specdesc_t *) ((arg1)->sd);
@@ -9958,16 +10474,16 @@ static int _wrap_new_SpecDesc(lua_State* L) {
   int SWIG_arg = 0;
   char *arg1 = (char *) 0 ;
   size_t arg2 ;
-  SpecDesc *result = 0 ;
+  Aubio::SpecDesc *result = 0 ;
   
-  SWIG_check_num_args("SpecDesc::SpecDesc",2,2)
-  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("SpecDesc::SpecDesc",1,"char const *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("SpecDesc::SpecDesc",2,"size_t");
+  SWIG_check_num_args("Aubio::SpecDesc::SpecDesc",2,2)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Aubio::SpecDesc::SpecDesc",1,"char const *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::SpecDesc::SpecDesc",2,"size_t");
   arg1 = (char *)lua_tostring(L, 1);
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
-  result = (SpecDesc *)new SpecDesc((char const *)arg1,arg2);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_SpecDesc,1); SWIG_arg++; 
+  result = (Aubio::SpecDesc *)new Aubio::SpecDesc((char const *)arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__SpecDesc,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -9980,30 +10496,30 @@ fail:
 
 static int _wrap_SpecDesc_process(lua_State* L) {
   int SWIG_arg = 0;
-  SpecDesc *arg1 = (SpecDesc *) 0 ;
-  CVec *arg2 = 0 ;
-  FVec *arg3 = 0 ;
+  Aubio::SpecDesc *arg1 = (Aubio::SpecDesc *) 0 ;
+  Aubio::CVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
   
-  SWIG_check_num_args("SpecDesc::process",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SpecDesc::process",1,"SpecDesc *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SpecDesc::process",2,"CVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("SpecDesc::process",3,"FVec &");
+  SWIG_check_num_args("Aubio::SpecDesc::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SpecDesc::process",1,"Aubio::SpecDesc *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::SpecDesc::process",2,"Aubio::CVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::SpecDesc::process",3,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_SpecDesc,0))){
-    SWIG_fail_ptr("SpecDesc_process",1,SWIGTYPE_p_SpecDesc);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SpecDesc,0))){
+    SWIG_fail_ptr("SpecDesc_process",1,SWIGTYPE_p_Aubio__SpecDesc);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_CVec,0))){
-    SWIG_fail_ptr("SpecDesc_process",2,SWIGTYPE_p_CVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("SpecDesc_process",2,SWIGTYPE_p_Aubio__CVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("SpecDesc_process",3,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("SpecDesc_process",3,SWIGTYPE_p_Aubio__FVec);
   }
   
-  (arg1)->process((CVec const &)*arg2,*arg3);
+  (arg1)->process((Aubio::CVec const &)*arg2,*arg3);
   
   return SWIG_arg;
   
@@ -10016,7 +10532,7 @@ fail:
 
 
 static void swig_delete_SpecDesc(void *obj) {
-SpecDesc *arg1 = (SpecDesc *) obj;
+Aubio::SpecDesc *arg1 = (Aubio::SpecDesc *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_SpecDesc(lua_State *L) {
@@ -10062,19 +10578,19 @@ static swig_lua_namespace swig_SpecDesc_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_SpecDesc_bases[] = {0};
 static const char *swig_SpecDesc_base_names[] = {0};
-static swig_lua_class _wrap_class_SpecDesc = { "SpecDesc", "SpecDesc", &SWIGTYPE_p_SpecDesc,_proxy__wrap_new_SpecDesc, swig_delete_SpecDesc, swig_SpecDesc_methods, swig_SpecDesc_attributes, &swig_SpecDesc_Sf_SwigStatic, swig_SpecDesc_meta, swig_SpecDesc_bases, swig_SpecDesc_base_names };
+static swig_lua_class _wrap_class_SpecDesc = { "SpecDesc", "SpecDesc", &SWIGTYPE_p_Aubio__SpecDesc,_proxy__wrap_new_SpecDesc, swig_delete_SpecDesc, swig_SpecDesc_methods, swig_SpecDesc_attributes, &swig_SpecDesc_Sf_SwigStatic, swig_SpecDesc_meta, swig_SpecDesc_bases, swig_SpecDesc_base_names };
 
 static int _wrap_Pitch_p_set(lua_State* L) {
   int SWIG_arg = 0;
-  Pitch *arg1 = (Pitch *) 0 ;
+  Aubio::Pitch *arg1 = (Aubio::Pitch *) 0 ;
   aubio_pitch_t *arg2 = (aubio_pitch_t *) 0 ;
   
-  SWIG_check_num_args("Pitch::p",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pitch::p",1,"Pitch *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Pitch::p",2,"aubio_pitch_t *");
+  SWIG_check_num_args("Aubio::Pitch::p",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Pitch::p",1,"Aubio::Pitch *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::Pitch::p",2,"aubio_pitch_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pitch,0))){
-    SWIG_fail_ptr("Pitch_p_set",1,SWIGTYPE_p_Pitch);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Pitch,0))){
+    SWIG_fail_ptr("Pitch_p_set",1,SWIGTYPE_p_Aubio__Pitch);
   }
   
   
@@ -10096,14 +10612,14 @@ fail:
 
 static int _wrap_Pitch_p_get(lua_State* L) {
   int SWIG_arg = 0;
-  Pitch *arg1 = (Pitch *) 0 ;
+  Aubio::Pitch *arg1 = (Aubio::Pitch *) 0 ;
   aubio_pitch_t *result = 0 ;
   
-  SWIG_check_num_args("Pitch::p",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pitch::p",1,"Pitch *");
+  SWIG_check_num_args("Aubio::Pitch::p",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Pitch::p",1,"Aubio::Pitch *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pitch,0))){
-    SWIG_fail_ptr("Pitch_p_get",1,SWIGTYPE_p_Pitch);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Pitch,0))){
+    SWIG_fail_ptr("Pitch_p_get",1,SWIGTYPE_p_Aubio__Pitch);
   }
   
   result = (aubio_pitch_t *) ((arg1)->p);
@@ -10122,24 +10638,24 @@ static int _wrap_new_Pitch(lua_State* L) {
   int SWIG_arg = 0;
   char *arg1 = (char *) 0 ;
   size_t arg2 ;
-  size_t arg3 ;
-  size_t arg4 ;
-  Pitch *result = 0 ;
+  uint32_t arg3 ;
+  uint32_t arg4 ;
+  Aubio::Pitch *result = 0 ;
   
-  SWIG_check_num_args("Pitch::Pitch",4,4)
-  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Pitch::Pitch",1,"char const *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("Pitch::Pitch",2,"size_t");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("Pitch::Pitch",3,"size_t");
-  if(!lua_isnumber(L,4)) SWIG_fail_arg("Pitch::Pitch",4,"size_t");
+  SWIG_check_num_args("Aubio::Pitch::Pitch",4,4)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Aubio::Pitch::Pitch",1,"char const *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Pitch::Pitch",2,"size_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::Pitch::Pitch",3,"uint32_t");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("Aubio::Pitch::Pitch",4,"uint32_t");
   arg1 = (char *)lua_tostring(L, 1);
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
-  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative")
-  arg3 = (size_t)lua_tonumber(L, 3);
-  SWIG_contract_assert((lua_tonumber(L,4)>=0),"number must not be negative")
-  arg4 = (size_t)lua_tonumber(L, 4);
-  result = (Pitch *)new Pitch((char const *)arg1,arg2,arg3,arg4);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Pitch,1); SWIG_arg++; 
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
+  arg3 = (uint32_t)lua_tonumber(L, 3);
+  SWIG_contract_assert((lua_tonumber(L,4)>=0),"number must not be negative");
+  arg4 = (uint32_t)lua_tonumber(L, 4);
+  result = (Aubio::Pitch *)new Aubio::Pitch((char const *)arg1,arg2,arg3,arg4);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__Pitch,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -10152,30 +10668,30 @@ fail:
 
 static int _wrap_Pitch_process(lua_State* L) {
   int SWIG_arg = 0;
-  Pitch *arg1 = (Pitch *) 0 ;
-  FVec *arg2 = 0 ;
-  FVec *arg3 = 0 ;
+  Aubio::Pitch *arg1 = (Aubio::Pitch *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
   
-  SWIG_check_num_args("Pitch::process",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pitch::process",1,"Pitch *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Pitch::process",2,"FVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Pitch::process",3,"FVec &");
+  SWIG_check_num_args("Aubio::Pitch::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Pitch::process",1,"Aubio::Pitch *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Pitch::process",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::Pitch::process",3,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pitch,0))){
-    SWIG_fail_ptr("Pitch_process",1,SWIGTYPE_p_Pitch);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Pitch,0))){
+    SWIG_fail_ptr("Pitch_process",1,SWIGTYPE_p_Aubio__Pitch);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("Pitch_process",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Pitch_process",2,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("Pitch_process",3,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Pitch_process",3,SWIGTYPE_p_Aubio__FVec);
   }
   
-  (arg1)->process((FVec const &)*arg2,*arg3);
+  (arg1)->process((Aubio::FVec const &)*arg2,*arg3);
   
   return SWIG_arg;
   
@@ -10189,16 +10705,16 @@ fail:
 
 static int _wrap_Pitch_set_tolerance(lua_State* L) {
   int SWIG_arg = 0;
-  Pitch *arg1 = (Pitch *) 0 ;
+  Aubio::Pitch *arg1 = (Aubio::Pitch *) 0 ;
   double arg2 ;
   size_t result;
   
-  SWIG_check_num_args("Pitch::set_tolerance",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pitch::set_tolerance",1,"Pitch *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("Pitch::set_tolerance",2,"double");
+  SWIG_check_num_args("Aubio::Pitch::set_tolerance",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Pitch::set_tolerance",1,"Aubio::Pitch *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Pitch::set_tolerance",2,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pitch,0))){
-    SWIG_fail_ptr("Pitch_set_tolerance",1,SWIGTYPE_p_Pitch);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Pitch,0))){
+    SWIG_fail_ptr("Pitch_set_tolerance",1,SWIGTYPE_p_Aubio__Pitch);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
@@ -10216,14 +10732,14 @@ fail:
 
 static int _wrap_Pitch_get_tolerance(lua_State* L) {
   int SWIG_arg = 0;
-  Pitch *arg1 = (Pitch *) 0 ;
+  Aubio::Pitch *arg1 = (Aubio::Pitch *) 0 ;
   double result;
   
-  SWIG_check_num_args("Pitch::get_tolerance",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pitch::get_tolerance",1,"Pitch *");
+  SWIG_check_num_args("Aubio::Pitch::get_tolerance",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Pitch::get_tolerance",1,"Aubio::Pitch *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pitch,0))){
-    SWIG_fail_ptr("Pitch_get_tolerance",1,SWIGTYPE_p_Pitch);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Pitch,0))){
+    SWIG_fail_ptr("Pitch_get_tolerance",1,SWIGTYPE_p_Aubio__Pitch);
   }
   
   result = (double)(arg1)->get_tolerance();
@@ -10240,16 +10756,16 @@ fail:
 
 static int _wrap_Pitch_set_unit(lua_State* L) {
   int SWIG_arg = 0;
-  Pitch *arg1 = (Pitch *) 0 ;
+  Aubio::Pitch *arg1 = (Aubio::Pitch *) 0 ;
   char *arg2 = (char *) 0 ;
   size_t result;
   
-  SWIG_check_num_args("Pitch::set_unit",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pitch::set_unit",1,"Pitch *");
-  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Pitch::set_unit",2,"char const *");
+  SWIG_check_num_args("Aubio::Pitch::set_unit",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Pitch::set_unit",1,"Aubio::Pitch *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Aubio::Pitch::set_unit",2,"char const *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pitch,0))){
-    SWIG_fail_ptr("Pitch_set_unit",1,SWIGTYPE_p_Pitch);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Pitch,0))){
+    SWIG_fail_ptr("Pitch_set_unit",1,SWIGTYPE_p_Aubio__Pitch);
   }
   
   arg2 = (char *)lua_tostring(L, 2);
@@ -10267,20 +10783,27 @@ fail:
 
 static int _wrap_Pitch_set_silence(lua_State* L) {
   int SWIG_arg = 0;
-  Pitch *arg1 = (Pitch *) 0 ;
-  double arg2 ;
+  Aubio::Pitch *arg1 = (Aubio::Pitch *) 0 ;
+  Aubio::Pitch *arg2 = 0 ;
+  double arg3 ;
   size_t result;
   
-  SWIG_check_num_args("Pitch::set_silence",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pitch::set_silence",1,"Pitch *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("Pitch::set_silence",2,"double");
+  SWIG_check_num_args("Aubio::Pitch::set_silence",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Pitch::set_silence",1,"Aubio::Pitch *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Pitch::set_silence",2,"Aubio::Pitch const &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::Pitch::set_silence",3,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pitch,0))){
-    SWIG_fail_ptr("Pitch_set_silence",1,SWIGTYPE_p_Pitch);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Pitch,0))){
+    SWIG_fail_ptr("Pitch_set_silence",1,SWIGTYPE_p_Aubio__Pitch);
   }
   
-  arg2 = (double)lua_tonumber(L, 2);
-  result = (arg1)->set_silence(arg2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__Pitch,0))){
+    SWIG_fail_ptr("Pitch_set_silence",2,SWIGTYPE_p_Aubio__Pitch);
+  }
+  
+  arg3 = (double)lua_tonumber(L, 3);
+  result = (arg1)->set_silence((Aubio::Pitch const &)*arg2,arg3);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -10294,14 +10817,14 @@ fail:
 
 static int _wrap_Pitch_get_silence(lua_State* L) {
   int SWIG_arg = 0;
-  Pitch *arg1 = (Pitch *) 0 ;
+  Aubio::Pitch *arg1 = (Aubio::Pitch *) 0 ;
   double result;
   
-  SWIG_check_num_args("Pitch::get_silence",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pitch::get_silence",1,"Pitch *");
+  SWIG_check_num_args("Aubio::Pitch::get_silence",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Pitch::get_silence",1,"Aubio::Pitch *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pitch,0))){
-    SWIG_fail_ptr("Pitch_get_silence",1,SWIGTYPE_p_Pitch);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Pitch,0))){
+    SWIG_fail_ptr("Pitch_get_silence",1,SWIGTYPE_p_Aubio__Pitch);
   }
   
   result = (double)(arg1)->get_silence();
@@ -10318,14 +10841,14 @@ fail:
 
 static int _wrap_Pitch_get_confidence(lua_State* L) {
   int SWIG_arg = 0;
-  Pitch *arg1 = (Pitch *) 0 ;
+  Aubio::Pitch *arg1 = (Aubio::Pitch *) 0 ;
   double result;
   
-  SWIG_check_num_args("Pitch::get_confidence",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Pitch::get_confidence",1,"Pitch *");
+  SWIG_check_num_args("Aubio::Pitch::get_confidence",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Pitch::get_confidence",1,"Aubio::Pitch *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Pitch,0))){
-    SWIG_fail_ptr("Pitch_get_confidence",1,SWIGTYPE_p_Pitch);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Pitch,0))){
+    SWIG_fail_ptr("Pitch_get_confidence",1,SWIGTYPE_p_Aubio__Pitch);
   }
   
   result = (double)(arg1)->get_confidence();
@@ -10341,7 +10864,7 @@ fail:
 
 
 static void swig_delete_Pitch(void *obj) {
-Pitch *arg1 = (Pitch *) obj;
+Aubio::Pitch *arg1 = (Aubio::Pitch *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_Pitch(lua_State *L) {
@@ -10393,19 +10916,1470 @@ static swig_lua_namespace swig_Pitch_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_Pitch_bases[] = {0};
 static const char *swig_Pitch_base_names[] = {0};
-static swig_lua_class _wrap_class_Pitch = { "Pitch", "Pitch", &SWIGTYPE_p_Pitch,_proxy__wrap_new_Pitch, swig_delete_Pitch, swig_Pitch_methods, swig_Pitch_attributes, &swig_Pitch_Sf_SwigStatic, swig_Pitch_meta, swig_Pitch_bases, swig_Pitch_base_names };
+static swig_lua_class _wrap_class_Pitch = { "Pitch", "Pitch", &SWIGTYPE_p_Aubio__Pitch,_proxy__wrap_new_Pitch, swig_delete_Pitch, swig_Pitch_methods, swig_Pitch_attributes, &swig_Pitch_Sf_SwigStatic, swig_Pitch_meta, swig_Pitch_bases, swig_Pitch_base_names };
+
+static int _wrap_PitchFComb_pitch_set(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchFComb *arg1 = (Aubio::PitchFComb *) 0 ;
+  aubio_pitchfcomb_t *arg2 = (aubio_pitchfcomb_t *) 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchFComb::pitch",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchFComb::pitch",1,"Aubio::PitchFComb *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::PitchFComb::pitch",2,"aubio_pitchfcomb_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchFComb,0))){
+    SWIG_fail_ptr("PitchFComb_pitch_set",1,SWIGTYPE_p_Aubio__PitchFComb);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_aubio_pitchfcomb_t,SWIG_POINTER_DISOWN))){
+    SWIG_fail_ptr("PitchFComb_pitch_set",2,SWIGTYPE_p_aubio_pitchfcomb_t);
+  }
+  
+  if (arg1) (arg1)->pitch = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchFComb_pitch_get(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchFComb *arg1 = (Aubio::PitchFComb *) 0 ;
+  aubio_pitchfcomb_t *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchFComb::pitch",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchFComb::pitch",1,"Aubio::PitchFComb *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchFComb,0))){
+    SWIG_fail_ptr("PitchFComb_pitch_get",1,SWIGTYPE_p_Aubio__PitchFComb);
+  }
+  
+  result = (aubio_pitchfcomb_t *) ((arg1)->pitch);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_aubio_pitchfcomb_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PitchFComb(lua_State* L) {
+  int SWIG_arg = 0;
+  uint32_t arg1 ;
+  uint32_t arg2 ;
+  Aubio::PitchFComb *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchFComb::PitchFComb",2,2)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::PitchFComb::PitchFComb",1,"uint32_t");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::PitchFComb::PitchFComb",2,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (Aubio::PitchFComb *)new Aubio::PitchFComb(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__PitchFComb,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchFComb_process(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchFComb *arg1 = (Aubio::PitchFComb *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchFComb::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchFComb::process",1,"Aubio::PitchFComb *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::PitchFComb::process",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::PitchFComb::process",3,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchFComb,0))){
+    SWIG_fail_ptr("PitchFComb_process",1,SWIGTYPE_p_Aubio__PitchFComb);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("PitchFComb_process",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("PitchFComb_process",3,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  (arg1)->process((Aubio::FVec const &)*arg2,*arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_PitchFComb(void *obj) {
+Aubio::PitchFComb *arg1 = (Aubio::PitchFComb *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_PitchFComb(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_PitchFComb);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_PitchFComb_attributes[] = {
+    { "pitch", _wrap_PitchFComb_pitch_get, _wrap_PitchFComb_pitch_set },
+    {0,0,0}
+};
+static swig_lua_method swig_PitchFComb_methods[]= {
+    { "process", _wrap_PitchFComb_process},
+    {0,0}
+};
+static swig_lua_method swig_PitchFComb_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_PitchFComb_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_PitchFComb_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_PitchFComb_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_PitchFComb_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_PitchFComb_Sf_SwigStatic = {
+    "PitchFComb",
+    swig_PitchFComb_Sf_SwigStatic_methods,
+    swig_PitchFComb_Sf_SwigStatic_attributes,
+    swig_PitchFComb_Sf_SwigStatic_constants,
+    swig_PitchFComb_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_PitchFComb_bases[] = {0};
+static const char *swig_PitchFComb_base_names[] = {0};
+static swig_lua_class _wrap_class_PitchFComb = { "PitchFComb", "PitchFComb", &SWIGTYPE_p_Aubio__PitchFComb,_proxy__wrap_new_PitchFComb, swig_delete_PitchFComb, swig_PitchFComb_methods, swig_PitchFComb_attributes, &swig_PitchFComb_Sf_SwigStatic, swig_PitchFComb_meta, swig_PitchFComb_bases, swig_PitchFComb_base_names };
+
+static int _wrap_PitchMComb_pitch_set(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchMComb *arg1 = (Aubio::PitchMComb *) 0 ;
+  aubio_pitchmcomb_t *arg2 = (aubio_pitchmcomb_t *) 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchMComb::pitch",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchMComb::pitch",1,"Aubio::PitchMComb *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::PitchMComb::pitch",2,"aubio_pitchmcomb_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchMComb,0))){
+    SWIG_fail_ptr("PitchMComb_pitch_set",1,SWIGTYPE_p_Aubio__PitchMComb);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_aubio_pitchmcomb_t,SWIG_POINTER_DISOWN))){
+    SWIG_fail_ptr("PitchMComb_pitch_set",2,SWIGTYPE_p_aubio_pitchmcomb_t);
+  }
+  
+  if (arg1) (arg1)->pitch = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchMComb_pitch_get(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchMComb *arg1 = (Aubio::PitchMComb *) 0 ;
+  aubio_pitchmcomb_t *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchMComb::pitch",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchMComb::pitch",1,"Aubio::PitchMComb *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchMComb,0))){
+    SWIG_fail_ptr("PitchMComb_pitch_get",1,SWIGTYPE_p_Aubio__PitchMComb);
+  }
+  
+  result = (aubio_pitchmcomb_t *) ((arg1)->pitch);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_aubio_pitchmcomb_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PitchMComb(lua_State* L) {
+  int SWIG_arg = 0;
+  uint32_t arg1 ;
+  uint32_t arg2 ;
+  Aubio::PitchMComb *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchMComb::PitchMComb",2,2)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::PitchMComb::PitchMComb",1,"uint32_t");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::PitchMComb::PitchMComb",2,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (Aubio::PitchMComb *)new Aubio::PitchMComb(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__PitchMComb,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchMComb_process(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchMComb *arg1 = (Aubio::PitchMComb *) 0 ;
+  Aubio::CVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchMComb::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchMComb::process",1,"Aubio::PitchMComb *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::PitchMComb::process",2,"Aubio::CVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::PitchMComb::process",3,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchMComb,0))){
+    SWIG_fail_ptr("PitchMComb_process",1,SWIGTYPE_p_Aubio__PitchMComb);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__CVec,0))){
+    SWIG_fail_ptr("PitchMComb_process",2,SWIGTYPE_p_Aubio__CVec);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("PitchMComb_process",3,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  (arg1)->process((Aubio::CVec const &)*arg2,*arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_PitchMComb(void *obj) {
+Aubio::PitchMComb *arg1 = (Aubio::PitchMComb *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_PitchMComb(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_PitchMComb);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_PitchMComb_attributes[] = {
+    { "pitch", _wrap_PitchMComb_pitch_get, _wrap_PitchMComb_pitch_set },
+    {0,0,0}
+};
+static swig_lua_method swig_PitchMComb_methods[]= {
+    { "process", _wrap_PitchMComb_process},
+    {0,0}
+};
+static swig_lua_method swig_PitchMComb_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_PitchMComb_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_PitchMComb_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_PitchMComb_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_PitchMComb_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_PitchMComb_Sf_SwigStatic = {
+    "PitchMComb",
+    swig_PitchMComb_Sf_SwigStatic_methods,
+    swig_PitchMComb_Sf_SwigStatic_attributes,
+    swig_PitchMComb_Sf_SwigStatic_constants,
+    swig_PitchMComb_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_PitchMComb_bases[] = {0};
+static const char *swig_PitchMComb_base_names[] = {0};
+static swig_lua_class _wrap_class_PitchMComb = { "PitchMComb", "PitchMComb", &SWIGTYPE_p_Aubio__PitchMComb,_proxy__wrap_new_PitchMComb, swig_delete_PitchMComb, swig_PitchMComb_methods, swig_PitchMComb_attributes, &swig_PitchMComb_Sf_SwigStatic, swig_PitchMComb_meta, swig_PitchMComb_bases, swig_PitchMComb_base_names };
+
+static int _wrap_PitchSchmitt_pitch_set(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchSchmitt *arg1 = (Aubio::PitchSchmitt *) 0 ;
+  aubio_pitchschmitt_t *arg2 = (aubio_pitchschmitt_t *) 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchSchmitt::pitch",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchSchmitt::pitch",1,"Aubio::PitchSchmitt *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::PitchSchmitt::pitch",2,"aubio_pitchschmitt_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchSchmitt,0))){
+    SWIG_fail_ptr("PitchSchmitt_pitch_set",1,SWIGTYPE_p_Aubio__PitchSchmitt);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_aubio_pitchschmitt_t,SWIG_POINTER_DISOWN))){
+    SWIG_fail_ptr("PitchSchmitt_pitch_set",2,SWIGTYPE_p_aubio_pitchschmitt_t);
+  }
+  
+  if (arg1) (arg1)->pitch = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchSchmitt_pitch_get(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchSchmitt *arg1 = (Aubio::PitchSchmitt *) 0 ;
+  aubio_pitchschmitt_t *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchSchmitt::pitch",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchSchmitt::pitch",1,"Aubio::PitchSchmitt *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchSchmitt,0))){
+    SWIG_fail_ptr("PitchSchmitt_pitch_get",1,SWIGTYPE_p_Aubio__PitchSchmitt);
+  }
+  
+  result = (aubio_pitchschmitt_t *) ((arg1)->pitch);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_aubio_pitchschmitt_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PitchSchmitt(lua_State* L) {
+  int SWIG_arg = 0;
+  uint32_t arg1 ;
+  Aubio::PitchSchmitt *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchSchmitt::PitchSchmitt",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::PitchSchmitt::PitchSchmitt",1,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  result = (Aubio::PitchSchmitt *)new Aubio::PitchSchmitt(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__PitchSchmitt,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchSchmitt_process(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchSchmitt *arg1 = (Aubio::PitchSchmitt *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchSchmitt::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchSchmitt::process",1,"Aubio::PitchSchmitt *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::PitchSchmitt::process",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::PitchSchmitt::process",3,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchSchmitt,0))){
+    SWIG_fail_ptr("PitchSchmitt_process",1,SWIGTYPE_p_Aubio__PitchSchmitt);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("PitchSchmitt_process",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("PitchSchmitt_process",3,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  (arg1)->process((Aubio::FVec const &)*arg2,*arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_PitchSchmitt(void *obj) {
+Aubio::PitchSchmitt *arg1 = (Aubio::PitchSchmitt *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_PitchSchmitt(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_PitchSchmitt);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_PitchSchmitt_attributes[] = {
+    { "pitch", _wrap_PitchSchmitt_pitch_get, _wrap_PitchSchmitt_pitch_set },
+    {0,0,0}
+};
+static swig_lua_method swig_PitchSchmitt_methods[]= {
+    { "process", _wrap_PitchSchmitt_process},
+    {0,0}
+};
+static swig_lua_method swig_PitchSchmitt_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_PitchSchmitt_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_PitchSchmitt_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_PitchSchmitt_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_PitchSchmitt_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_PitchSchmitt_Sf_SwigStatic = {
+    "PitchSchmitt",
+    swig_PitchSchmitt_Sf_SwigStatic_methods,
+    swig_PitchSchmitt_Sf_SwigStatic_attributes,
+    swig_PitchSchmitt_Sf_SwigStatic_constants,
+    swig_PitchSchmitt_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_PitchSchmitt_bases[] = {0};
+static const char *swig_PitchSchmitt_base_names[] = {0};
+static swig_lua_class _wrap_class_PitchSchmitt = { "PitchSchmitt", "PitchSchmitt", &SWIGTYPE_p_Aubio__PitchSchmitt,_proxy__wrap_new_PitchSchmitt, swig_delete_PitchSchmitt, swig_PitchSchmitt_methods, swig_PitchSchmitt_attributes, &swig_PitchSchmitt_Sf_SwigStatic, swig_PitchSchmitt_meta, swig_PitchSchmitt_bases, swig_PitchSchmitt_base_names };
+
+static int _wrap_PitchSpecACF_pitch_set(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchSpecACF *arg1 = (Aubio::PitchSpecACF *) 0 ;
+  aubio_pitchspecacf_t *arg2 = (aubio_pitchspecacf_t *) 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchSpecACF::pitch",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchSpecACF::pitch",1,"Aubio::PitchSpecACF *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::PitchSpecACF::pitch",2,"aubio_pitchspecacf_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchSpecACF,0))){
+    SWIG_fail_ptr("PitchSpecACF_pitch_set",1,SWIGTYPE_p_Aubio__PitchSpecACF);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_aubio_pitchspecacf_t,SWIG_POINTER_DISOWN))){
+    SWIG_fail_ptr("PitchSpecACF_pitch_set",2,SWIGTYPE_p_aubio_pitchspecacf_t);
+  }
+  
+  if (arg1) (arg1)->pitch = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchSpecACF_pitch_get(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchSpecACF *arg1 = (Aubio::PitchSpecACF *) 0 ;
+  aubio_pitchspecacf_t *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchSpecACF::pitch",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchSpecACF::pitch",1,"Aubio::PitchSpecACF *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchSpecACF,0))){
+    SWIG_fail_ptr("PitchSpecACF_pitch_get",1,SWIGTYPE_p_Aubio__PitchSpecACF);
+  }
+  
+  result = (aubio_pitchspecacf_t *) ((arg1)->pitch);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_aubio_pitchspecacf_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PitchSpecACF(lua_State* L) {
+  int SWIG_arg = 0;
+  uint32_t arg1 ;
+  Aubio::PitchSpecACF *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchSpecACF::PitchSpecACF",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::PitchSpecACF::PitchSpecACF",1,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  result = (Aubio::PitchSpecACF *)new Aubio::PitchSpecACF(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__PitchSpecACF,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchSpecACF_get_tolerance(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchSpecACF *arg1 = (Aubio::PitchSpecACF *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::PitchSpecACF::get_tolerance",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchSpecACF::get_tolerance",1,"Aubio::PitchSpecACF *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchSpecACF,0))){
+    SWIG_fail_ptr("PitchSpecACF_get_tolerance",1,SWIGTYPE_p_Aubio__PitchSpecACF);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_tolerance();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchSpecACF_set_tolerance(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchSpecACF *arg1 = (Aubio::PitchSpecACF *) 0 ;
+  Aubio::Sample arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::PitchSpecACF::set_tolerance",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchSpecACF::set_tolerance",1,"Aubio::PitchSpecACF *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::PitchSpecACF::set_tolerance",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchSpecACF,0))){
+    SWIG_fail_ptr("PitchSpecACF_set_tolerance",1,SWIGTYPE_p_Aubio__PitchSpecACF);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->set_tolerance(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchSpecACF_get_confidence(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchSpecACF *arg1 = (Aubio::PitchSpecACF *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::PitchSpecACF::get_confidence",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchSpecACF::get_confidence",1,"Aubio::PitchSpecACF *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchSpecACF,0))){
+    SWIG_fail_ptr("PitchSpecACF_get_confidence",1,SWIGTYPE_p_Aubio__PitchSpecACF);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_confidence();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchSpecACF_process(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchSpecACF *arg1 = (Aubio::PitchSpecACF *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchSpecACF::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchSpecACF::process",1,"Aubio::PitchSpecACF *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::PitchSpecACF::process",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::PitchSpecACF::process",3,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchSpecACF,0))){
+    SWIG_fail_ptr("PitchSpecACF_process",1,SWIGTYPE_p_Aubio__PitchSpecACF);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("PitchSpecACF_process",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("PitchSpecACF_process",3,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  (arg1)->process((Aubio::FVec const &)*arg2,*arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_PitchSpecACF(void *obj) {
+Aubio::PitchSpecACF *arg1 = (Aubio::PitchSpecACF *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_PitchSpecACF(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_PitchSpecACF);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_PitchSpecACF_attributes[] = {
+    { "pitch", _wrap_PitchSpecACF_pitch_get, _wrap_PitchSpecACF_pitch_set },
+    {0,0,0}
+};
+static swig_lua_method swig_PitchSpecACF_methods[]= {
+    { "get_tolerance", _wrap_PitchSpecACF_get_tolerance},
+    { "set_tolerance", _wrap_PitchSpecACF_set_tolerance},
+    { "get_confidence", _wrap_PitchSpecACF_get_confidence},
+    { "process", _wrap_PitchSpecACF_process},
+    {0,0}
+};
+static swig_lua_method swig_PitchSpecACF_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_PitchSpecACF_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_PitchSpecACF_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_PitchSpecACF_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_PitchSpecACF_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_PitchSpecACF_Sf_SwigStatic = {
+    "PitchSpecACF",
+    swig_PitchSpecACF_Sf_SwigStatic_methods,
+    swig_PitchSpecACF_Sf_SwigStatic_attributes,
+    swig_PitchSpecACF_Sf_SwigStatic_constants,
+    swig_PitchSpecACF_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_PitchSpecACF_bases[] = {0};
+static const char *swig_PitchSpecACF_base_names[] = {0};
+static swig_lua_class _wrap_class_PitchSpecACF = { "PitchSpecACF", "PitchSpecACF", &SWIGTYPE_p_Aubio__PitchSpecACF,_proxy__wrap_new_PitchSpecACF, swig_delete_PitchSpecACF, swig_PitchSpecACF_methods, swig_PitchSpecACF_attributes, &swig_PitchSpecACF_Sf_SwigStatic, swig_PitchSpecACF_meta, swig_PitchSpecACF_bases, swig_PitchSpecACF_base_names };
+
+static int _wrap_PitchYin_pitch_set(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchYin *arg1 = (Aubio::PitchYin *) 0 ;
+  aubio_pitchyin_t *arg2 = (aubio_pitchyin_t *) 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchYin::pitch",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchYin::pitch",1,"Aubio::PitchYin *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::PitchYin::pitch",2,"aubio_pitchyin_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchYin,0))){
+    SWIG_fail_ptr("PitchYin_pitch_set",1,SWIGTYPE_p_Aubio__PitchYin);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_aubio_pitchyin_t,SWIG_POINTER_DISOWN))){
+    SWIG_fail_ptr("PitchYin_pitch_set",2,SWIGTYPE_p_aubio_pitchyin_t);
+  }
+  
+  if (arg1) (arg1)->pitch = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchYin_pitch_get(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchYin *arg1 = (Aubio::PitchYin *) 0 ;
+  aubio_pitchyin_t *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchYin::pitch",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchYin::pitch",1,"Aubio::PitchYin *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchYin,0))){
+    SWIG_fail_ptr("PitchYin_pitch_get",1,SWIGTYPE_p_Aubio__PitchYin);
+  }
+  
+  result = (aubio_pitchyin_t *) ((arg1)->pitch);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_aubio_pitchyin_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PitchYin(lua_State* L) {
+  int SWIG_arg = 0;
+  uint32_t arg1 ;
+  Aubio::PitchYin *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchYin::PitchYin",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::PitchYin::PitchYin",1,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  result = (Aubio::PitchYin *)new Aubio::PitchYin(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__PitchYin,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchYin_get_tolerance(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchYin *arg1 = (Aubio::PitchYin *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::PitchYin::get_tolerance",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchYin::get_tolerance",1,"Aubio::PitchYin *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchYin,0))){
+    SWIG_fail_ptr("PitchYin_get_tolerance",1,SWIGTYPE_p_Aubio__PitchYin);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_tolerance();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchYin_set_tolerance(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchYin *arg1 = (Aubio::PitchYin *) 0 ;
+  Aubio::Sample arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::PitchYin::set_tolerance",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchYin::set_tolerance",1,"Aubio::PitchYin *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::PitchYin::set_tolerance",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchYin,0))){
+    SWIG_fail_ptr("PitchYin_set_tolerance",1,SWIGTYPE_p_Aubio__PitchYin);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->set_tolerance(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchYin_get_confidence(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchYin *arg1 = (Aubio::PitchYin *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::PitchYin::get_confidence",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchYin::get_confidence",1,"Aubio::PitchYin *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchYin,0))){
+    SWIG_fail_ptr("PitchYin_get_confidence",1,SWIGTYPE_p_Aubio__PitchYin);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_confidence();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchYin_process(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchYin *arg1 = (Aubio::PitchYin *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchYin::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchYin::process",1,"Aubio::PitchYin *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::PitchYin::process",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::PitchYin::process",3,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchYin,0))){
+    SWIG_fail_ptr("PitchYin_process",1,SWIGTYPE_p_Aubio__PitchYin);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("PitchYin_process",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("PitchYin_process",3,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  (arg1)->process((Aubio::FVec const &)*arg2,*arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_PitchYin(void *obj) {
+Aubio::PitchYin *arg1 = (Aubio::PitchYin *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_PitchYin(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_PitchYin);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_PitchYin_attributes[] = {
+    { "pitch", _wrap_PitchYin_pitch_get, _wrap_PitchYin_pitch_set },
+    {0,0,0}
+};
+static swig_lua_method swig_PitchYin_methods[]= {
+    { "get_tolerance", _wrap_PitchYin_get_tolerance},
+    { "set_tolerance", _wrap_PitchYin_set_tolerance},
+    { "get_confidence", _wrap_PitchYin_get_confidence},
+    { "process", _wrap_PitchYin_process},
+    {0,0}
+};
+static swig_lua_method swig_PitchYin_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_PitchYin_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_PitchYin_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_PitchYin_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_PitchYin_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_PitchYin_Sf_SwigStatic = {
+    "PitchYin",
+    swig_PitchYin_Sf_SwigStatic_methods,
+    swig_PitchYin_Sf_SwigStatic_attributes,
+    swig_PitchYin_Sf_SwigStatic_constants,
+    swig_PitchYin_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_PitchYin_bases[] = {0};
+static const char *swig_PitchYin_base_names[] = {0};
+static swig_lua_class _wrap_class_PitchYin = { "PitchYin", "PitchYin", &SWIGTYPE_p_Aubio__PitchYin,_proxy__wrap_new_PitchYin, swig_delete_PitchYin, swig_PitchYin_methods, swig_PitchYin_attributes, &swig_PitchYin_Sf_SwigStatic, swig_PitchYin_meta, swig_PitchYin_bases, swig_PitchYin_base_names };
+
+static int _wrap_PitchYinFast_pitch_set(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchYinFast *arg1 = (Aubio::PitchYinFast *) 0 ;
+  aubio_pitchyinfast_t *arg2 = (aubio_pitchyinfast_t *) 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchYinFast::pitch",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchYinFast::pitch",1,"Aubio::PitchYinFast *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::PitchYinFast::pitch",2,"aubio_pitchyinfast_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchYinFast,0))){
+    SWIG_fail_ptr("PitchYinFast_pitch_set",1,SWIGTYPE_p_Aubio__PitchYinFast);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_aubio_pitchyinfast_t,SWIG_POINTER_DISOWN))){
+    SWIG_fail_ptr("PitchYinFast_pitch_set",2,SWIGTYPE_p_aubio_pitchyinfast_t);
+  }
+  
+  if (arg1) (arg1)->pitch = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchYinFast_pitch_get(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchYinFast *arg1 = (Aubio::PitchYinFast *) 0 ;
+  aubio_pitchyinfast_t *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchYinFast::pitch",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchYinFast::pitch",1,"Aubio::PitchYinFast *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchYinFast,0))){
+    SWIG_fail_ptr("PitchYinFast_pitch_get",1,SWIGTYPE_p_Aubio__PitchYinFast);
+  }
+  
+  result = (aubio_pitchyinfast_t *) ((arg1)->pitch);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_aubio_pitchyinfast_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PitchYinFast(lua_State* L) {
+  int SWIG_arg = 0;
+  uint32_t arg1 ;
+  Aubio::PitchYinFast *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchYinFast::PitchYinFast",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::PitchYinFast::PitchYinFast",1,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  result = (Aubio::PitchYinFast *)new Aubio::PitchYinFast(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__PitchYinFast,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchYinFast_get_tolerance(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchYinFast *arg1 = (Aubio::PitchYinFast *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::PitchYinFast::get_tolerance",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchYinFast::get_tolerance",1,"Aubio::PitchYinFast *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchYinFast,0))){
+    SWIG_fail_ptr("PitchYinFast_get_tolerance",1,SWIGTYPE_p_Aubio__PitchYinFast);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_tolerance();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchYinFast_set_tolerance(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchYinFast *arg1 = (Aubio::PitchYinFast *) 0 ;
+  Aubio::Sample arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::PitchYinFast::set_tolerance",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchYinFast::set_tolerance",1,"Aubio::PitchYinFast *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::PitchYinFast::set_tolerance",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchYinFast,0))){
+    SWIG_fail_ptr("PitchYinFast_set_tolerance",1,SWIGTYPE_p_Aubio__PitchYinFast);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->set_tolerance(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchYinFast_get_confidence(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchYinFast *arg1 = (Aubio::PitchYinFast *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::PitchYinFast::get_confidence",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchYinFast::get_confidence",1,"Aubio::PitchYinFast *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchYinFast,0))){
+    SWIG_fail_ptr("PitchYinFast_get_confidence",1,SWIGTYPE_p_Aubio__PitchYinFast);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_confidence();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchYinFast_process(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchYinFast *arg1 = (Aubio::PitchYinFast *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchYinFast::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchYinFast::process",1,"Aubio::PitchYinFast *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::PitchYinFast::process",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::PitchYinFast::process",3,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchYinFast,0))){
+    SWIG_fail_ptr("PitchYinFast_process",1,SWIGTYPE_p_Aubio__PitchYinFast);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("PitchYinFast_process",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("PitchYinFast_process",3,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  (arg1)->process((Aubio::FVec const &)*arg2,*arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_PitchYinFast(void *obj) {
+Aubio::PitchYinFast *arg1 = (Aubio::PitchYinFast *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_PitchYinFast(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_PitchYinFast);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_PitchYinFast_attributes[] = {
+    { "pitch", _wrap_PitchYinFast_pitch_get, _wrap_PitchYinFast_pitch_set },
+    {0,0,0}
+};
+static swig_lua_method swig_PitchYinFast_methods[]= {
+    { "get_tolerance", _wrap_PitchYinFast_get_tolerance},
+    { "set_tolerance", _wrap_PitchYinFast_set_tolerance},
+    { "get_confidence", _wrap_PitchYinFast_get_confidence},
+    { "process", _wrap_PitchYinFast_process},
+    {0,0}
+};
+static swig_lua_method swig_PitchYinFast_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_PitchYinFast_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_PitchYinFast_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_PitchYinFast_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_PitchYinFast_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_PitchYinFast_Sf_SwigStatic = {
+    "PitchYinFast",
+    swig_PitchYinFast_Sf_SwigStatic_methods,
+    swig_PitchYinFast_Sf_SwigStatic_attributes,
+    swig_PitchYinFast_Sf_SwigStatic_constants,
+    swig_PitchYinFast_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_PitchYinFast_bases[] = {0};
+static const char *swig_PitchYinFast_base_names[] = {0};
+static swig_lua_class _wrap_class_PitchYinFast = { "PitchYinFast", "PitchYinFast", &SWIGTYPE_p_Aubio__PitchYinFast,_proxy__wrap_new_PitchYinFast, swig_delete_PitchYinFast, swig_PitchYinFast_methods, swig_PitchYinFast_attributes, &swig_PitchYinFast_Sf_SwigStatic, swig_PitchYinFast_meta, swig_PitchYinFast_bases, swig_PitchYinFast_base_names };
+
+static int _wrap_PitchYinFFT_pitch_set(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchYinFFT *arg1 = (Aubio::PitchYinFFT *) 0 ;
+  aubio_pitchyinfft_t *arg2 = (aubio_pitchyinfft_t *) 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchYinFFT::pitch",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchYinFFT::pitch",1,"Aubio::PitchYinFFT *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::PitchYinFFT::pitch",2,"aubio_pitchyinfft_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchYinFFT,0))){
+    SWIG_fail_ptr("PitchYinFFT_pitch_set",1,SWIGTYPE_p_Aubio__PitchYinFFT);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_aubio_pitchyinfft_t,SWIG_POINTER_DISOWN))){
+    SWIG_fail_ptr("PitchYinFFT_pitch_set",2,SWIGTYPE_p_aubio_pitchyinfft_t);
+  }
+  
+  if (arg1) (arg1)->pitch = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchYinFFT_pitch_get(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchYinFFT *arg1 = (Aubio::PitchYinFFT *) 0 ;
+  aubio_pitchyinfft_t *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchYinFFT::pitch",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchYinFFT::pitch",1,"Aubio::PitchYinFFT *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchYinFFT,0))){
+    SWIG_fail_ptr("PitchYinFFT_pitch_get",1,SWIGTYPE_p_Aubio__PitchYinFFT);
+  }
+  
+  result = (aubio_pitchyinfft_t *) ((arg1)->pitch);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_aubio_pitchyinfft_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PitchYinFFT(lua_State* L) {
+  int SWIG_arg = 0;
+  uint32_t arg1 ;
+  uint32_t arg2 ;
+  Aubio::PitchYinFFT *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchYinFFT::PitchYinFFT",2,2)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::PitchYinFFT::PitchYinFFT",1,"uint32_t");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::PitchYinFFT::PitchYinFFT",2,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (Aubio::PitchYinFFT *)new Aubio::PitchYinFFT(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__PitchYinFFT,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchYinFFT_get_tolerance(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchYinFFT *arg1 = (Aubio::PitchYinFFT *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::PitchYinFFT::get_tolerance",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchYinFFT::get_tolerance",1,"Aubio::PitchYinFFT *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchYinFFT,0))){
+    SWIG_fail_ptr("PitchYinFFT_get_tolerance",1,SWIGTYPE_p_Aubio__PitchYinFFT);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_tolerance();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchYinFFT_set_tolerance(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchYinFFT *arg1 = (Aubio::PitchYinFFT *) 0 ;
+  Aubio::Sample arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::PitchYinFFT::set_tolerance",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchYinFFT::set_tolerance",1,"Aubio::PitchYinFFT *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::PitchYinFFT::set_tolerance",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchYinFFT,0))){
+    SWIG_fail_ptr("PitchYinFFT_set_tolerance",1,SWIGTYPE_p_Aubio__PitchYinFFT);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->set_tolerance(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchYinFFT_get_confidence(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchYinFFT *arg1 = (Aubio::PitchYinFFT *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::PitchYinFFT::get_confidence",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchYinFFT::get_confidence",1,"Aubio::PitchYinFFT *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchYinFFT,0))){
+    SWIG_fail_ptr("PitchYinFFT_get_confidence",1,SWIGTYPE_p_Aubio__PitchYinFFT);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_confidence();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PitchYinFFT_process(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PitchYinFFT *arg1 = (Aubio::PitchYinFFT *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
+  
+  SWIG_check_num_args("Aubio::PitchYinFFT::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PitchYinFFT::process",1,"Aubio::PitchYinFFT *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::PitchYinFFT::process",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::PitchYinFFT::process",3,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PitchYinFFT,0))){
+    SWIG_fail_ptr("PitchYinFFT_process",1,SWIGTYPE_p_Aubio__PitchYinFFT);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("PitchYinFFT_process",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("PitchYinFFT_process",3,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  (arg1)->process((Aubio::FVec const &)*arg2,*arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_PitchYinFFT(void *obj) {
+Aubio::PitchYinFFT *arg1 = (Aubio::PitchYinFFT *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_PitchYinFFT(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_PitchYinFFT);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_PitchYinFFT_attributes[] = {
+    { "pitch", _wrap_PitchYinFFT_pitch_get, _wrap_PitchYinFFT_pitch_set },
+    {0,0,0}
+};
+static swig_lua_method swig_PitchYinFFT_methods[]= {
+    { "get_tolerance", _wrap_PitchYinFFT_get_tolerance},
+    { "set_tolerance", _wrap_PitchYinFFT_set_tolerance},
+    { "get_confidence", _wrap_PitchYinFFT_get_confidence},
+    { "process", _wrap_PitchYinFFT_process},
+    {0,0}
+};
+static swig_lua_method swig_PitchYinFFT_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_PitchYinFFT_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_PitchYinFFT_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_PitchYinFFT_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_PitchYinFFT_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_PitchYinFFT_Sf_SwigStatic = {
+    "PitchYinFFT",
+    swig_PitchYinFFT_Sf_SwigStatic_methods,
+    swig_PitchYinFFT_Sf_SwigStatic_attributes,
+    swig_PitchYinFFT_Sf_SwigStatic_constants,
+    swig_PitchYinFFT_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_PitchYinFFT_bases[] = {0};
+static const char *swig_PitchYinFFT_base_names[] = {0};
+static swig_lua_class _wrap_class_PitchYinFFT = { "PitchYinFFT", "PitchYinFFT", &SWIGTYPE_p_Aubio__PitchYinFFT,_proxy__wrap_new_PitchYinFFT, swig_delete_PitchYinFFT, swig_PitchYinFFT_methods, swig_PitchYinFFT_attributes, &swig_PitchYinFFT_Sf_SwigStatic, swig_PitchYinFFT_meta, swig_PitchYinFFT_bases, swig_PitchYinFFT_base_names };
 
 static int _wrap_Tempo_tempo_set(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   aubio_tempo_t *arg2 = (aubio_tempo_t *) 0 ;
   
-  SWIG_check_num_args("Tempo::tempo",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::tempo",1,"Tempo *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Tempo::tempo",2,"aubio_tempo_t *");
+  SWIG_check_num_args("Aubio::Tempo::tempo",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::tempo",1,"Aubio::Tempo *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::Tempo::tempo",2,"aubio_tempo_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_tempo_set",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_tempo_set",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   
@@ -10427,14 +12401,14 @@ fail:
 
 static int _wrap_Tempo_tempo_get(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   aubio_tempo_t *result = 0 ;
   
-  SWIG_check_num_args("Tempo::tempo",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::tempo",1,"Tempo *");
+  SWIG_check_num_args("Aubio::Tempo::tempo",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::tempo",1,"Aubio::Tempo *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_tempo_get",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_tempo_get",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   result = (aubio_tempo_t *) ((arg1)->tempo);
@@ -10453,24 +12427,24 @@ static int _wrap_new_Tempo(lua_State* L) {
   int SWIG_arg = 0;
   char *arg1 = (char *) 0 ;
   size_t arg2 ;
-  size_t arg3 ;
-  size_t arg4 ;
-  Tempo *result = 0 ;
+  uint32_t arg3 ;
+  uint32_t arg4 ;
+  Aubio::Tempo *result = 0 ;
   
-  SWIG_check_num_args("Tempo::Tempo",4,4)
-  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Tempo::Tempo",1,"char const *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("Tempo::Tempo",2,"size_t");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("Tempo::Tempo",3,"size_t");
-  if(!lua_isnumber(L,4)) SWIG_fail_arg("Tempo::Tempo",4,"size_t");
+  SWIG_check_num_args("Aubio::Tempo::Tempo",4,4)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Aubio::Tempo::Tempo",1,"char const *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Tempo::Tempo",2,"size_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::Tempo::Tempo",3,"uint32_t");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("Aubio::Tempo::Tempo",4,"uint32_t");
   arg1 = (char *)lua_tostring(L, 1);
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
-  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative")
-  arg3 = (size_t)lua_tonumber(L, 3);
-  SWIG_contract_assert((lua_tonumber(L,4)>=0),"number must not be negative")
-  arg4 = (size_t)lua_tonumber(L, 4);
-  result = (Tempo *)new Tempo((char const *)arg1,arg2,arg3,arg4);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Tempo,1); SWIG_arg++; 
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
+  arg3 = (uint32_t)lua_tonumber(L, 3);
+  SWIG_contract_assert((lua_tonumber(L,4)>=0),"number must not be negative");
+  arg4 = (uint32_t)lua_tonumber(L, 4);
+  result = (Aubio::Tempo *)new Aubio::Tempo((char const *)arg1,arg2,arg3,arg4);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__Tempo,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -10483,30 +12457,30 @@ fail:
 
 static int _wrap_Tempo_process(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
-  FVec *arg2 = 0 ;
-  FVec *arg3 = 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
   
-  SWIG_check_num_args("Tempo::process",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::process",1,"Tempo *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Tempo::process",2,"FVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Tempo::process",3,"FVec &");
+  SWIG_check_num_args("Aubio::Tempo::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::process",1,"Aubio::Tempo *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Tempo::process",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::Tempo::process",3,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_process",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_process",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("Tempo_process",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Tempo_process",2,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("Tempo_process",3,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Tempo_process",3,SWIGTYPE_p_Aubio__FVec);
   }
   
-  (arg1)->process((FVec const &)*arg2,*arg3);
+  (arg1)->process((Aubio::FVec const &)*arg2,*arg3);
   
   return SWIG_arg;
   
@@ -10520,14 +12494,14 @@ fail:
 
 static int _wrap_Tempo_get_last(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   size_t result;
   
-  SWIG_check_num_args("Tempo::get_last",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::get_last",1,"Tempo *");
+  SWIG_check_num_args("Aubio::Tempo::get_last",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::get_last",1,"Aubio::Tempo *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_get_last",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_get_last",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   result = (arg1)->get_last();
@@ -10544,14 +12518,14 @@ fail:
 
 static int _wrap_Tempo_get_last_s(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   double result;
   
-  SWIG_check_num_args("Tempo::get_last_s",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::get_last_s",1,"Tempo *");
+  SWIG_check_num_args("Aubio::Tempo::get_last_s",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::get_last_s",1,"Aubio::Tempo *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_get_last_s",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_get_last_s",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   result = (double)(arg1)->get_last_s();
@@ -10568,14 +12542,14 @@ fail:
 
 static int _wrap_Tempo_get_last_ms(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   double result;
   
-  SWIG_check_num_args("Tempo::get_last_ms",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::get_last_ms",1,"Tempo *");
+  SWIG_check_num_args("Aubio::Tempo::get_last_ms",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::get_last_ms",1,"Aubio::Tempo *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_get_last_ms",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_get_last_ms",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   result = (double)(arg1)->get_last_ms();
@@ -10592,16 +12566,16 @@ fail:
 
 static int _wrap_Tempo_set_silence(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   double arg2 ;
   size_t result;
   
-  SWIG_check_num_args("Tempo::set_silence",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::set_silence",1,"Tempo *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("Tempo::set_silence",2,"double");
+  SWIG_check_num_args("Aubio::Tempo::set_silence",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::set_silence",1,"Aubio::Tempo *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Tempo::set_silence",2,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_set_silence",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_set_silence",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
@@ -10619,14 +12593,14 @@ fail:
 
 static int _wrap_Tempo_get_silence(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   double result;
   
-  SWIG_check_num_args("Tempo::get_silence",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::get_silence",1,"Tempo *");
+  SWIG_check_num_args("Aubio::Tempo::get_silence",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::get_silence",1,"Aubio::Tempo *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_get_silence",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_get_silence",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   result = (double)(arg1)->get_silence();
@@ -10643,16 +12617,16 @@ fail:
 
 static int _wrap_Tempo_set_threshold(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   double arg2 ;
   size_t result;
   
-  SWIG_check_num_args("Tempo::set_threshold",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::set_threshold",1,"Tempo *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("Tempo::set_threshold",2,"double");
+  SWIG_check_num_args("Aubio::Tempo::set_threshold",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::set_threshold",1,"Aubio::Tempo *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Tempo::set_threshold",2,"double");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_set_threshold",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_set_threshold",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   arg2 = (double)lua_tonumber(L, 2);
@@ -10670,14 +12644,14 @@ fail:
 
 static int _wrap_Tempo_get_threshold(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   double result;
   
-  SWIG_check_num_args("Tempo::get_threshold",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::get_threshold",1,"Tempo *");
+  SWIG_check_num_args("Aubio::Tempo::get_threshold",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::get_threshold",1,"Aubio::Tempo *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_get_threshold",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_get_threshold",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   result = (double)(arg1)->get_threshold();
@@ -10694,14 +12668,14 @@ fail:
 
 static int _wrap_Tempo_get_period(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   double result;
   
-  SWIG_check_num_args("Tempo::get_period",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::get_period",1,"Tempo *");
+  SWIG_check_num_args("Aubio::Tempo::get_period",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::get_period",1,"Aubio::Tempo *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_get_period",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_get_period",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   result = (double)(arg1)->get_period();
@@ -10718,14 +12692,14 @@ fail:
 
 static int _wrap_Tempo_get_period_s(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   double result;
   
-  SWIG_check_num_args("Tempo::get_period_s",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::get_period_s",1,"Tempo *");
+  SWIG_check_num_args("Aubio::Tempo::get_period_s",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::get_period_s",1,"Aubio::Tempo *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_get_period_s",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_get_period_s",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   result = (double)(arg1)->get_period_s();
@@ -10742,14 +12716,14 @@ fail:
 
 static int _wrap_Tempo_get_bpm(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   double result;
   
-  SWIG_check_num_args("Tempo::get_bpm",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::get_bpm",1,"Tempo *");
+  SWIG_check_num_args("Aubio::Tempo::get_bpm",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::get_bpm",1,"Aubio::Tempo *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_get_bpm",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_get_bpm",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   result = (double)(arg1)->get_bpm();
@@ -10766,14 +12740,14 @@ fail:
 
 static int _wrap_Tempo_get_confidence(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   double result;
   
-  SWIG_check_num_args("Tempo::get_confidence",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::get_confidence",1,"Tempo *");
+  SWIG_check_num_args("Aubio::Tempo::get_confidence",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::get_confidence",1,"Aubio::Tempo *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_get_confidence",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_get_confidence",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   result = (double)(arg1)->get_confidence();
@@ -10790,17 +12764,21 @@ fail:
 
 static int _wrap_Tempo_get_set_tatum_signature(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
+  uint_t arg2 ;
   size_t result;
   
-  SWIG_check_num_args("Tempo::get_set_tatum_signature",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::get_set_tatum_signature",1,"Tempo *");
+  SWIG_check_num_args("Aubio::Tempo::get_set_tatum_signature",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::get_set_tatum_signature",1,"Aubio::Tempo *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Tempo::get_set_tatum_signature",2,"uint_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_get_set_tatum_signature",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_get_set_tatum_signature",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
-  result = (arg1)->get_set_tatum_signature();
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint_t)lua_tonumber(L, 2);
+  result = (arg1)->get_set_tatum_signature(arg2);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -10814,14 +12792,14 @@ fail:
 
 static int _wrap_Tempo_was_tatum(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   size_t result;
   
-  SWIG_check_num_args("Tempo::was_tatum",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::was_tatum",1,"Tempo *");
+  SWIG_check_num_args("Aubio::Tempo::was_tatum",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::was_tatum",1,"Aubio::Tempo *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_was_tatum",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_was_tatum",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   result = (arg1)->was_tatum();
@@ -10838,14 +12816,14 @@ fail:
 
 static int _wrap_Tempo_get_last_tatum(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   double result;
   
-  SWIG_check_num_args("Tempo::get_last_tatum",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::get_last_tatum",1,"Tempo *");
+  SWIG_check_num_args("Aubio::Tempo::get_last_tatum",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::get_last_tatum",1,"Aubio::Tempo *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_get_last_tatum",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_get_last_tatum",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   result = (double)(arg1)->get_last_tatum();
@@ -10862,14 +12840,14 @@ fail:
 
 static int _wrap_Tempo_get_delay(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   double result;
   
-  SWIG_check_num_args("Tempo::get_delay",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::get_delay",1,"Tempo *");
+  SWIG_check_num_args("Aubio::Tempo::get_delay",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::get_delay",1,"Aubio::Tempo *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_get_delay",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_get_delay",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   result = (double)(arg1)->get_delay();
@@ -10886,14 +12864,14 @@ fail:
 
 static int _wrap_Tempo_get_delay_s(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   double result;
   
-  SWIG_check_num_args("Tempo::get_delay_s",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::get_delay_s",1,"Tempo *");
+  SWIG_check_num_args("Aubio::Tempo::get_delay_s",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::get_delay_s",1,"Aubio::Tempo *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_get_delay_s",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_get_delay_s",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   result = (double)(arg1)->get_delay_s();
@@ -10910,14 +12888,14 @@ fail:
 
 static int _wrap_Tempo_get_delay_ms(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   double result;
   
-  SWIG_check_num_args("Tempo::get_delay_ms",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::get_delay_ms",1,"Tempo *");
+  SWIG_check_num_args("Aubio::Tempo::get_delay_ms",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::get_delay_ms",1,"Aubio::Tempo *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_get_delay_ms",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_get_delay_ms",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   result = (double)(arg1)->get_delay_ms();
@@ -10934,16 +12912,16 @@ fail:
 
 static int _wrap_Tempo_set_delay(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   int arg2 ;
   size_t result;
   
-  SWIG_check_num_args("Tempo::set_delay",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::set_delay",1,"Tempo *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("Tempo::set_delay",2,"int");
+  SWIG_check_num_args("Aubio::Tempo::set_delay",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::set_delay",1,"Aubio::Tempo *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Tempo::set_delay",2,"int");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_set_delay",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_set_delay",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   arg2 = (int)lua_tonumber(L, 2);
@@ -10961,16 +12939,16 @@ fail:
 
 static int _wrap_Tempo_set_delay_s(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   int arg2 ;
   size_t result;
   
-  SWIG_check_num_args("Tempo::set_delay_s",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::set_delay_s",1,"Tempo *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("Tempo::set_delay_s",2,"int");
+  SWIG_check_num_args("Aubio::Tempo::set_delay_s",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::set_delay_s",1,"Aubio::Tempo *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Tempo::set_delay_s",2,"int");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_set_delay_s",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_set_delay_s",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   arg2 = (int)lua_tonumber(L, 2);
@@ -10988,16 +12966,16 @@ fail:
 
 static int _wrap_Tempo_set_delay_ms(lua_State* L) {
   int SWIG_arg = 0;
-  Tempo *arg1 = (Tempo *) 0 ;
+  Aubio::Tempo *arg1 = (Aubio::Tempo *) 0 ;
   int arg2 ;
   size_t result;
   
-  SWIG_check_num_args("Tempo::set_delay_ms",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Tempo::set_delay_ms",1,"Tempo *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("Tempo::set_delay_ms",2,"int");
+  SWIG_check_num_args("Aubio::Tempo::set_delay_ms",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Tempo::set_delay_ms",1,"Aubio::Tempo *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Tempo::set_delay_ms",2,"int");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Tempo,0))){
-    SWIG_fail_ptr("Tempo_set_delay_ms",1,SWIGTYPE_p_Tempo);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Tempo,0))){
+    SWIG_fail_ptr("Tempo_set_delay_ms",1,SWIGTYPE_p_Aubio__Tempo);
   }
   
   arg2 = (int)lua_tonumber(L, 2);
@@ -11014,7 +12992,7 @@ fail:
 
 
 static void swig_delete_Tempo(void *obj) {
-Tempo *arg1 = (Tempo *) obj;
+Aubio::Tempo *arg1 = (Aubio::Tempo *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_Tempo(lua_State *L) {
@@ -11080,19 +13058,19 @@ static swig_lua_namespace swig_Tempo_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_Tempo_bases[] = {0};
 static const char *swig_Tempo_base_names[] = {0};
-static swig_lua_class _wrap_class_Tempo = { "Tempo", "Tempo", &SWIGTYPE_p_Tempo,_proxy__wrap_new_Tempo, swig_delete_Tempo, swig_Tempo_methods, swig_Tempo_attributes, &swig_Tempo_Sf_SwigStatic, swig_Tempo_meta, swig_Tempo_bases, swig_Tempo_base_names };
+static swig_lua_class _wrap_class_Tempo = { "Tempo", "Tempo", &SWIGTYPE_p_Aubio__Tempo,_proxy__wrap_new_Tempo, swig_delete_Tempo, swig_Tempo_methods, swig_Tempo_attributes, &swig_Tempo_Sf_SwigStatic, swig_Tempo_meta, swig_Tempo_bases, swig_Tempo_base_names };
 
 static int _wrap_BeatTrack_bt_set(lua_State* L) {
   int SWIG_arg = 0;
-  BeatTrack *arg1 = (BeatTrack *) 0 ;
+  Aubio::BeatTrack *arg1 = (Aubio::BeatTrack *) 0 ;
   aubio_beattracking_t *arg2 = (aubio_beattracking_t *) 0 ;
   
-  SWIG_check_num_args("BeatTrack::bt",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("BeatTrack::bt",1,"BeatTrack *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("BeatTrack::bt",2,"aubio_beattracking_t *");
+  SWIG_check_num_args("Aubio::BeatTrack::bt",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::BeatTrack::bt",1,"Aubio::BeatTrack *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::BeatTrack::bt",2,"aubio_beattracking_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_BeatTrack,0))){
-    SWIG_fail_ptr("BeatTrack_bt_set",1,SWIGTYPE_p_BeatTrack);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__BeatTrack,0))){
+    SWIG_fail_ptr("BeatTrack_bt_set",1,SWIGTYPE_p_Aubio__BeatTrack);
   }
   
   
@@ -11114,14 +13092,14 @@ fail:
 
 static int _wrap_BeatTrack_bt_get(lua_State* L) {
   int SWIG_arg = 0;
-  BeatTrack *arg1 = (BeatTrack *) 0 ;
+  Aubio::BeatTrack *arg1 = (Aubio::BeatTrack *) 0 ;
   aubio_beattracking_t *result = 0 ;
   
-  SWIG_check_num_args("BeatTrack::bt",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("BeatTrack::bt",1,"BeatTrack *");
+  SWIG_check_num_args("Aubio::BeatTrack::bt",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::BeatTrack::bt",1,"Aubio::BeatTrack *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_BeatTrack,0))){
-    SWIG_fail_ptr("BeatTrack_bt_get",1,SWIGTYPE_p_BeatTrack);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__BeatTrack,0))){
+    SWIG_fail_ptr("BeatTrack_bt_get",1,SWIGTYPE_p_Aubio__BeatTrack);
   }
   
   result = (aubio_beattracking_t *) ((arg1)->bt);
@@ -11139,22 +13117,22 @@ fail:
 static int _wrap_new_BeatTrack(lua_State* L) {
   int SWIG_arg = 0;
   size_t arg1 ;
-  size_t arg2 ;
-  size_t arg3 ;
-  BeatTrack *result = 0 ;
+  uint32_t arg2 ;
+  uint32_t arg3 ;
+  Aubio::BeatTrack *result = 0 ;
   
-  SWIG_check_num_args("BeatTrack::BeatTrack",3,3)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("BeatTrack::BeatTrack",1,"size_t");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("BeatTrack::BeatTrack",2,"size_t");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("BeatTrack::BeatTrack",3,"size_t");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
+  SWIG_check_num_args("Aubio::BeatTrack::BeatTrack",3,3)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::BeatTrack::BeatTrack",1,"size_t");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::BeatTrack::BeatTrack",2,"uint32_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::BeatTrack::BeatTrack",3,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
   arg1 = (size_t)lua_tonumber(L, 1);
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
-  arg2 = (size_t)lua_tonumber(L, 2);
-  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative")
-  arg3 = (size_t)lua_tonumber(L, 3);
-  result = (BeatTrack *)new BeatTrack(arg1,arg2,arg3);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_BeatTrack,1); SWIG_arg++; 
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
+  arg3 = (uint32_t)lua_tonumber(L, 3);
+  result = (Aubio::BeatTrack *)new Aubio::BeatTrack(arg1,arg2,arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__BeatTrack,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -11167,30 +13145,30 @@ fail:
 
 static int _wrap_BeatTrack_process(lua_State* L) {
   int SWIG_arg = 0;
-  BeatTrack *arg1 = (BeatTrack *) 0 ;
-  FVec *arg2 = 0 ;
-  FVec *arg3 = 0 ;
+  Aubio::BeatTrack *arg1 = (Aubio::BeatTrack *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
   
-  SWIG_check_num_args("BeatTrack::process",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("BeatTrack::process",1,"BeatTrack *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("BeatTrack::process",2,"FVec const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("BeatTrack::process",3,"FVec &");
+  SWIG_check_num_args("Aubio::BeatTrack::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::BeatTrack::process",1,"Aubio::BeatTrack *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::BeatTrack::process",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::BeatTrack::process",3,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_BeatTrack,0))){
-    SWIG_fail_ptr("BeatTrack_process",1,SWIGTYPE_p_BeatTrack);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__BeatTrack,0))){
+    SWIG_fail_ptr("BeatTrack_process",1,SWIGTYPE_p_Aubio__BeatTrack);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("BeatTrack_process",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("BeatTrack_process",2,SWIGTYPE_p_Aubio__FVec);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("BeatTrack_process",3,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("BeatTrack_process",3,SWIGTYPE_p_Aubio__FVec);
   }
   
-  (arg1)->process((FVec const &)*arg2,*arg3);
+  (arg1)->process((Aubio::FVec const &)*arg2,*arg3);
   
   return SWIG_arg;
   
@@ -11204,14 +13182,14 @@ fail:
 
 static int _wrap_BeatTrack_get_period(lua_State* L) {
   int SWIG_arg = 0;
-  BeatTrack *arg1 = (BeatTrack *) 0 ;
+  Aubio::BeatTrack *arg1 = (Aubio::BeatTrack *) 0 ;
   double result;
   
-  SWIG_check_num_args("BeatTrack::get_period",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("BeatTrack::get_period",1,"BeatTrack *");
+  SWIG_check_num_args("Aubio::BeatTrack::get_period",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::BeatTrack::get_period",1,"Aubio::BeatTrack *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_BeatTrack,0))){
-    SWIG_fail_ptr("BeatTrack_get_period",1,SWIGTYPE_p_BeatTrack);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__BeatTrack,0))){
+    SWIG_fail_ptr("BeatTrack_get_period",1,SWIGTYPE_p_Aubio__BeatTrack);
   }
   
   result = (double)(arg1)->get_period();
@@ -11228,14 +13206,14 @@ fail:
 
 static int _wrap_BeatTrack_get_period_s(lua_State* L) {
   int SWIG_arg = 0;
-  BeatTrack *arg1 = (BeatTrack *) 0 ;
+  Aubio::BeatTrack *arg1 = (Aubio::BeatTrack *) 0 ;
   double result;
   
-  SWIG_check_num_args("BeatTrack::get_period_s",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("BeatTrack::get_period_s",1,"BeatTrack *");
+  SWIG_check_num_args("Aubio::BeatTrack::get_period_s",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::BeatTrack::get_period_s",1,"Aubio::BeatTrack *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_BeatTrack,0))){
-    SWIG_fail_ptr("BeatTrack_get_period_s",1,SWIGTYPE_p_BeatTrack);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__BeatTrack,0))){
+    SWIG_fail_ptr("BeatTrack_get_period_s",1,SWIGTYPE_p_Aubio__BeatTrack);
   }
   
   result = (double)(arg1)->get_period_s();
@@ -11252,14 +13230,14 @@ fail:
 
 static int _wrap_BeatTrack_get_bpm(lua_State* L) {
   int SWIG_arg = 0;
-  BeatTrack *arg1 = (BeatTrack *) 0 ;
+  Aubio::BeatTrack *arg1 = (Aubio::BeatTrack *) 0 ;
   double result;
   
-  SWIG_check_num_args("BeatTrack::get_bpm",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("BeatTrack::get_bpm",1,"BeatTrack *");
+  SWIG_check_num_args("Aubio::BeatTrack::get_bpm",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::BeatTrack::get_bpm",1,"Aubio::BeatTrack *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_BeatTrack,0))){
-    SWIG_fail_ptr("BeatTrack_get_bpm",1,SWIGTYPE_p_BeatTrack);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__BeatTrack,0))){
+    SWIG_fail_ptr("BeatTrack_get_bpm",1,SWIGTYPE_p_Aubio__BeatTrack);
   }
   
   result = (double)(arg1)->get_bpm();
@@ -11276,14 +13254,14 @@ fail:
 
 static int _wrap_BeatTrack_get_confidence(lua_State* L) {
   int SWIG_arg = 0;
-  BeatTrack *arg1 = (BeatTrack *) 0 ;
+  Aubio::BeatTrack *arg1 = (Aubio::BeatTrack *) 0 ;
   double result;
   
-  SWIG_check_num_args("BeatTrack::get_confidence",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("BeatTrack::get_confidence",1,"BeatTrack *");
+  SWIG_check_num_args("Aubio::BeatTrack::get_confidence",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::BeatTrack::get_confidence",1,"Aubio::BeatTrack *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_BeatTrack,0))){
-    SWIG_fail_ptr("BeatTrack_get_confidence",1,SWIGTYPE_p_BeatTrack);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__BeatTrack,0))){
+    SWIG_fail_ptr("BeatTrack_get_confidence",1,SWIGTYPE_p_Aubio__BeatTrack);
   }
   
   result = (double)(arg1)->get_confidence();
@@ -11299,7 +13277,7 @@ fail:
 
 
 static void swig_delete_BeatTrack(void *obj) {
-BeatTrack *arg1 = (BeatTrack *) obj;
+Aubio::BeatTrack *arg1 = (Aubio::BeatTrack *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_BeatTrack(lua_State *L) {
@@ -11349,19 +13327,19 @@ static swig_lua_namespace swig_BeatTrack_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_BeatTrack_bases[] = {0};
 static const char *swig_BeatTrack_base_names[] = {0};
-static swig_lua_class _wrap_class_BeatTrack = { "BeatTrack", "BeatTrack", &SWIGTYPE_p_BeatTrack,_proxy__wrap_new_BeatTrack, swig_delete_BeatTrack, swig_BeatTrack_methods, swig_BeatTrack_attributes, &swig_BeatTrack_Sf_SwigStatic, swig_BeatTrack_meta, swig_BeatTrack_bases, swig_BeatTrack_base_names };
+static swig_lua_class _wrap_class_BeatTrack = { "BeatTrack", "BeatTrack", &SWIGTYPE_p_Aubio__BeatTrack,_proxy__wrap_new_BeatTrack, swig_delete_BeatTrack, swig_BeatTrack_methods, swig_BeatTrack_attributes, &swig_BeatTrack_Sf_SwigStatic, swig_BeatTrack_meta, swig_BeatTrack_bases, swig_BeatTrack_base_names };
 
 static int _wrap_Sink_sink_set(lua_State* L) {
   int SWIG_arg = 0;
-  Sink *arg1 = (Sink *) 0 ;
+  Aubio::Sink *arg1 = (Aubio::Sink *) 0 ;
   aubio_sink_t *arg2 = (aubio_sink_t *) 0 ;
   
-  SWIG_check_num_args("Sink::sink",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Sink::sink",1,"Sink *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Sink::sink",2,"aubio_sink_t *");
+  SWIG_check_num_args("Aubio::Sink::sink",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Sink::sink",1,"Aubio::Sink *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::Sink::sink",2,"aubio_sink_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Sink,0))){
-    SWIG_fail_ptr("Sink_sink_set",1,SWIGTYPE_p_Sink);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Sink,0))){
+    SWIG_fail_ptr("Sink_sink_set",1,SWIGTYPE_p_Aubio__Sink);
   }
   
   
@@ -11383,14 +13361,14 @@ fail:
 
 static int _wrap_Sink_sink_get(lua_State* L) {
   int SWIG_arg = 0;
-  Sink *arg1 = (Sink *) 0 ;
+  Aubio::Sink *arg1 = (Aubio::Sink *) 0 ;
   aubio_sink_t *result = 0 ;
   
-  SWIG_check_num_args("Sink::sink",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Sink::sink",1,"Sink *");
+  SWIG_check_num_args("Aubio::Sink::sink",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Sink::sink",1,"Aubio::Sink *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Sink,0))){
-    SWIG_fail_ptr("Sink_sink_get",1,SWIGTYPE_p_Sink);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Sink,0))){
+    SWIG_fail_ptr("Sink_sink_get",1,SWIGTYPE_p_Aubio__Sink);
   }
   
   result = (aubio_sink_t *) ((arg1)->sink);
@@ -11408,17 +13386,17 @@ fail:
 static int _wrap_new_Sink(lua_State* L) {
   int SWIG_arg = 0;
   char *arg1 = (char *) 0 ;
-  size_t arg2 ;
-  Sink *result = 0 ;
+  uint32_t arg2 ;
+  Aubio::Sink *result = 0 ;
   
-  SWIG_check_num_args("Sink::Sink",2,2)
-  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Sink::Sink",1,"char const *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("Sink::Sink",2,"size_t");
+  SWIG_check_num_args("Aubio::Sink::Sink",2,2)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Aubio::Sink::Sink",1,"char const *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Sink::Sink",2,"uint32_t");
   arg1 = (char *)lua_tostring(L, 1);
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
-  arg2 = (size_t)lua_tonumber(L, 2);
-  result = (Sink *)new Sink((char const *)arg1,arg2);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Sink,1); SWIG_arg++; 
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (Aubio::Sink *)new Aubio::Sink((char const *)arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__Sink,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -11431,19 +13409,19 @@ fail:
 
 static int _wrap_Sink_preset_samplerate(lua_State* L) {
   int SWIG_arg = 0;
-  Sink *arg1 = (Sink *) 0 ;
+  Aubio::Sink *arg1 = (Aubio::Sink *) 0 ;
   size_t arg2 ;
   size_t result;
   
-  SWIG_check_num_args("Sink::preset_samplerate",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Sink::preset_samplerate",1,"Sink *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("Sink::preset_samplerate",2,"size_t");
+  SWIG_check_num_args("Aubio::Sink::preset_samplerate",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Sink::preset_samplerate",1,"Aubio::Sink *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Sink::preset_samplerate",2,"size_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Sink,0))){
-    SWIG_fail_ptr("Sink_preset_samplerate",1,SWIGTYPE_p_Sink);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Sink,0))){
+    SWIG_fail_ptr("Sink_preset_samplerate",1,SWIGTYPE_p_Aubio__Sink);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
   result = (arg1)->preset_samplerate(arg2);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
@@ -11459,14 +13437,14 @@ fail:
 
 static int _wrap_Sink_get_samplerate(lua_State* L) {
   int SWIG_arg = 0;
-  Sink *arg1 = (Sink *) 0 ;
+  Aubio::Sink *arg1 = (Aubio::Sink *) 0 ;
   size_t result;
   
-  SWIG_check_num_args("Sink::get_samplerate",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Sink::get_samplerate",1,"Sink *");
+  SWIG_check_num_args("Aubio::Sink::get_samplerate",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Sink::get_samplerate",1,"Aubio::Sink *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Sink,0))){
-    SWIG_fail_ptr("Sink_get_samplerate",1,SWIGTYPE_p_Sink);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Sink,0))){
+    SWIG_fail_ptr("Sink_get_samplerate",1,SWIGTYPE_p_Aubio__Sink);
   }
   
   result = (arg1)->get_samplerate();
@@ -11483,14 +13461,14 @@ fail:
 
 static int _wrap_Sink_get_channels(lua_State* L) {
   int SWIG_arg = 0;
-  Sink *arg1 = (Sink *) 0 ;
+  Aubio::Sink *arg1 = (Aubio::Sink *) 0 ;
   size_t result;
   
-  SWIG_check_num_args("Sink::get_channels",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Sink::get_channels",1,"Sink *");
+  SWIG_check_num_args("Aubio::Sink::get_channels",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Sink::get_channels",1,"Aubio::Sink *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Sink,0))){
-    SWIG_fail_ptr("Sink_get_channels",1,SWIGTYPE_p_Sink);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Sink,0))){
+    SWIG_fail_ptr("Sink_get_channels",1,SWIGTYPE_p_Aubio__Sink);
   }
   
   result = (arg1)->get_channels();
@@ -11507,25 +13485,25 @@ fail:
 
 static int _wrap_Sink_process(lua_State* L) {
   int SWIG_arg = 0;
-  Sink *arg1 = (Sink *) 0 ;
-  FVec *arg2 = 0 ;
+  Aubio::Sink *arg1 = (Aubio::Sink *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
   size_t arg3 ;
   
-  SWIG_check_num_args("Sink::process",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Sink::process",1,"Sink *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Sink::process",2,"FVec &");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("Sink::process",3,"size_t");
+  SWIG_check_num_args("Aubio::Sink::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Sink::process",1,"Aubio::Sink *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Sink::process",2,"Aubio::FVec &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::Sink::process",3,"size_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Sink,0))){
-    SWIG_fail_ptr("Sink_process",1,SWIGTYPE_p_Sink);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Sink,0))){
+    SWIG_fail_ptr("Sink_process",1,SWIGTYPE_p_Aubio__Sink);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("Sink_process",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Sink_process",2,SWIGTYPE_p_Aubio__FVec);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
   arg3 = (size_t)lua_tonumber(L, 3);
   (arg1)->process(*arg2,arg3);
   
@@ -11541,25 +13519,25 @@ fail:
 
 static int _wrap_Sink_process_multi(lua_State* L) {
   int SWIG_arg = 0;
-  Sink *arg1 = (Sink *) 0 ;
-  FMat *arg2 = 0 ;
+  Aubio::Sink *arg1 = (Aubio::Sink *) 0 ;
+  Aubio::FMat *arg2 = 0 ;
   size_t arg3 ;
   
-  SWIG_check_num_args("Sink::process_multi",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Sink::process_multi",1,"Sink *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Sink::process_multi",2,"FMat &");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("Sink::process_multi",3,"size_t");
+  SWIG_check_num_args("Aubio::Sink::process_multi",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Sink::process_multi",1,"Aubio::Sink *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Sink::process_multi",2,"Aubio::FMat &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::Sink::process_multi",3,"size_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Sink,0))){
-    SWIG_fail_ptr("Sink_process_multi",1,SWIGTYPE_p_Sink);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Sink,0))){
+    SWIG_fail_ptr("Sink_process_multi",1,SWIGTYPE_p_Aubio__Sink);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("Sink_process_multi",2,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("Sink_process_multi",2,SWIGTYPE_p_Aubio__FMat);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
   arg3 = (size_t)lua_tonumber(L, 3);
   (arg1)->process_multi(*arg2,arg3);
   
@@ -11575,14 +13553,14 @@ fail:
 
 static int _wrap_Sink_close(lua_State* L) {
   int SWIG_arg = 0;
-  Sink *arg1 = (Sink *) 0 ;
+  Aubio::Sink *arg1 = (Aubio::Sink *) 0 ;
   size_t result;
   
-  SWIG_check_num_args("Sink::close",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Sink::close",1,"Sink *");
+  SWIG_check_num_args("Aubio::Sink::close",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Sink::close",1,"Aubio::Sink *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Sink,0))){
-    SWIG_fail_ptr("Sink_close",1,SWIGTYPE_p_Sink);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Sink,0))){
+    SWIG_fail_ptr("Sink_close",1,SWIGTYPE_p_Aubio__Sink);
   }
   
   result = (arg1)->close();
@@ -11598,7 +13576,7 @@ fail:
 
 
 static void swig_delete_Sink(void *obj) {
-Sink *arg1 = (Sink *) obj;
+Aubio::Sink *arg1 = (Aubio::Sink *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_Sink(lua_State *L) {
@@ -11649,19 +13627,627 @@ static swig_lua_namespace swig_Sink_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_Sink_bases[] = {0};
 static const char *swig_Sink_base_names[] = {0};
-static swig_lua_class _wrap_class_Sink = { "Sink", "Sink", &SWIGTYPE_p_Sink,_proxy__wrap_new_Sink, swig_delete_Sink, swig_Sink_methods, swig_Sink_attributes, &swig_Sink_Sf_SwigStatic, swig_Sink_meta, swig_Sink_bases, swig_Sink_base_names };
+static swig_lua_class _wrap_class_Sink = { "Sink", "Sink", &SWIGTYPE_p_Aubio__Sink,_proxy__wrap_new_Sink, swig_delete_Sink, swig_Sink_methods, swig_Sink_attributes, &swig_Sink_Sf_SwigStatic, swig_Sink_meta, swig_Sink_bases, swig_Sink_base_names };
+
+static int _wrap_SinkSoundFile_file_set(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SinkSoundFile *arg1 = (Aubio::SinkSoundFile *) 0 ;
+  aubio_sink_sndfile_t *arg2 = (aubio_sink_sndfile_t *) 0 ;
+  
+  SWIG_check_num_args("Aubio::SinkSoundFile::file",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SinkSoundFile::file",1,"Aubio::SinkSoundFile *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::SinkSoundFile::file",2,"aubio_sink_sndfile_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SinkSoundFile,0))){
+    SWIG_fail_ptr("SinkSoundFile_file_set",1,SWIGTYPE_p_Aubio__SinkSoundFile);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_aubio_sink_sndfile_t,SWIG_POINTER_DISOWN))){
+    SWIG_fail_ptr("SinkSoundFile_file_set",2,SWIGTYPE_p_aubio_sink_sndfile_t);
+  }
+  
+  if (arg1) (arg1)->file = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SinkSoundFile_file_get(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SinkSoundFile *arg1 = (Aubio::SinkSoundFile *) 0 ;
+  aubio_sink_sndfile_t *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::SinkSoundFile::file",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SinkSoundFile::file",1,"Aubio::SinkSoundFile *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SinkSoundFile,0))){
+    SWIG_fail_ptr("SinkSoundFile_file_get",1,SWIGTYPE_p_Aubio__SinkSoundFile);
+  }
+  
+  result = (aubio_sink_sndfile_t *) ((arg1)->file);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_aubio_sink_sndfile_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SinkSoundFile(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  uint32_t arg2 ;
+  Aubio::SinkSoundFile *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::SinkSoundFile::SinkSoundFile",2,2)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Aubio::SinkSoundFile::SinkSoundFile",1,"char const *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::SinkSoundFile::SinkSoundFile",2,"uint32_t");
+  arg1 = (char *)lua_tostring(L, 1);
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (Aubio::SinkSoundFile *)new Aubio::SinkSoundFile((char const *)arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__SinkSoundFile,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SinkSoundFile_preset_samplerate(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SinkSoundFile *arg1 = (Aubio::SinkSoundFile *) 0 ;
+  uint32_t arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::SinkSoundFile::preset_samplerate",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SinkSoundFile::preset_samplerate",1,"Aubio::SinkSoundFile *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::SinkSoundFile::preset_samplerate",2,"uint32_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SinkSoundFile,0))){
+    SWIG_fail_ptr("SinkSoundFile_preset_samplerate",1,SWIGTYPE_p_Aubio__SinkSoundFile);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->preset_samplerate(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SinkSoundFile_preset_channels(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SinkSoundFile *arg1 = (Aubio::SinkSoundFile *) 0 ;
+  uint32_t arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::SinkSoundFile::preset_channels",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SinkSoundFile::preset_channels",1,"Aubio::SinkSoundFile *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::SinkSoundFile::preset_channels",2,"uint32_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SinkSoundFile,0))){
+    SWIG_fail_ptr("SinkSoundFile_preset_channels",1,SWIGTYPE_p_Aubio__SinkSoundFile);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->preset_channels(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SinkSoundFile_get_samplerate(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SinkSoundFile *arg1 = (Aubio::SinkSoundFile *) 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::SinkSoundFile::get_samplerate",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SinkSoundFile::get_samplerate",1,"Aubio::SinkSoundFile *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SinkSoundFile,0))){
+    SWIG_fail_ptr("SinkSoundFile_get_samplerate",1,SWIGTYPE_p_Aubio__SinkSoundFile);
+  }
+  
+  result = (uint32_t)(arg1)->get_samplerate();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SinkSoundFile_get_channels(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SinkSoundFile *arg1 = (Aubio::SinkSoundFile *) 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::SinkSoundFile::get_channels",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SinkSoundFile::get_channels",1,"Aubio::SinkSoundFile *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SinkSoundFile,0))){
+    SWIG_fail_ptr("SinkSoundFile_get_channels",1,SWIGTYPE_p_Aubio__SinkSoundFile);
+  }
+  
+  result = (uint32_t)(arg1)->get_channels();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SinkSoundFile_process(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SinkSoundFile *arg1 = (Aubio::SinkSoundFile *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  uint32_t arg3 ;
+  
+  SWIG_check_num_args("Aubio::SinkSoundFile::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SinkSoundFile::process",1,"Aubio::SinkSoundFile *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::SinkSoundFile::process",2,"Aubio::FVec &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::SinkSoundFile::process",3,"uint32_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SinkSoundFile,0))){
+    SWIG_fail_ptr("SinkSoundFile_process",1,SWIGTYPE_p_Aubio__SinkSoundFile);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("SinkSoundFile_process",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
+  arg3 = (uint32_t)lua_tonumber(L, 3);
+  (arg1)->process(*arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SinkSoundFile_do_multi(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SinkSoundFile *arg1 = (Aubio::SinkSoundFile *) 0 ;
+  Aubio::FMat *arg2 = 0 ;
+  uint32_t arg3 ;
+  
+  SWIG_check_num_args("Aubio::SinkSoundFile::do_multi",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SinkSoundFile::do_multi",1,"Aubio::SinkSoundFile *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::SinkSoundFile::do_multi",2,"Aubio::FMat &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::SinkSoundFile::do_multi",3,"uint32_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SinkSoundFile,0))){
+    SWIG_fail_ptr("SinkSoundFile_do_multi",1,SWIGTYPE_p_Aubio__SinkSoundFile);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("SinkSoundFile_do_multi",2,SWIGTYPE_p_Aubio__FMat);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
+  arg3 = (uint32_t)lua_tonumber(L, 3);
+  (arg1)->do_multi(*arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_SinkSoundFile(void *obj) {
+Aubio::SinkSoundFile *arg1 = (Aubio::SinkSoundFile *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_SinkSoundFile(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_SinkSoundFile);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_SinkSoundFile_attributes[] = {
+    { "file", _wrap_SinkSoundFile_file_get, _wrap_SinkSoundFile_file_set },
+    {0,0,0}
+};
+static swig_lua_method swig_SinkSoundFile_methods[]= {
+    { "preset_samplerate", _wrap_SinkSoundFile_preset_samplerate},
+    { "preset_channels", _wrap_SinkSoundFile_preset_channels},
+    { "get_samplerate", _wrap_SinkSoundFile_get_samplerate},
+    { "get_channels", _wrap_SinkSoundFile_get_channels},
+    { "process", _wrap_SinkSoundFile_process},
+    { "do_multi", _wrap_SinkSoundFile_do_multi},
+    {0,0}
+};
+static swig_lua_method swig_SinkSoundFile_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_SinkSoundFile_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_SinkSoundFile_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_SinkSoundFile_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_SinkSoundFile_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_SinkSoundFile_Sf_SwigStatic = {
+    "SinkSoundFile",
+    swig_SinkSoundFile_Sf_SwigStatic_methods,
+    swig_SinkSoundFile_Sf_SwigStatic_attributes,
+    swig_SinkSoundFile_Sf_SwigStatic_constants,
+    swig_SinkSoundFile_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_SinkSoundFile_bases[] = {0};
+static const char *swig_SinkSoundFile_base_names[] = {0};
+static swig_lua_class _wrap_class_SinkSoundFile = { "SinkSoundFile", "SinkSoundFile", &SWIGTYPE_p_Aubio__SinkSoundFile,_proxy__wrap_new_SinkSoundFile, swig_delete_SinkSoundFile, swig_SinkSoundFile_methods, swig_SinkSoundFile_attributes, &swig_SinkSoundFile_Sf_SwigStatic, swig_SinkSoundFile_meta, swig_SinkSoundFile_bases, swig_SinkSoundFile_base_names };
+
+static int _wrap_SinkWavWrite_wav_set(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SinkWavWrite *arg1 = (Aubio::SinkWavWrite *) 0 ;
+  aubio_sink_wavwrite_t *arg2 = (aubio_sink_wavwrite_t *) 0 ;
+  
+  SWIG_check_num_args("Aubio::SinkWavWrite::wav",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SinkWavWrite::wav",1,"Aubio::SinkWavWrite *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::SinkWavWrite::wav",2,"aubio_sink_wavwrite_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SinkWavWrite,0))){
+    SWIG_fail_ptr("SinkWavWrite_wav_set",1,SWIGTYPE_p_Aubio__SinkWavWrite);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_aubio_sink_wavwrite_t,SWIG_POINTER_DISOWN))){
+    SWIG_fail_ptr("SinkWavWrite_wav_set",2,SWIGTYPE_p_aubio_sink_wavwrite_t);
+  }
+  
+  if (arg1) (arg1)->wav = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SinkWavWrite_wav_get(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SinkWavWrite *arg1 = (Aubio::SinkWavWrite *) 0 ;
+  aubio_sink_wavwrite_t *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::SinkWavWrite::wav",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SinkWavWrite::wav",1,"Aubio::SinkWavWrite *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SinkWavWrite,0))){
+    SWIG_fail_ptr("SinkWavWrite_wav_get",1,SWIGTYPE_p_Aubio__SinkWavWrite);
+  }
+  
+  result = (aubio_sink_wavwrite_t *) ((arg1)->wav);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_aubio_sink_wavwrite_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SinkWavWrite(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  uint32_t arg2 ;
+  Aubio::SinkWavWrite *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::SinkWavWrite::SinkWavWrite",2,2)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Aubio::SinkWavWrite::SinkWavWrite",1,"char const *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::SinkWavWrite::SinkWavWrite",2,"uint32_t");
+  arg1 = (char *)lua_tostring(L, 1);
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (Aubio::SinkWavWrite *)new Aubio::SinkWavWrite((char const *)arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__SinkWavWrite,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SinkWavWrite_preset_samplerate(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SinkWavWrite *arg1 = (Aubio::SinkWavWrite *) 0 ;
+  uint32_t arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::SinkWavWrite::preset_samplerate",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SinkWavWrite::preset_samplerate",1,"Aubio::SinkWavWrite *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::SinkWavWrite::preset_samplerate",2,"uint32_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SinkWavWrite,0))){
+    SWIG_fail_ptr("SinkWavWrite_preset_samplerate",1,SWIGTYPE_p_Aubio__SinkWavWrite);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->preset_samplerate(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SinkWavWrite_preset_channels(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SinkWavWrite *arg1 = (Aubio::SinkWavWrite *) 0 ;
+  uint32_t arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::SinkWavWrite::preset_channels",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SinkWavWrite::preset_channels",1,"Aubio::SinkWavWrite *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::SinkWavWrite::preset_channels",2,"uint32_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SinkWavWrite,0))){
+    SWIG_fail_ptr("SinkWavWrite_preset_channels",1,SWIGTYPE_p_Aubio__SinkWavWrite);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->preset_channels(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SinkWavWrite_get_samplerate(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SinkWavWrite *arg1 = (Aubio::SinkWavWrite *) 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::SinkWavWrite::get_samplerate",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SinkWavWrite::get_samplerate",1,"Aubio::SinkWavWrite *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SinkWavWrite,0))){
+    SWIG_fail_ptr("SinkWavWrite_get_samplerate",1,SWIGTYPE_p_Aubio__SinkWavWrite);
+  }
+  
+  result = (uint32_t)(arg1)->get_samplerate();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SinkWavWrite_get_channels(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SinkWavWrite *arg1 = (Aubio::SinkWavWrite *) 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::SinkWavWrite::get_channels",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SinkWavWrite::get_channels",1,"Aubio::SinkWavWrite *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SinkWavWrite,0))){
+    SWIG_fail_ptr("SinkWavWrite_get_channels",1,SWIGTYPE_p_Aubio__SinkWavWrite);
+  }
+  
+  result = (uint32_t)(arg1)->get_channels();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SinkWavWrite_process(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SinkWavWrite *arg1 = (Aubio::SinkWavWrite *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  uint32_t arg3 ;
+  
+  SWIG_check_num_args("Aubio::SinkWavWrite::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SinkWavWrite::process",1,"Aubio::SinkWavWrite *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::SinkWavWrite::process",2,"Aubio::FVec &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::SinkWavWrite::process",3,"uint32_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SinkWavWrite,0))){
+    SWIG_fail_ptr("SinkWavWrite_process",1,SWIGTYPE_p_Aubio__SinkWavWrite);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("SinkWavWrite_process",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
+  arg3 = (uint32_t)lua_tonumber(L, 3);
+  (arg1)->process(*arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SinkWavWrite_do_multi(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SinkWavWrite *arg1 = (Aubio::SinkWavWrite *) 0 ;
+  Aubio::FMat *arg2 = 0 ;
+  uint32_t arg3 ;
+  
+  SWIG_check_num_args("Aubio::SinkWavWrite::do_multi",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SinkWavWrite::do_multi",1,"Aubio::SinkWavWrite *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::SinkWavWrite::do_multi",2,"Aubio::FMat &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::SinkWavWrite::do_multi",3,"uint32_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SinkWavWrite,0))){
+    SWIG_fail_ptr("SinkWavWrite_do_multi",1,SWIGTYPE_p_Aubio__SinkWavWrite);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("SinkWavWrite_do_multi",2,SWIGTYPE_p_Aubio__FMat);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
+  arg3 = (uint32_t)lua_tonumber(L, 3);
+  (arg1)->do_multi(*arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_SinkWavWrite(void *obj) {
+Aubio::SinkWavWrite *arg1 = (Aubio::SinkWavWrite *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_SinkWavWrite(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_SinkWavWrite);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_SinkWavWrite_attributes[] = {
+    { "wav", _wrap_SinkWavWrite_wav_get, _wrap_SinkWavWrite_wav_set },
+    {0,0,0}
+};
+static swig_lua_method swig_SinkWavWrite_methods[]= {
+    { "preset_samplerate", _wrap_SinkWavWrite_preset_samplerate},
+    { "preset_channels", _wrap_SinkWavWrite_preset_channels},
+    { "get_samplerate", _wrap_SinkWavWrite_get_samplerate},
+    { "get_channels", _wrap_SinkWavWrite_get_channels},
+    { "process", _wrap_SinkWavWrite_process},
+    { "do_multi", _wrap_SinkWavWrite_do_multi},
+    {0,0}
+};
+static swig_lua_method swig_SinkWavWrite_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_SinkWavWrite_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_SinkWavWrite_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_SinkWavWrite_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_SinkWavWrite_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_SinkWavWrite_Sf_SwigStatic = {
+    "SinkWavWrite",
+    swig_SinkWavWrite_Sf_SwigStatic_methods,
+    swig_SinkWavWrite_Sf_SwigStatic_attributes,
+    swig_SinkWavWrite_Sf_SwigStatic_constants,
+    swig_SinkWavWrite_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_SinkWavWrite_bases[] = {0};
+static const char *swig_SinkWavWrite_base_names[] = {0};
+static swig_lua_class _wrap_class_SinkWavWrite = { "SinkWavWrite", "SinkWavWrite", &SWIGTYPE_p_Aubio__SinkWavWrite,_proxy__wrap_new_SinkWavWrite, swig_delete_SinkWavWrite, swig_SinkWavWrite_methods, swig_SinkWavWrite_attributes, &swig_SinkWavWrite_Sf_SwigStatic, swig_SinkWavWrite_meta, swig_SinkWavWrite_bases, swig_SinkWavWrite_base_names };
 
 static int _wrap_Sampler_sampler_set(lua_State* L) {
   int SWIG_arg = 0;
-  Sampler *arg1 = (Sampler *) 0 ;
+  Aubio::Sampler *arg1 = (Aubio::Sampler *) 0 ;
   aubio_sampler_t *arg2 = (aubio_sampler_t *) 0 ;
   
-  SWIG_check_num_args("Sampler::sampler",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Sampler::sampler",1,"Sampler *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Sampler::sampler",2,"aubio_sampler_t *");
+  SWIG_check_num_args("Aubio::Sampler::sampler",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Sampler::sampler",1,"Aubio::Sampler *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::Sampler::sampler",2,"aubio_sampler_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Sampler,0))){
-    SWIG_fail_ptr("Sampler_sampler_set",1,SWIGTYPE_p_Sampler);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Sampler,0))){
+    SWIG_fail_ptr("Sampler_sampler_set",1,SWIGTYPE_p_Aubio__Sampler);
   }
   
   
@@ -11683,14 +14269,14 @@ fail:
 
 static int _wrap_Sampler_sampler_get(lua_State* L) {
   int SWIG_arg = 0;
-  Sampler *arg1 = (Sampler *) 0 ;
+  Aubio::Sampler *arg1 = (Aubio::Sampler *) 0 ;
   aubio_sampler_t *result = 0 ;
   
-  SWIG_check_num_args("Sampler::sampler",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Sampler::sampler",1,"Sampler *");
+  SWIG_check_num_args("Aubio::Sampler::sampler",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Sampler::sampler",1,"Aubio::Sampler *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Sampler,0))){
-    SWIG_fail_ptr("Sampler_sampler_get",1,SWIGTYPE_p_Sampler);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Sampler,0))){
+    SWIG_fail_ptr("Sampler_sampler_get",1,SWIGTYPE_p_Aubio__Sampler);
   }
   
   result = (aubio_sampler_t *) ((arg1)->sampler);
@@ -11707,19 +14293,120 @@ fail:
 
 static int _wrap_new_Sampler(lua_State* L) {
   int SWIG_arg = 0;
-  size_t arg1 ;
+  uint32_t arg1 ;
   size_t arg2 ;
-  Sampler *result = 0 ;
+  Aubio::Sampler *result = 0 ;
   
-  SWIG_check_num_args("Sampler::Sampler",2,2)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("Sampler::Sampler",1,"size_t");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("Sampler::Sampler",2,"size_t");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative")
-  arg1 = (size_t)lua_tonumber(L, 1);
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_check_num_args("Aubio::Sampler::Sampler",2,2)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::Sampler::Sampler",1,"uint32_t");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Sampler::Sampler",2,"size_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
-  result = (Sampler *)new Sampler(arg1,arg2);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Sampler,1); SWIG_arg++; 
+  result = (Aubio::Sampler *)new Aubio::Sampler(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__Sampler,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Sampler_load(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Sampler *arg1 = (Aubio::Sampler *) 0 ;
+  char *arg2 = (char *) 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Sampler::load",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Sampler::load",1,"Aubio::Sampler *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Aubio::Sampler::load",2,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Sampler,0))){
+    SWIG_fail_ptr("Sampler_load",1,SWIGTYPE_p_Aubio__Sampler);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  result = (uint32_t)(arg1)->load((char const *)arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Sampler_process(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Sampler *arg1 = (Aubio::Sampler *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
+  
+  SWIG_check_num_args("Aubio::Sampler::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Sampler::process",1,"Aubio::Sampler *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Sampler::process",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::Sampler::process",3,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Sampler,0))){
+    SWIG_fail_ptr("Sampler_process",1,SWIGTYPE_p_Aubio__Sampler);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Sampler_process",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Sampler_process",3,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  (arg1)->process((Aubio::FVec const &)*arg2,*arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Sampler_process_multi(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Sampler *arg1 = (Aubio::Sampler *) 0 ;
+  Aubio::FMat *arg2 = 0 ;
+  Aubio::FMat *arg3 = 0 ;
+  
+  SWIG_check_num_args("Aubio::Sampler::process_multi",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Sampler::process_multi",1,"Aubio::Sampler *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Sampler::process_multi",2,"Aubio::FMat const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::Sampler::process_multi",3,"Aubio::FMat &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Sampler,0))){
+    SWIG_fail_ptr("Sampler_process_multi",1,SWIGTYPE_p_Aubio__Sampler);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("Sampler_process_multi",2,SWIGTYPE_p_Aubio__FMat);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("Sampler_process_multi",3,SWIGTYPE_p_Aubio__FMat);
+  }
+  
+  (arg1)->process_multi((Aubio::FMat const &)*arg2,*arg3);
+  
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -11731,7 +14418,7 @@ fail:
 
 
 static void swig_delete_Sampler(void *obj) {
-Sampler *arg1 = (Sampler *) obj;
+Aubio::Sampler *arg1 = (Aubio::Sampler *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_Sampler(lua_State *L) {
@@ -11747,6 +14434,9 @@ static swig_lua_attribute swig_Sampler_attributes[] = {
     {0,0,0}
 };
 static swig_lua_method swig_Sampler_methods[]= {
+    { "load", _wrap_Sampler_load},
+    { "process", _wrap_Sampler_process},
+    { "process_multi", _wrap_Sampler_process_multi},
     {0,0}
 };
 static swig_lua_method swig_Sampler_meta[] = {
@@ -11776,19 +14466,317 @@ static swig_lua_namespace swig_Sampler_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_Sampler_bases[] = {0};
 static const char *swig_Sampler_base_names[] = {0};
-static swig_lua_class _wrap_class_Sampler = { "Sampler", "Sampler", &SWIGTYPE_p_Sampler,_proxy__wrap_new_Sampler, swig_delete_Sampler, swig_Sampler_methods, swig_Sampler_attributes, &swig_Sampler_Sf_SwigStatic, swig_Sampler_meta, swig_Sampler_bases, swig_Sampler_base_names };
+static swig_lua_class _wrap_class_Sampler = { "Sampler", "Sampler", &SWIGTYPE_p_Aubio__Sampler,_proxy__wrap_new_Sampler, swig_delete_Sampler, swig_Sampler_methods, swig_Sampler_attributes, &swig_Sampler_Sf_SwigStatic, swig_Sampler_meta, swig_Sampler_bases, swig_Sampler_base_names };
+
+static int _wrap_Source_source_set(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Source *arg1 = (Aubio::Source *) 0 ;
+  aubio_source_t *arg2 = (aubio_source_t *) 0 ;
+  
+  SWIG_check_num_args("Aubio::Source::source",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Source::source",1,"Aubio::Source *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::Source::source",2,"aubio_source_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Source,0))){
+    SWIG_fail_ptr("Source_source_set",1,SWIGTYPE_p_Aubio__Source);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_aubio_source_t,SWIG_POINTER_DISOWN))){
+    SWIG_fail_ptr("Source_source_set",2,SWIGTYPE_p_aubio_source_t);
+  }
+  
+  if (arg1) (arg1)->source = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Source_source_get(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Source *arg1 = (Aubio::Source *) 0 ;
+  aubio_source_t *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::Source::source",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Source::source",1,"Aubio::Source *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Source,0))){
+    SWIG_fail_ptr("Source_source_get",1,SWIGTYPE_p_Aubio__Source);
+  }
+  
+  result = (aubio_source_t *) ((arg1)->source);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_aubio_source_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_Source(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  uint32_t arg2 ;
+  uint32_t arg3 ;
+  Aubio::Source *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::Source::Source",3,3)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Aubio::Source::Source",1,"char const *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Source::Source",2,"uint32_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::Source::Source",3,"uint32_t");
+  arg1 = (char *)lua_tostring(L, 1);
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
+  arg3 = (uint32_t)lua_tonumber(L, 3);
+  result = (Aubio::Source *)new Aubio::Source((char const *)arg1,arg2,arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__Source,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Source_process(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Source *arg1 = (Aubio::Source *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Source::process",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Source::process",1,"Aubio::Source *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Source::process",2,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Source,0))){
+    SWIG_fail_ptr("Source_process",1,SWIGTYPE_p_Aubio__Source);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Source_process",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  result = (uint32_t)(arg1)->process(*arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Source_process_multi(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Source *arg1 = (Aubio::Source *) 0 ;
+  Aubio::FMat *arg2 = 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Source::process_multi",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Source::process_multi",1,"Aubio::Source *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Source::process_multi",2,"Aubio::FMat &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Source,0))){
+    SWIG_fail_ptr("Source_process_multi",1,SWIGTYPE_p_Aubio__Source);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("Source_process_multi",2,SWIGTYPE_p_Aubio__FMat);
+  }
+  
+  result = (uint32_t)(arg1)->process_multi(*arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Source_get_samplerate(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Source *arg1 = (Aubio::Source *) 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Source::get_samplerate",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Source::get_samplerate",1,"Aubio::Source *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Source,0))){
+    SWIG_fail_ptr("Source_get_samplerate",1,SWIGTYPE_p_Aubio__Source);
+  }
+  
+  result = (uint32_t)(arg1)->get_samplerate();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Source_get_channels(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Source *arg1 = (Aubio::Source *) 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Source::get_channels",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Source::get_channels",1,"Aubio::Source *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Source,0))){
+    SWIG_fail_ptr("Source_get_channels",1,SWIGTYPE_p_Aubio__Source);
+  }
+  
+  result = (uint32_t)(arg1)->get_channels();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Source_seek(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Source *arg1 = (Aubio::Source *) 0 ;
+  uint32_t arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Source::seek",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Source::seek",1,"Aubio::Source *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Source::seek",2,"uint32_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Source,0))){
+    SWIG_fail_ptr("Source_seek",1,SWIGTYPE_p_Aubio__Source);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->seek(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Source_get_duration(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Source *arg1 = (Aubio::Source *) 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Source::get_duration",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Source::get_duration",1,"Aubio::Source *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Source,0))){
+    SWIG_fail_ptr("Source_get_duration",1,SWIGTYPE_p_Aubio__Source);
+  }
+  
+  result = (uint32_t)(arg1)->get_duration();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_Source(void *obj) {
+Aubio::Source *arg1 = (Aubio::Source *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_Source(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_Source);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_Source_attributes[] = {
+    { "source", _wrap_Source_source_get, _wrap_Source_source_set },
+    {0,0,0}
+};
+static swig_lua_method swig_Source_methods[]= {
+    { "process", _wrap_Source_process},
+    { "process_multi", _wrap_Source_process_multi},
+    { "get_samplerate", _wrap_Source_get_samplerate},
+    { "get_channels", _wrap_Source_get_channels},
+    { "seek", _wrap_Source_seek},
+    { "get_duration", _wrap_Source_get_duration},
+    {0,0}
+};
+static swig_lua_method swig_Source_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_Source_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_Source_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_Source_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_Source_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_Source_Sf_SwigStatic = {
+    "Source",
+    swig_Source_Sf_SwigStatic_methods,
+    swig_Source_Sf_SwigStatic_attributes,
+    swig_Source_Sf_SwigStatic_constants,
+    swig_Source_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_Source_bases[] = {0};
+static const char *swig_Source_base_names[] = {0};
+static swig_lua_class _wrap_class_Source = { "Source", "Source", &SWIGTYPE_p_Aubio__Source,_proxy__wrap_new_Source, swig_delete_Source, swig_Source_methods, swig_Source_attributes, &swig_Source_Sf_SwigStatic, swig_Source_meta, swig_Source_bases, swig_Source_base_names };
 
 static int _wrap_SourceSoundFile_file_set(lua_State* L) {
   int SWIG_arg = 0;
-  SourceSoundFile *arg1 = (SourceSoundFile *) 0 ;
+  Aubio::SourceSoundFile *arg1 = (Aubio::SourceSoundFile *) 0 ;
   aubio_source_sndfile_t *arg2 = (aubio_source_sndfile_t *) 0 ;
   
-  SWIG_check_num_args("SourceSoundFile::file",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SourceSoundFile::file",1,"SourceSoundFile *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("SourceSoundFile::file",2,"aubio_source_sndfile_t *");
+  SWIG_check_num_args("Aubio::SourceSoundFile::file",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SourceSoundFile::file",1,"Aubio::SourceSoundFile *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::SourceSoundFile::file",2,"aubio_source_sndfile_t *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_SourceSoundFile,0))){
-    SWIG_fail_ptr("SourceSoundFile_file_set",1,SWIGTYPE_p_SourceSoundFile);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SourceSoundFile,0))){
+    SWIG_fail_ptr("SourceSoundFile_file_set",1,SWIGTYPE_p_Aubio__SourceSoundFile);
   }
   
   
@@ -11810,14 +14798,14 @@ fail:
 
 static int _wrap_SourceSoundFile_file_get(lua_State* L) {
   int SWIG_arg = 0;
-  SourceSoundFile *arg1 = (SourceSoundFile *) 0 ;
+  Aubio::SourceSoundFile *arg1 = (Aubio::SourceSoundFile *) 0 ;
   aubio_source_sndfile_t *result = 0 ;
   
-  SWIG_check_num_args("SourceSoundFile::file",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SourceSoundFile::file",1,"SourceSoundFile *");
+  SWIG_check_num_args("Aubio::SourceSoundFile::file",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SourceSoundFile::file",1,"Aubio::SourceSoundFile *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_SourceSoundFile,0))){
-    SWIG_fail_ptr("SourceSoundFile_file_get",1,SWIGTYPE_p_SourceSoundFile);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SourceSoundFile,0))){
+    SWIG_fail_ptr("SourceSoundFile_file_get",1,SWIGTYPE_p_Aubio__SourceSoundFile);
   }
   
   result = (aubio_source_sndfile_t *) ((arg1)->file);
@@ -11835,21 +14823,21 @@ fail:
 static int _wrap_new_SourceSoundFile(lua_State* L) {
   int SWIG_arg = 0;
   char *arg1 = (char *) 0 ;
-  size_t arg2 ;
+  uint32_t arg2 ;
   size_t arg3 ;
-  SourceSoundFile *result = 0 ;
+  Aubio::SourceSoundFile *result = 0 ;
   
-  SWIG_check_num_args("SourceSoundFile::SourceSoundFile",3,3)
-  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("SourceSoundFile::SourceSoundFile",1,"char const *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("SourceSoundFile::SourceSoundFile",2,"size_t");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("SourceSoundFile::SourceSoundFile",3,"size_t");
+  SWIG_check_num_args("Aubio::SourceSoundFile::SourceSoundFile",3,3)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Aubio::SourceSoundFile::SourceSoundFile",1,"char const *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::SourceSoundFile::SourceSoundFile",2,"uint32_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::SourceSoundFile::SourceSoundFile",3,"size_t");
   arg1 = (char *)lua_tostring(L, 1);
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
-  arg2 = (size_t)lua_tonumber(L, 2);
-  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
   arg3 = (size_t)lua_tonumber(L, 3);
-  result = (SourceSoundFile *)new SourceSoundFile((char const *)arg1,arg2,arg3);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_SourceSoundFile,1); SWIG_arg++; 
+  result = (Aubio::SourceSoundFile *)new Aubio::SourceSoundFile((char const *)arg1,arg2,arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__SourceSoundFile,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -11862,21 +14850,21 @@ fail:
 
 static int _wrap_SourceSoundFile_process(lua_State* L) {
   int SWIG_arg = 0;
-  SourceSoundFile *arg1 = (SourceSoundFile *) 0 ;
-  FVec *arg2 = 0 ;
+  Aubio::SourceSoundFile *arg1 = (Aubio::SourceSoundFile *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
   size_t result;
   
-  SWIG_check_num_args("SourceSoundFile::process",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SourceSoundFile::process",1,"SourceSoundFile *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SourceSoundFile::process",2,"FVec &");
+  SWIG_check_num_args("Aubio::SourceSoundFile::process",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SourceSoundFile::process",1,"Aubio::SourceSoundFile *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::SourceSoundFile::process",2,"Aubio::FVec &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_SourceSoundFile,0))){
-    SWIG_fail_ptr("SourceSoundFile_process",1,SWIGTYPE_p_SourceSoundFile);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SourceSoundFile,0))){
+    SWIG_fail_ptr("SourceSoundFile_process",1,SWIGTYPE_p_Aubio__SourceSoundFile);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FVec,0))){
-    SWIG_fail_ptr("SourceSoundFile_process",2,SWIGTYPE_p_FVec);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("SourceSoundFile_process",2,SWIGTYPE_p_Aubio__FVec);
   }
   
   result = (arg1)->process(*arg2);
@@ -11893,21 +14881,21 @@ fail:
 
 static int _wrap_SourceSoundFile_multi_process(lua_State* L) {
   int SWIG_arg = 0;
-  SourceSoundFile *arg1 = (SourceSoundFile *) 0 ;
-  FMat *arg2 = 0 ;
+  Aubio::SourceSoundFile *arg1 = (Aubio::SourceSoundFile *) 0 ;
+  Aubio::FMat *arg2 = 0 ;
   size_t result;
   
-  SWIG_check_num_args("SourceSoundFile::multi_process",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SourceSoundFile::multi_process",1,"SourceSoundFile *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SourceSoundFile::multi_process",2,"FMat &");
+  SWIG_check_num_args("Aubio::SourceSoundFile::multi_process",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SourceSoundFile::multi_process",1,"Aubio::SourceSoundFile *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::SourceSoundFile::multi_process",2,"Aubio::FMat &");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_SourceSoundFile,0))){
-    SWIG_fail_ptr("SourceSoundFile_multi_process",1,SWIGTYPE_p_SourceSoundFile);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SourceSoundFile,0))){
+    SWIG_fail_ptr("SourceSoundFile_multi_process",1,SWIGTYPE_p_Aubio__SourceSoundFile);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_FMat,0))){
-    SWIG_fail_ptr("SourceSoundFile_multi_process",2,SWIGTYPE_p_FMat);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("SourceSoundFile_multi_process",2,SWIGTYPE_p_Aubio__FMat);
   }
   
   result = (arg1)->multi_process(*arg2);
@@ -11924,17 +14912,17 @@ fail:
 
 static int _wrap_SourceSoundFile_get_samplerate(lua_State* L) {
   int SWIG_arg = 0;
-  SourceSoundFile *arg1 = (SourceSoundFile *) 0 ;
-  size_t result;
+  Aubio::SourceSoundFile *arg1 = (Aubio::SourceSoundFile *) 0 ;
+  uint32_t result;
   
-  SWIG_check_num_args("SourceSoundFile::get_samplerate",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SourceSoundFile::get_samplerate",1,"SourceSoundFile *");
+  SWIG_check_num_args("Aubio::SourceSoundFile::get_samplerate",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SourceSoundFile::get_samplerate",1,"Aubio::SourceSoundFile *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_SourceSoundFile,0))){
-    SWIG_fail_ptr("SourceSoundFile_get_samplerate",1,SWIGTYPE_p_SourceSoundFile);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SourceSoundFile,0))){
+    SWIG_fail_ptr("SourceSoundFile_get_samplerate",1,SWIGTYPE_p_Aubio__SourceSoundFile);
   }
   
-  result = (arg1)->get_samplerate();
+  result = (uint32_t)(arg1)->get_samplerate();
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -11948,17 +14936,17 @@ fail:
 
 static int _wrap_SourceSoundFile_get_channels(lua_State* L) {
   int SWIG_arg = 0;
-  SourceSoundFile *arg1 = (SourceSoundFile *) 0 ;
-  size_t result;
+  Aubio::SourceSoundFile *arg1 = (Aubio::SourceSoundFile *) 0 ;
+  uint32_t result;
   
-  SWIG_check_num_args("SourceSoundFile::get_channels",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SourceSoundFile::get_channels",1,"SourceSoundFile *");
+  SWIG_check_num_args("Aubio::SourceSoundFile::get_channels",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SourceSoundFile::get_channels",1,"Aubio::SourceSoundFile *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_SourceSoundFile,0))){
-    SWIG_fail_ptr("SourceSoundFile_get_channels",1,SWIGTYPE_p_SourceSoundFile);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SourceSoundFile,0))){
+    SWIG_fail_ptr("SourceSoundFile_get_channels",1,SWIGTYPE_p_Aubio__SourceSoundFile);
   }
   
-  result = (arg1)->get_channels();
+  result = (uint32_t)(arg1)->get_channels();
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -11972,21 +14960,21 @@ fail:
 
 static int _wrap_SourceSoundFile_seek(lua_State* L) {
   int SWIG_arg = 0;
-  SourceSoundFile *arg1 = (SourceSoundFile *) 0 ;
+  Aubio::SourceSoundFile *arg1 = (Aubio::SourceSoundFile *) 0 ;
   size_t arg2 ;
-  size_t result;
+  uint64_t result;
   
-  SWIG_check_num_args("SourceSoundFile::seek",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SourceSoundFile::seek",1,"SourceSoundFile *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("SourceSoundFile::seek",2,"size_t");
+  SWIG_check_num_args("Aubio::SourceSoundFile::seek",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SourceSoundFile::seek",1,"Aubio::SourceSoundFile *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::SourceSoundFile::seek",2,"size_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_SourceSoundFile,0))){
-    SWIG_fail_ptr("SourceSoundFile_seek",1,SWIGTYPE_p_SourceSoundFile);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SourceSoundFile,0))){
+    SWIG_fail_ptr("SourceSoundFile_seek",1,SWIGTYPE_p_Aubio__SourceSoundFile);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
-  result = (arg1)->seek(arg2);
+  result = (uint64_t)(arg1)->seek(arg2);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -12000,17 +14988,17 @@ fail:
 
 static int _wrap_SourceSoundFile_get_duration(lua_State* L) {
   int SWIG_arg = 0;
-  SourceSoundFile *arg1 = (SourceSoundFile *) 0 ;
-  size_t result;
+  Aubio::SourceSoundFile *arg1 = (Aubio::SourceSoundFile *) 0 ;
+  uint32_t result;
   
-  SWIG_check_num_args("SourceSoundFile::get_duration",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SourceSoundFile::get_duration",1,"SourceSoundFile *");
+  SWIG_check_num_args("Aubio::SourceSoundFile::get_duration",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SourceSoundFile::get_duration",1,"Aubio::SourceSoundFile *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_SourceSoundFile,0))){
-    SWIG_fail_ptr("SourceSoundFile_get_duration",1,SWIGTYPE_p_SourceSoundFile);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SourceSoundFile,0))){
+    SWIG_fail_ptr("SourceSoundFile_get_duration",1,SWIGTYPE_p_Aubio__SourceSoundFile);
   }
   
-  result = (arg1)->get_duration();
+  result = (uint32_t)(arg1)->get_duration();
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -12024,17 +15012,17 @@ fail:
 
 static int _wrap_SourceSoundFile_close(lua_State* L) {
   int SWIG_arg = 0;
-  SourceSoundFile *arg1 = (SourceSoundFile *) 0 ;
-  size_t result;
+  Aubio::SourceSoundFile *arg1 = (Aubio::SourceSoundFile *) 0 ;
+  uint32_t result;
   
-  SWIG_check_num_args("SourceSoundFile::close",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SourceSoundFile::close",1,"SourceSoundFile *");
+  SWIG_check_num_args("Aubio::SourceSoundFile::close",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SourceSoundFile::close",1,"Aubio::SourceSoundFile *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_SourceSoundFile,0))){
-    SWIG_fail_ptr("SourceSoundFile_close",1,SWIGTYPE_p_SourceSoundFile);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SourceSoundFile,0))){
+    SWIG_fail_ptr("SourceSoundFile_close",1,SWIGTYPE_p_Aubio__SourceSoundFile);
   }
   
-  result = (arg1)->close();
+  result = (uint32_t)(arg1)->close();
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -12047,7 +15035,7 @@ fail:
 
 
 static void swig_delete_SourceSoundFile(void *obj) {
-SourceSoundFile *arg1 = (SourceSoundFile *) obj;
+Aubio::SourceSoundFile *arg1 = (Aubio::SourceSoundFile *) obj;
 delete arg1;
 }
 static int _proxy__wrap_new_SourceSoundFile(lua_State *L) {
@@ -12099,7 +15087,2649 @@ static swig_lua_namespace swig_SourceSoundFile_Sf_SwigStatic = {
 };
 static swig_lua_class *swig_SourceSoundFile_bases[] = {0};
 static const char *swig_SourceSoundFile_base_names[] = {0};
-static swig_lua_class _wrap_class_SourceSoundFile = { "SourceSoundFile", "SourceSoundFile", &SWIGTYPE_p_SourceSoundFile,_proxy__wrap_new_SourceSoundFile, swig_delete_SourceSoundFile, swig_SourceSoundFile_methods, swig_SourceSoundFile_attributes, &swig_SourceSoundFile_Sf_SwigStatic, swig_SourceSoundFile_meta, swig_SourceSoundFile_bases, swig_SourceSoundFile_base_names };
+static swig_lua_class _wrap_class_SourceSoundFile = { "SourceSoundFile", "SourceSoundFile", &SWIGTYPE_p_Aubio__SourceSoundFile,_proxy__wrap_new_SourceSoundFile, swig_delete_SourceSoundFile, swig_SourceSoundFile_methods, swig_SourceSoundFile_attributes, &swig_SourceSoundFile_Sf_SwigStatic, swig_SourceSoundFile_meta, swig_SourceSoundFile_bases, swig_SourceSoundFile_base_names };
+
+static int _wrap_SourceWavFile_file_set(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SourceWavFile *arg1 = (Aubio::SourceWavFile *) 0 ;
+  aubio_source_wavread_t *arg2 = (aubio_source_wavread_t *) 0 ;
+  
+  SWIG_check_num_args("Aubio::SourceWavFile::file",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SourceWavFile::file",1,"Aubio::SourceWavFile *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::SourceWavFile::file",2,"aubio_source_wavread_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SourceWavFile,0))){
+    SWIG_fail_ptr("SourceWavFile_file_set",1,SWIGTYPE_p_Aubio__SourceWavFile);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_aubio_source_wavread_t,SWIG_POINTER_DISOWN))){
+    SWIG_fail_ptr("SourceWavFile_file_set",2,SWIGTYPE_p_aubio_source_wavread_t);
+  }
+  
+  if (arg1) (arg1)->file = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SourceWavFile_file_get(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SourceWavFile *arg1 = (Aubio::SourceWavFile *) 0 ;
+  aubio_source_wavread_t *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::SourceWavFile::file",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SourceWavFile::file",1,"Aubio::SourceWavFile *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SourceWavFile,0))){
+    SWIG_fail_ptr("SourceWavFile_file_get",1,SWIGTYPE_p_Aubio__SourceWavFile);
+  }
+  
+  result = (aubio_source_wavread_t *) ((arg1)->file);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_aubio_source_wavread_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SourceWavFile(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  uint32_t arg2 ;
+  size_t arg3 ;
+  Aubio::SourceWavFile *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::SourceWavFile::SourceWavFile",3,3)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Aubio::SourceWavFile::SourceWavFile",1,"char const *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::SourceWavFile::SourceWavFile",2,"uint32_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::SourceWavFile::SourceWavFile",3,"size_t");
+  arg1 = (char *)lua_tostring(L, 1);
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
+  arg3 = (size_t)lua_tonumber(L, 3);
+  result = (Aubio::SourceWavFile *)new Aubio::SourceWavFile((char const *)arg1,arg2,arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__SourceWavFile,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SourceWavFile_process(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SourceWavFile *arg1 = (Aubio::SourceWavFile *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  size_t result;
+  
+  SWIG_check_num_args("Aubio::SourceWavFile::process",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SourceWavFile::process",1,"Aubio::SourceWavFile *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::SourceWavFile::process",2,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SourceWavFile,0))){
+    SWIG_fail_ptr("SourceWavFile_process",1,SWIGTYPE_p_Aubio__SourceWavFile);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("SourceWavFile_process",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  result = (arg1)->process(*arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SourceWavFile_multi_process(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SourceWavFile *arg1 = (Aubio::SourceWavFile *) 0 ;
+  Aubio::FMat *arg2 = 0 ;
+  size_t result;
+  
+  SWIG_check_num_args("Aubio::SourceWavFile::multi_process",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SourceWavFile::multi_process",1,"Aubio::SourceWavFile *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::SourceWavFile::multi_process",2,"Aubio::FMat &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SourceWavFile,0))){
+    SWIG_fail_ptr("SourceWavFile_multi_process",1,SWIGTYPE_p_Aubio__SourceWavFile);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FMat,0))){
+    SWIG_fail_ptr("SourceWavFile_multi_process",2,SWIGTYPE_p_Aubio__FMat);
+  }
+  
+  result = (arg1)->multi_process(*arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SourceWavFile_get_samplerate(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SourceWavFile *arg1 = (Aubio::SourceWavFile *) 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::SourceWavFile::get_samplerate",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SourceWavFile::get_samplerate",1,"Aubio::SourceWavFile *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SourceWavFile,0))){
+    SWIG_fail_ptr("SourceWavFile_get_samplerate",1,SWIGTYPE_p_Aubio__SourceWavFile);
+  }
+  
+  result = (uint32_t)(arg1)->get_samplerate();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SourceWavFile_get_channels(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SourceWavFile *arg1 = (Aubio::SourceWavFile *) 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::SourceWavFile::get_channels",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SourceWavFile::get_channels",1,"Aubio::SourceWavFile *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SourceWavFile,0))){
+    SWIG_fail_ptr("SourceWavFile_get_channels",1,SWIGTYPE_p_Aubio__SourceWavFile);
+  }
+  
+  result = (uint32_t)(arg1)->get_channels();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SourceWavFile_seek(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SourceWavFile *arg1 = (Aubio::SourceWavFile *) 0 ;
+  size_t arg2 ;
+  uint64_t result;
+  
+  SWIG_check_num_args("Aubio::SourceWavFile::seek",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SourceWavFile::seek",1,"Aubio::SourceWavFile *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::SourceWavFile::seek",2,"size_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SourceWavFile,0))){
+    SWIG_fail_ptr("SourceWavFile_seek",1,SWIGTYPE_p_Aubio__SourceWavFile);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  result = (uint64_t)(arg1)->seek(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SourceWavFile_get_duration(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SourceWavFile *arg1 = (Aubio::SourceWavFile *) 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::SourceWavFile::get_duration",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SourceWavFile::get_duration",1,"Aubio::SourceWavFile *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SourceWavFile,0))){
+    SWIG_fail_ptr("SourceWavFile_get_duration",1,SWIGTYPE_p_Aubio__SourceWavFile);
+  }
+  
+  result = (uint32_t)(arg1)->get_duration();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SourceWavFile_close(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::SourceWavFile *arg1 = (Aubio::SourceWavFile *) 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::SourceWavFile::close",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::SourceWavFile::close",1,"Aubio::SourceWavFile *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__SourceWavFile,0))){
+    SWIG_fail_ptr("SourceWavFile_close",1,SWIGTYPE_p_Aubio__SourceWavFile);
+  }
+  
+  result = (uint32_t)(arg1)->close();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_SourceWavFile(void *obj) {
+Aubio::SourceWavFile *arg1 = (Aubio::SourceWavFile *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_SourceWavFile(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_SourceWavFile);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_SourceWavFile_attributes[] = {
+    { "file", _wrap_SourceWavFile_file_get, _wrap_SourceWavFile_file_set },
+    {0,0,0}
+};
+static swig_lua_method swig_SourceWavFile_methods[]= {
+    { "process", _wrap_SourceWavFile_process},
+    { "multi_process", _wrap_SourceWavFile_multi_process},
+    { "get_samplerate", _wrap_SourceWavFile_get_samplerate},
+    { "get_channels", _wrap_SourceWavFile_get_channels},
+    { "seek", _wrap_SourceWavFile_seek},
+    { "get_duration", _wrap_SourceWavFile_get_duration},
+    { "close", _wrap_SourceWavFile_close},
+    {0,0}
+};
+static swig_lua_method swig_SourceWavFile_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_SourceWavFile_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_SourceWavFile_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_SourceWavFile_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_SourceWavFile_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_SourceWavFile_Sf_SwigStatic = {
+    "SourceWavFile",
+    swig_SourceWavFile_Sf_SwigStatic_methods,
+    swig_SourceWavFile_Sf_SwigStatic_attributes,
+    swig_SourceWavFile_Sf_SwigStatic_constants,
+    swig_SourceWavFile_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_SourceWavFile_bases[] = {0};
+static const char *swig_SourceWavFile_base_names[] = {0};
+static swig_lua_class _wrap_class_SourceWavFile = { "SourceWavFile", "SourceWavFile", &SWIGTYPE_p_Aubio__SourceWavFile,_proxy__wrap_new_SourceWavFile, swig_delete_SourceWavFile, swig_SourceWavFile_methods, swig_SourceWavFile_attributes, &swig_SourceWavFile_Sf_SwigStatic, swig_SourceWavFile_meta, swig_SourceWavFile_bases, swig_SourceWavFile_base_names };
+
+static int _wrap_Notes_notes_set(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Notes *arg1 = (Aubio::Notes *) 0 ;
+  aubio_notes_t *arg2 = (aubio_notes_t *) 0 ;
+  
+  SWIG_check_num_args("Aubio::Notes::notes",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Notes::notes",1,"Aubio::Notes *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::Notes::notes",2,"aubio_notes_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Notes,0))){
+    SWIG_fail_ptr("Notes_notes_set",1,SWIGTYPE_p_Aubio__Notes);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_aubio_notes_t,SWIG_POINTER_DISOWN))){
+    SWIG_fail_ptr("Notes_notes_set",2,SWIGTYPE_p_aubio_notes_t);
+  }
+  
+  if (arg1) (arg1)->notes = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Notes_notes_get(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Notes *arg1 = (Aubio::Notes *) 0 ;
+  aubio_notes_t *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::Notes::notes",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Notes::notes",1,"Aubio::Notes *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Notes,0))){
+    SWIG_fail_ptr("Notes_notes_get",1,SWIGTYPE_p_Aubio__Notes);
+  }
+  
+  result = (aubio_notes_t *) ((arg1)->notes);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_aubio_notes_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_Notes(lua_State* L) {
+  int SWIG_arg = 0;
+  uint32_t arg1 ;
+  uint32_t arg2 ;
+  uint32_t arg3 ;
+  Aubio::Notes *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::Notes::Notes",3,3)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::Notes::Notes",1,"uint32_t");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Notes::Notes",2,"uint32_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::Notes::Notes",3,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
+  arg3 = (uint32_t)lua_tonumber(L, 3);
+  result = (Aubio::Notes *)new Aubio::Notes(arg1,arg2,arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__Notes,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Notes_process(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Notes *arg1 = (Aubio::Notes *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
+  
+  SWIG_check_num_args("Aubio::Notes::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Notes::process",1,"Aubio::Notes *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Notes::process",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::Notes::process",3,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Notes,0))){
+    SWIG_fail_ptr("Notes_process",1,SWIGTYPE_p_Aubio__Notes);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Notes_process",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Notes_process",3,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  (arg1)->process((Aubio::FVec const &)*arg2,*arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Notes_set_silence(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Notes *arg1 = (Aubio::Notes *) 0 ;
+  Aubio::Sample arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Notes::set_silence",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Notes::set_silence",1,"Aubio::Notes *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Notes::set_silence",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Notes,0))){
+    SWIG_fail_ptr("Notes_set_silence",1,SWIGTYPE_p_Aubio__Notes);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->set_silence(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Notes_get_silence(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Notes *arg1 = (Aubio::Notes *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::Notes::get_silence",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Notes::get_silence",1,"Aubio::Notes *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Notes,0))){
+    SWIG_fail_ptr("Notes_get_silence",1,SWIGTYPE_p_Aubio__Notes);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_silence();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Notes_get_minioi_ms(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Notes *arg1 = (Aubio::Notes *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::Notes::get_minioi_ms",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Notes::get_minioi_ms",1,"Aubio::Notes *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Notes,0))){
+    SWIG_fail_ptr("Notes_get_minioi_ms",1,SWIGTYPE_p_Aubio__Notes);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_minioi_ms();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Notes_set_minitoi_ms(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Notes *arg1 = (Aubio::Notes *) 0 ;
+  Aubio::Sample arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Notes::set_minitoi_ms",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Notes::set_minitoi_ms",1,"Aubio::Notes *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Notes::set_minitoi_ms",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Notes,0))){
+    SWIG_fail_ptr("Notes_set_minitoi_ms",1,SWIGTYPE_p_Aubio__Notes);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->set_minitoi_ms(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Notes_release_drop(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Notes *arg1 = (Aubio::Notes *) 0 ;
+  Aubio::Sample arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Notes::release_drop",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Notes::release_drop",1,"Aubio::Notes *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Notes::release_drop",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Notes,0))){
+    SWIG_fail_ptr("Notes_release_drop",1,SWIGTYPE_p_Aubio__Notes);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->release_drop(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_Notes(void *obj) {
+Aubio::Notes *arg1 = (Aubio::Notes *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_Notes(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_Notes);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_Notes_attributes[] = {
+    { "notes", _wrap_Notes_notes_get, _wrap_Notes_notes_set },
+    {0,0,0}
+};
+static swig_lua_method swig_Notes_methods[]= {
+    { "process", _wrap_Notes_process},
+    { "set_silence", _wrap_Notes_set_silence},
+    { "get_silence", _wrap_Notes_get_silence},
+    { "get_minioi_ms", _wrap_Notes_get_minioi_ms},
+    { "set_minitoi_ms", _wrap_Notes_set_minitoi_ms},
+    { "release_drop", _wrap_Notes_release_drop},
+    {0,0}
+};
+static swig_lua_method swig_Notes_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_Notes_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_Notes_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_Notes_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_Notes_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_Notes_Sf_SwigStatic = {
+    "Notes",
+    swig_Notes_Sf_SwigStatic_methods,
+    swig_Notes_Sf_SwigStatic_attributes,
+    swig_Notes_Sf_SwigStatic_constants,
+    swig_Notes_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_Notes_bases[] = {0};
+static const char *swig_Notes_base_names[] = {0};
+static swig_lua_class _wrap_class_Notes = { "Notes", "Notes", &SWIGTYPE_p_Aubio__Notes,_proxy__wrap_new_Notes, swig_delete_Notes, swig_Notes_methods, swig_Notes_attributes, &swig_Notes_Sf_SwigStatic, swig_Notes_meta, swig_Notes_bases, swig_Notes_base_names };
+
+static int _wrap_Onset_onset_set(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  aubio_onset_t *arg2 = (aubio_onset_t *) 0 ;
+  
+  SWIG_check_num_args("Aubio::Onset::onset",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::onset",1,"Aubio::Onset *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::Onset::onset",2,"aubio_onset_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_onset_set",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_aubio_onset_t,SWIG_POINTER_DISOWN))){
+    SWIG_fail_ptr("Onset_onset_set",2,SWIGTYPE_p_aubio_onset_t);
+  }
+  
+  if (arg1) (arg1)->onset = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_onset_get(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  aubio_onset_t *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::Onset::onset",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::onset",1,"Aubio::Onset *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_onset_get",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  result = (aubio_onset_t *) ((arg1)->onset);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_aubio_onset_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_Onset(lua_State* L) {
+  int SWIG_arg = 0;
+  uint32_t arg1 ;
+  uint32_t arg2 ;
+  uint32_t arg3 ;
+  Aubio::Onset *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::Onset::Onset",3,3)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::Onset::Onset",1,"uint32_t");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Onset::Onset",2,"uint32_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::Onset::Onset",3,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
+  arg3 = (uint32_t)lua_tonumber(L, 3);
+  result = (Aubio::Onset *)new Aubio::Onset(arg1,arg2,arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__Onset,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_process(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
+  
+  SWIG_check_num_args("Aubio::Onset::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::process",1,"Aubio::Onset *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Onset::process",2,"Aubio::FVec const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::Onset::process",3,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_process",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Onset_process",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Onset_process",3,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  (arg1)->process((Aubio::FVec const &)*arg2,*arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_get_last(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Onset::get_last",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::get_last",1,"Aubio::Onset *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_get_last",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  result = (uint32_t)(arg1)->get_last();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_get_last_s(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::Onset::get_last_s",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::get_last_s",1,"Aubio::Onset *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_get_last_s",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_last_s();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_get_last_ms(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::Onset::get_last_ms",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::get_last_ms",1,"Aubio::Onset *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_get_last_ms",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_last_ms();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_set_awhitening(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  uint32_t arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Onset::set_awhitening",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::set_awhitening",1,"Aubio::Onset *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Onset::set_awhitening",2,"uint32_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_set_awhitening",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->set_awhitening(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_get_awhitening(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::Onset::get_awhitening",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::get_awhitening",1,"Aubio::Onset *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_get_awhitening",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_awhitening();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_set_compression(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  Aubio::Sample arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Onset::set_compression",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::set_compression",1,"Aubio::Onset *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Onset::set_compression",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_set_compression",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->set_compression(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_get_compression(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::Onset::get_compression",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::get_compression",1,"Aubio::Onset *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_get_compression",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_compression();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_set_silence(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  Aubio::Sample arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Onset::set_silence",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::set_silence",1,"Aubio::Onset *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Onset::set_silence",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_set_silence",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->set_silence(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_get_silence(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::Onset::get_silence",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::get_silence",1,"Aubio::Onset *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_get_silence",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_silence();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_get_thresholded_descriptor(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::Onset::get_thresholded_descriptor",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::get_thresholded_descriptor",1,"Aubio::Onset *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_get_thresholded_descriptor",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_thresholded_descriptor();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_set_threshold(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  Aubio::Sample arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Onset::set_threshold",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::set_threshold",1,"Aubio::Onset *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Onset::set_threshold",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_set_threshold",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->set_threshold(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_set_minioi(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  uint32_t arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Onset::set_minioi",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::set_minioi",1,"Aubio::Onset *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Onset::set_minioi",2,"uint32_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_set_minioi",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->set_minioi(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_set_minioi_s(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  Aubio::Sample arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Onset::set_minioi_s",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::set_minioi_s",1,"Aubio::Onset *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Onset::set_minioi_s",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_set_minioi_s",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->set_minioi_s(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_set_minioi_ms(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  Aubio::Sample arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Onset::set_minioi_ms",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::set_minioi_ms",1,"Aubio::Onset *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Onset::set_minioi_ms",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_set_minioi_ms",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->set_minioi_ms(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_set_delay(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  uint32_t arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Onset::set_delay",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::set_delay",1,"Aubio::Onset *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Onset::set_delay",2,"uint32_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_set_delay",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->set_delay(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_set_delay_s(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  Aubio::Sample arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Onset::set_delay_s",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::set_delay_s",1,"Aubio::Onset *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Onset::set_delay_s",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_set_delay_s",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->set_delay_s(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_set_delay_ms(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  Aubio::Sample arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Onset::set_delay_ms",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::set_delay_ms",1,"Aubio::Onset *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Onset::set_delay_ms",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_set_delay_ms",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->set_delay_ms(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_get_minioi(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Onset::get_minioi",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::get_minioi",1,"Aubio::Onset *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_get_minioi",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  result = (uint32_t)(arg1)->get_minioi();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_get_minioi_ms(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::Onset::get_minioi_ms",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::get_minioi_ms",1,"Aubio::Onset *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_get_minioi_ms",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_minioi_ms();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_get_delay(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Onset::get_delay",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::get_delay",1,"Aubio::Onset *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_get_delay",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  result = (uint32_t)(arg1)->get_delay();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_get_delay_s(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::Onset::get_delay_s",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::get_delay_s",1,"Aubio::Onset *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_get_delay_s",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_delay_s();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_get_delay_ms(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::Onset::get_delay_ms",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::get_delay_ms",1,"Aubio::Onset *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_get_delay_ms",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_delay_ms();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_get_threshold(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::Onset::get_threshold",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::get_threshold",1,"Aubio::Onset *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_get_threshold",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_threshold();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_set_default_parameters(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  char *arg2 = (char *) 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::Onset::set_default_parameters",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::set_default_parameters",1,"Aubio::Onset *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Aubio::Onset::set_default_parameters",2,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_set_default_parameters",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  result = (uint32_t)(arg1)->set_default_parameters((char const *)arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Onset_reset(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Onset *arg1 = (Aubio::Onset *) 0 ;
+  
+  SWIG_check_num_args("Aubio::Onset::reset",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Onset::reset",1,"Aubio::Onset *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Onset,0))){
+    SWIG_fail_ptr("Onset_reset",1,SWIGTYPE_p_Aubio__Onset);
+  }
+  
+  (arg1)->reset();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_Onset(void *obj) {
+Aubio::Onset *arg1 = (Aubio::Onset *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_Onset(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_Onset);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_Onset_attributes[] = {
+    { "onset", _wrap_Onset_onset_get, _wrap_Onset_onset_set },
+    {0,0,0}
+};
+static swig_lua_method swig_Onset_methods[]= {
+    { "process", _wrap_Onset_process},
+    { "get_last", _wrap_Onset_get_last},
+    { "get_last_s", _wrap_Onset_get_last_s},
+    { "get_last_ms", _wrap_Onset_get_last_ms},
+    { "set_awhitening", _wrap_Onset_set_awhitening},
+    { "get_awhitening", _wrap_Onset_get_awhitening},
+    { "set_compression", _wrap_Onset_set_compression},
+    { "get_compression", _wrap_Onset_get_compression},
+    { "set_silence", _wrap_Onset_set_silence},
+    { "get_silence", _wrap_Onset_get_silence},
+    { "get_thresholded_descriptor", _wrap_Onset_get_thresholded_descriptor},
+    { "set_threshold", _wrap_Onset_set_threshold},
+    { "set_minioi", _wrap_Onset_set_minioi},
+    { "set_minioi_s", _wrap_Onset_set_minioi_s},
+    { "set_minioi_ms", _wrap_Onset_set_minioi_ms},
+    { "set_delay", _wrap_Onset_set_delay},
+    { "set_delay_s", _wrap_Onset_set_delay_s},
+    { "set_delay_ms", _wrap_Onset_set_delay_ms},
+    { "get_minioi", _wrap_Onset_get_minioi},
+    { "get_minioi_ms", _wrap_Onset_get_minioi_ms},
+    { "get_delay", _wrap_Onset_get_delay},
+    { "get_delay_s", _wrap_Onset_get_delay_s},
+    { "get_delay_ms", _wrap_Onset_get_delay_ms},
+    { "get_threshold", _wrap_Onset_get_threshold},
+    { "set_default_parameters", _wrap_Onset_set_default_parameters},
+    { "reset", _wrap_Onset_reset},
+    {0,0}
+};
+static swig_lua_method swig_Onset_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_Onset_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_Onset_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_Onset_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_Onset_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_Onset_Sf_SwigStatic = {
+    "Onset",
+    swig_Onset_Sf_SwigStatic_methods,
+    swig_Onset_Sf_SwigStatic_attributes,
+    swig_Onset_Sf_SwigStatic_constants,
+    swig_Onset_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_Onset_bases[] = {0};
+static const char *swig_Onset_base_names[] = {0};
+static swig_lua_class _wrap_class_Onset = { "Onset", "Onset", &SWIGTYPE_p_Aubio__Onset,_proxy__wrap_new_Onset, swig_delete_Onset, swig_Onset_methods, swig_Onset_attributes, &swig_Onset_Sf_SwigStatic, swig_Onset_meta, swig_Onset_bases, swig_Onset_base_names };
+
+static int _wrap_PeakPicker_pick_set(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PeakPicker *arg1 = (Aubio::PeakPicker *) 0 ;
+  aubio_peakpicker_t *arg2 = (aubio_peakpicker_t *) 0 ;
+  
+  SWIG_check_num_args("Aubio::PeakPicker::pick",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PeakPicker::pick",1,"Aubio::PeakPicker *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::PeakPicker::pick",2,"aubio_peakpicker_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PeakPicker,0))){
+    SWIG_fail_ptr("PeakPicker_pick_set",1,SWIGTYPE_p_Aubio__PeakPicker);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_aubio_peakpicker_t,SWIG_POINTER_DISOWN))){
+    SWIG_fail_ptr("PeakPicker_pick_set",2,SWIGTYPE_p_aubio_peakpicker_t);
+  }
+  
+  if (arg1) (arg1)->pick = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PeakPicker_pick_get(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PeakPicker *arg1 = (Aubio::PeakPicker *) 0 ;
+  aubio_peakpicker_t *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::PeakPicker::pick",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PeakPicker::pick",1,"Aubio::PeakPicker *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PeakPicker,0))){
+    SWIG_fail_ptr("PeakPicker_pick_get",1,SWIGTYPE_p_Aubio__PeakPicker);
+  }
+  
+  result = (aubio_peakpicker_t *) ((arg1)->pick);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_aubio_peakpicker_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PeakPicker(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PeakPicker *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::PeakPicker::PeakPicker",0,0)
+  result = (Aubio::PeakPicker *)new Aubio::PeakPicker();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__PeakPicker,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PeakPicker_process(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PeakPicker *arg1 = (Aubio::PeakPicker *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  Aubio::FVec *arg3 = 0 ;
+  
+  SWIG_check_num_args("Aubio::PeakPicker::process",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PeakPicker::process",1,"Aubio::PeakPicker *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::PeakPicker::process",2,"Aubio::FVec &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Aubio::PeakPicker::process",3,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PeakPicker,0))){
+    SWIG_fail_ptr("PeakPicker_process",1,SWIGTYPE_p_Aubio__PeakPicker);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("PeakPicker_process",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("PeakPicker_process",3,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  (arg1)->process(*arg2,*arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PeakPicker_get_thresholded_input(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PeakPicker *arg1 = (Aubio::PeakPicker *) 0 ;
+  SwigValueWrapper< Aubio::FVec > result;
+  
+  SWIG_check_num_args("Aubio::PeakPicker::get_thresholded_input",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PeakPicker::get_thresholded_input",1,"Aubio::PeakPicker *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PeakPicker,0))){
+    SWIG_fail_ptr("PeakPicker_get_thresholded_input",1,SWIGTYPE_p_Aubio__PeakPicker);
+  }
+  
+  result = (arg1)->get_thresholded_input();
+  {
+    Aubio::FVec * resultptr = new Aubio::FVec((const Aubio::FVec &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_Aubio__FVec,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PeakPicker_set_threshold(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PeakPicker *arg1 = (Aubio::PeakPicker *) 0 ;
+  Aubio::Sample arg2 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::PeakPicker::set_threshold",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PeakPicker::set_threshold",1,"Aubio::PeakPicker *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::PeakPicker::set_threshold",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PeakPicker,0))){
+    SWIG_fail_ptr("PeakPicker_set_threshold",1,SWIGTYPE_p_Aubio__PeakPicker);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  result = (uint32_t)(arg1)->set_threshold(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PeakPicker_get_threshold(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::PeakPicker *arg1 = (Aubio::PeakPicker *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::PeakPicker::get_threshold",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::PeakPicker::get_threshold",1,"Aubio::PeakPicker *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__PeakPicker,0))){
+    SWIG_fail_ptr("PeakPicker_get_threshold",1,SWIGTYPE_p_Aubio__PeakPicker);
+  }
+  
+  result = (Aubio::Sample)(arg1)->get_threshold();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_PeakPicker(void *obj) {
+Aubio::PeakPicker *arg1 = (Aubio::PeakPicker *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_PeakPicker(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_PeakPicker);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_PeakPicker_attributes[] = {
+    { "pick", _wrap_PeakPicker_pick_get, _wrap_PeakPicker_pick_set },
+    {0,0,0}
+};
+static swig_lua_method swig_PeakPicker_methods[]= {
+    { "process", _wrap_PeakPicker_process},
+    { "get_thresholded_input", _wrap_PeakPicker_get_thresholded_input},
+    { "set_threshold", _wrap_PeakPicker_set_threshold},
+    { "get_threshold", _wrap_PeakPicker_get_threshold},
+    {0,0}
+};
+static swig_lua_method swig_PeakPicker_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_PeakPicker_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_PeakPicker_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_PeakPicker_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_PeakPicker_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_PeakPicker_Sf_SwigStatic = {
+    "PeakPicker",
+    swig_PeakPicker_Sf_SwigStatic_methods,
+    swig_PeakPicker_Sf_SwigStatic_attributes,
+    swig_PeakPicker_Sf_SwigStatic_constants,
+    swig_PeakPicker_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_PeakPicker_bases[] = {0};
+static const char *swig_PeakPicker_base_names[] = {0};
+static swig_lua_class _wrap_class_PeakPicker = { "PeakPicker", "PeakPicker", &SWIGTYPE_p_Aubio__PeakPicker,_proxy__wrap_new_PeakPicker, swig_delete_PeakPicker, swig_PeakPicker_methods, swig_PeakPicker_attributes, &swig_PeakPicker_Sf_SwigStatic, swig_PeakPicker_meta, swig_PeakPicker_bases, swig_PeakPicker_base_names };
+
+static int _wrap_Histogram_hist_set(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Histogram *arg1 = (Aubio::Histogram *) 0 ;
+  aubio_hist_t *arg2 = (aubio_hist_t *) 0 ;
+  
+  SWIG_check_num_args("Aubio::Histogram::hist",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Histogram::hist",1,"Aubio::Histogram *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Aubio::Histogram::hist",2,"aubio_hist_t *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Histogram,0))){
+    SWIG_fail_ptr("Histogram_hist_set",1,SWIGTYPE_p_Aubio__Histogram);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_aubio_hist_t,SWIG_POINTER_DISOWN))){
+    SWIG_fail_ptr("Histogram_hist_set",2,SWIGTYPE_p_aubio_hist_t);
+  }
+  
+  if (arg1) (arg1)->hist = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Histogram_hist_get(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Histogram *arg1 = (Aubio::Histogram *) 0 ;
+  aubio_hist_t *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::Histogram::hist",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Histogram::hist",1,"Aubio::Histogram *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Histogram,0))){
+    SWIG_fail_ptr("Histogram_hist_get",1,SWIGTYPE_p_Aubio__Histogram);
+  }
+  
+  result = (aubio_hist_t *) ((arg1)->hist);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_aubio_hist_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_Histogram(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Sample arg1 ;
+  Aubio::Sample arg2 ;
+  uint32_t arg3 ;
+  Aubio::Histogram *result = 0 ;
+  
+  SWIG_check_num_args("Aubio::Histogram::Histogram",3,3)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::Histogram::Histogram",1,"Aubio::Sample");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::Histogram::Histogram",2,"Aubio::Sample");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::Histogram::Histogram",3,"uint32_t");
+  arg1 = (Aubio::Sample)lua_tonumber(L, 1);
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
+  arg3 = (uint32_t)lua_tonumber(L, 3);
+  result = (Aubio::Histogram *)new Aubio::Histogram(arg1,arg2,arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Aubio__Histogram,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Histogram_process(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Histogram *arg1 = (Aubio::Histogram *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  
+  SWIG_check_num_args("Aubio::Histogram::process",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Histogram::process",1,"Aubio::Histogram *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Histogram::process",2,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Histogram,0))){
+    SWIG_fail_ptr("Histogram_process",1,SWIGTYPE_p_Aubio__Histogram);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Histogram_process",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  (arg1)->process(*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Histogram_process_notnull(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Histogram *arg1 = (Aubio::Histogram *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  
+  SWIG_check_num_args("Aubio::Histogram::process_notnull",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Histogram::process_notnull",1,"Aubio::Histogram *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Histogram::process_notnull",2,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Histogram,0))){
+    SWIG_fail_ptr("Histogram_process_notnull",1,SWIGTYPE_p_Aubio__Histogram);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Histogram_process_notnull",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  (arg1)->process_notnull(*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Histogram_hist_mean(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Histogram *arg1 = (Aubio::Histogram *) 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::Histogram::hist_mean",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Histogram::hist_mean",1,"Aubio::Histogram *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Histogram,0))){
+    SWIG_fail_ptr("Histogram_hist_mean",1,SWIGTYPE_p_Aubio__Histogram);
+  }
+  
+  result = (Aubio::Sample)(arg1)->hist_mean();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Histogram_hist_weight(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Histogram *arg1 = (Aubio::Histogram *) 0 ;
+  
+  SWIG_check_num_args("Aubio::Histogram::hist_weight",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Histogram::hist_weight",1,"Aubio::Histogram *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Histogram,0))){
+    SWIG_fail_ptr("Histogram_hist_weight",1,SWIGTYPE_p_Aubio__Histogram);
+  }
+  
+  (arg1)->hist_weight();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Histogram_dyn_notnull(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Histogram *arg1 = (Aubio::Histogram *) 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  
+  SWIG_check_num_args("Aubio::Histogram::dyn_notnull",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Aubio::Histogram::dyn_notnull",1,"Aubio::Histogram *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::Histogram::dyn_notnull",2,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__Histogram,0))){
+    SWIG_fail_ptr("Histogram_dyn_notnull",1,SWIGTYPE_p_Aubio__Histogram);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("Histogram_dyn_notnull",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  (arg1)->dyn_notnull(*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_Histogram(void *obj) {
+Aubio::Histogram *arg1 = (Aubio::Histogram *) obj;
+delete arg1;
+}
+static int _proxy__wrap_new_Histogram(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_Histogram);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_Histogram_attributes[] = {
+    { "hist", _wrap_Histogram_hist_get, _wrap_Histogram_hist_set },
+    {0,0,0}
+};
+static swig_lua_method swig_Histogram_methods[]= {
+    { "process", _wrap_Histogram_process},
+    { "process_notnull", _wrap_Histogram_process_notnull},
+    { "hist_mean", _wrap_Histogram_hist_mean},
+    { "hist_weight", _wrap_Histogram_hist_weight},
+    { "dyn_notnull", _wrap_Histogram_dyn_notnull},
+    {0,0}
+};
+static swig_lua_method swig_Histogram_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_Histogram_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_Histogram_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_Histogram_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_Histogram_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_Histogram_Sf_SwigStatic = {
+    "Histogram",
+    swig_Histogram_Sf_SwigStatic_methods,
+    swig_Histogram_Sf_SwigStatic_attributes,
+    swig_Histogram_Sf_SwigStatic_constants,
+    swig_Histogram_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_Histogram_bases[] = {0};
+static const char *swig_Histogram_base_names[] = {0};
+static swig_lua_class _wrap_class_Histogram = { "Histogram", "Histogram", &SWIGTYPE_p_Aubio__Histogram,_proxy__wrap_new_Histogram, swig_delete_Histogram, swig_Histogram_methods, swig_Histogram_attributes, &swig_Histogram_Sf_SwigStatic, swig_Histogram_meta, swig_Histogram_bases, swig_Histogram_base_names };
+
+static int _wrap_mean(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::mean",1,1)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::mean",1,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("mean",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  result = (Aubio::Sample)Aubio::mean(*arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_max(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::max",1,1)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::max",1,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("max",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  result = (Aubio::Sample)Aubio::max(*arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_min(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::min",1,1)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::min",1,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("min",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  result = (Aubio::Sample)Aubio::min(*arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_min_elem(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::min_elem",1,1)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::min_elem",1,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("min_elem",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  result = (uint32_t)Aubio::min_elem(*arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_max_elem(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::max_elem",1,1)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::max_elem",1,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("max_elem",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  result = (uint32_t)Aubio::max_elem(*arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_shift(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  
+  SWIG_check_num_args("Aubio::shift",1,1)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::shift",1,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("shift",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  Aubio::shift(*arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ishift(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  
+  SWIG_check_num_args("Aubio::ishift",1,1)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::ishift",1,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("ishift",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  Aubio::ishift(*arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_push(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::Sample arg2 ;
+  
+  SWIG_check_num_args("Aubio::push",2,2)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::push",1,"Aubio::FVec &");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::push",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("push",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  Aubio::push(*arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_sum(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::sum",1,1)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::sum",1,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("sum",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  result = (Aubio::Sample)Aubio::sum(*arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_local_hfc(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::local_hfc",1,1)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::local_hfc",1,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("local_hfc",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  result = (Aubio::Sample)Aubio::local_hfc(*arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_alpha_norm(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::Sample arg2 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::alpha_norm",2,2)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::alpha_norm",1,"Aubio::FVec &");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::alpha_norm",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("alpha_norm",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  result = (Aubio::Sample)Aubio::alpha_norm(*arg1,arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_alpha_normalise(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::Sample arg2 ;
+  
+  SWIG_check_num_args("Aubio::alpha_normalise",2,2)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::alpha_normalise",1,"Aubio::FVec &");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::alpha_normalise",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("alpha_normalise",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  Aubio::alpha_normalise(*arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_add(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::Sample arg2 ;
+  
+  SWIG_check_num_args("Aubio::add",2,2)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::add",1,"Aubio::FVec &");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::add",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("add",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  Aubio::add(*arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_mul(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::Sample arg2 ;
+  
+  SWIG_check_num_args("Aubio::mul",2,2)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::mul",1,"Aubio::FVec &");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::mul",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("mul",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  Aubio::mul(*arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_remove_min(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  
+  SWIG_check_num_args("Aubio::remove_min",1,1)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::remove_min",1,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("remove_min",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  Aubio::remove_min(*arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_moving_threshold(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  uint32_t arg3 ;
+  uint32_t arg4 ;
+  uint32_t arg5 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::moving_threshold",5,5)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::moving_threshold",1,"Aubio::FVec &");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::moving_threshold",2,"Aubio::FVec &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::moving_threshold",3,"uint32_t");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("Aubio::moving_threshold",4,"uint32_t");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("Aubio::moving_threshold",5,"uint32_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("moving_threshold",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("moving_threshold",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
+  arg3 = (uint32_t)lua_tonumber(L, 3);
+  SWIG_contract_assert((lua_tonumber(L,4)>=0),"number must not be negative");
+  arg4 = (uint32_t)lua_tonumber(L, 4);
+  SWIG_contract_assert((lua_tonumber(L,5)>=0),"number must not be negative");
+  arg5 = (uint32_t)lua_tonumber(L, 5);
+  result = (Aubio::Sample)Aubio::moving_threshold(*arg1,*arg2,arg3,arg4,arg5);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_adapt_threshold(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  uint32_t arg3 ;
+  uint32_t arg4 ;
+  
+  SWIG_check_num_args("Aubio::adapt_threshold",4,4)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::adapt_threshold",1,"Aubio::FVec &");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::adapt_threshold",2,"Aubio::FVec &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::adapt_threshold",3,"uint32_t");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("Aubio::adapt_threshold",4,"uint32_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("adapt_threshold",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("adapt_threshold",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
+  arg3 = (uint32_t)lua_tonumber(L, 3);
+  SWIG_contract_assert((lua_tonumber(L,4)>=0),"number must not be negative");
+  arg4 = (uint32_t)lua_tonumber(L, 4);
+  Aubio::adapt_threshold(*arg1,*arg2,arg3,arg4);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_median(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::median",1,1)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::median",1,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("median",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  result = (Aubio::Sample)Aubio::median(*arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_quadratic_peak_pos(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  uint32_t arg2 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::quadratic_peak_pos",2,2)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::quadratic_peak_pos",1,"Aubio::FVec &");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::quadratic_peak_pos",2,"uint32_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("quadratic_peak_pos",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (Aubio::Sample)Aubio::quadratic_peak_pos(*arg1,arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_quadratic_peak_mag(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::Sample arg2 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::quadratic_peak_mag",2,2)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::quadratic_peak_mag",1,"Aubio::FVec &");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::quadratic_peak_mag",2,"Aubio::Sample");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("quadratic_peak_mag",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  result = (Aubio::Sample)Aubio::quadratic_peak_mag(*arg1,arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_quadfrac(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::Sample arg1 ;
+  Aubio::Sample arg2 ;
+  Aubio::Sample arg3 ;
+  Aubio::Sample arg4 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::quadfrac",4,4)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::quadfrac",1,"Aubio::Sample");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::quadfrac",2,"Aubio::Sample");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Aubio::quadfrac",3,"Aubio::Sample");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("Aubio::quadfrac",4,"Aubio::Sample");
+  arg1 = (Aubio::Sample)lua_tonumber(L, 1);
+  arg2 = (Aubio::Sample)lua_tonumber(L, 2);
+  arg3 = (Aubio::Sample)lua_tonumber(L, 3);
+  arg4 = (Aubio::Sample)lua_tonumber(L, 4);
+  result = (Aubio::Sample)Aubio::quadfrac(arg1,arg2,arg3,arg4);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_peakpick(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  uint32_t arg2 ;
+  Aubio::Sample result;
+  
+  SWIG_check_num_args("Aubio::peakpick",2,2)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::peakpick",1,"Aubio::FVec &");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Aubio::peakpick",2,"uint32_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("peakpick",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (uint32_t)lua_tonumber(L, 2);
+  result = (Aubio::Sample)Aubio::peakpick(*arg1,arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_is_power_of_two(lua_State* L) {
+  int SWIG_arg = 0;
+  uint32_t arg1 ;
+  bool result;
+  
+  SWIG_check_num_args("Aubio::is_power_of_two",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::is_power_of_two",1,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  result = (bool)Aubio::is_power_of_two(arg1);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_next_power_of_two(lua_State* L) {
+  int SWIG_arg = 0;
+  uint32_t arg1 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::next_power_of_two",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::next_power_of_two",1,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  result = (uint32_t)Aubio::next_power_of_two(arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_power_of_two_order(lua_State* L) {
+  int SWIG_arg = 0;
+  uint32_t arg1 ;
+  uint32_t result;
+  
+  SWIG_check_num_args("Aubio::power_of_two_order",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("Aubio::power_of_two_order",1,"uint32_t");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (uint32_t)lua_tonumber(L, 1);
+  result = (uint32_t)Aubio::power_of_two_order(arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_autocorr(lua_State* L) {
+  int SWIG_arg = 0;
+  Aubio::FVec *arg1 = 0 ;
+  Aubio::FVec *arg2 = 0 ;
+  
+  SWIG_check_num_args("Aubio::autocorr",2,2)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("Aubio::autocorr",1,"Aubio::FVec &");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Aubio::autocorr",2,"Aubio::FVec &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("autocorr",1,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Aubio__FVec,0))){
+    SWIG_fail_ptr("autocorr",2,SWIGTYPE_p_Aubio__FVec);
+  }
+  
+  Aubio::autocorr(*arg1,*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
 
 static swig_lua_attribute swig_SwigModule_attributes[] = {
     {0,0,0}
@@ -12141,6 +17771,16 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
     {SWIG_LUA_CONSTTAB_STRING("pitch_fcomb", "fcomb")},
     {SWIG_LUA_CONSTTAB_STRING("pitch_specacf", "specacf")},
     {SWIG_LUA_CONSTTAB_STRING("pitch_default", "default")},
+    {SWIG_LUA_CONSTTAB_INT("AUBIO_UNSTABLE", 1)},
+    {SWIG_LUA_CONSTTAB_INT("SRC_SINC_BEST_QUALITY", Aubio::SRC_SINC_BEST_QUALITY)},
+    {SWIG_LUA_CONSTTAB_INT("SRC_SINC_MEDIUM_QUALITY", Aubio::SRC_SINC_MEDIUM_QUALITY)},
+    {SWIG_LUA_CONSTTAB_INT("SRC_SINC_FASTEST", Aubio::SRC_SINC_FASTEST)},
+    {SWIG_LUA_CONSTTAB_INT("SRC_ZERO_ORDER_HOLD", Aubio::SRC_ZERO_ORDER_HOLD)},
+    {SWIG_LUA_CONSTTAB_INT("SRC_LINEAR", Aubio::SRC_LINEAR)},
+    {SWIG_LUA_CONSTTAB_INT("FORMAT_WAV", Aubio::FORMAT_WAV)},
+    {SWIG_LUA_CONSTTAB_INT("FORMAT_AIFF", Aubio::FORMAT_AIFF)},
+    {SWIG_LUA_CONSTTAB_INT("FORMAT_FLAC", Aubio::FORMAT_FLAC)},
+    {SWIG_LUA_CONSTTAB_INT("FORMAT_OGG", Aubio::FORMAT_OGG)},
     {0,0,0,0,0,0}
 };
 static swig_lua_method swig_SwigModule_methods[]= {
@@ -12152,6 +17792,32 @@ static swig_lua_method swig_SwigModule_methods[]= {
     { "FFT_get_imaginary", _wrap_FFT_get_imaginary},
     { "FFT_get_norm", _wrap_FFT_get_norm},
     { "FFT_get_real", _wrap_FFT_get_real},
+    { "mean", _wrap_mean},
+    { "max", _wrap_max},
+    { "min", _wrap_min},
+    { "min_elem", _wrap_min_elem},
+    { "max_elem", _wrap_max_elem},
+    { "shift", _wrap_shift},
+    { "ishift", _wrap_ishift},
+    { "push", _wrap_push},
+    { "sum", _wrap_sum},
+    { "local_hfc", _wrap_local_hfc},
+    { "alpha_norm", _wrap_alpha_norm},
+    { "alpha_normalise", _wrap_alpha_normalise},
+    { "add", _wrap_add},
+    { "mul", _wrap_mul},
+    { "remove_min", _wrap_remove_min},
+    { "moving_threshold", _wrap_moving_threshold},
+    { "adapt_threshold", _wrap_adapt_threshold},
+    { "median", _wrap_median},
+    { "quadratic_peak_pos", _wrap_quadratic_peak_pos},
+    { "quadratic_peak_mag", _wrap_quadratic_peak_mag},
+    { "quadfrac", _wrap_quadfrac},
+    { "peakpick", _wrap_peakpick},
+    { "is_power_of_two", _wrap_is_power_of_two},
+    { "next_power_of_two", _wrap_next_power_of_two},
+    { "power_of_two_order", _wrap_power_of_two_order},
+    { "autocorr", _wrap_autocorr},
     {0,0}
 };
 static swig_lua_class* swig_SwigModule_classes[]= {
@@ -12176,11 +17842,26 @@ static swig_lua_class* swig_SwigModule_classes[]= {
 &_wrap_class_TSS,
 &_wrap_class_SpecDesc,
 &_wrap_class_Pitch,
+&_wrap_class_PitchFComb,
+&_wrap_class_PitchMComb,
+&_wrap_class_PitchSchmitt,
+&_wrap_class_PitchSpecACF,
+&_wrap_class_PitchYin,
+&_wrap_class_PitchYinFast,
+&_wrap_class_PitchYinFFT,
 &_wrap_class_Tempo,
 &_wrap_class_BeatTrack,
 &_wrap_class_Sink,
+&_wrap_class_SinkSoundFile,
+&_wrap_class_SinkWavWrite,
 &_wrap_class_Sampler,
+&_wrap_class_Source,
 &_wrap_class_SourceSoundFile,
+&_wrap_class_SourceWavFile,
+&_wrap_class_Notes,
+&_wrap_class_Onset,
+&_wrap_class_PeakPicker,
+&_wrap_class_Histogram,
     0
 };
 static swig_lua_namespace* swig_SwigModule_namespaces[] = {
@@ -12201,51 +17882,85 @@ static swig_lua_namespace swig_SwigModule = {
 
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
-static void *_p_BiQuadTo_p_Filter(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((Filter *)  ((BiQuad *) x));
+static void *_p_Aubio__BiQuadTo_p_Aubio__Filter(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((Aubio::Filter *)  ((Aubio::BiQuad *) x));
 }
-static void *_p_AWeightingTo_p_Filter(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((Filter *)  ((AWeighting *) x));
+static void *_p_Aubio__AWeightingTo_p_Aubio__Filter(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((Aubio::Filter *)  ((Aubio::AWeighting *) x));
 }
-static void *_p_CWeightingTo_p_Filter(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((Filter *)  ((CWeighting *) x));
+static void *_p_Aubio__CWeightingTo_p_Aubio__Filter(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((Aubio::Filter *)  ((Aubio::CWeighting *) x));
 }
-static swig_type_info _swigt__p_AWeighting = {"_p_AWeighting", "AWeighting *", 0, 0, (void*)&_wrap_class_AWeighting, 0};
-static swig_type_info _swigt__p_AWhitening = {"_p_AWhitening", "AWhitening *", 0, 0, (void*)&_wrap_class_AWhitening, 0};
-static swig_type_info _swigt__p_BeatTrack = {"_p_BeatTrack", "BeatTrack *", 0, 0, (void*)&_wrap_class_BeatTrack, 0};
-static swig_type_info _swigt__p_BiQuad = {"_p_BiQuad", "BiQuad *", 0, 0, (void*)&_wrap_class_BiQuad, 0};
-static swig_type_info _swigt__p_CVec = {"_p_CVec", "CVec *", 0, 0, (void*)&_wrap_class_CVec, 0};
-static swig_type_info _swigt__p_CWeighting = {"_p_CWeighting", "CWeighting *", 0, 0, (void*)&_wrap_class_CWeighting, 0};
-static swig_type_info _swigt__p_DCT = {"_p_DCT", "DCT *", 0, 0, (void*)&_wrap_class_DCT, 0};
-static swig_type_info _swigt__p_FFT = {"_p_FFT", "FFT *", 0, 0, (void*)&_wrap_class_FFT, 0};
-static swig_type_info _swigt__p_FMat = {"_p_FMat", "FMat *", 0, 0, (void*)&_wrap_class_FMat, 0};
-static swig_type_info _swigt__p_FVec = {"_p_FVec", "FVec *", 0, 0, (void*)&_wrap_class_FVec, 0};
-static swig_type_info _swigt__p_Filter = {"_p_Filter", "Filter *", 0, 0, (void*)&_wrap_class_Filter, 0};
-static swig_type_info _swigt__p_FilterBank = {"_p_FilterBank", "FilterBank *", 0, 0, (void*)&_wrap_class_FilterBank, 0};
-static swig_type_info _swigt__p_LVec = {"_p_LVec", "LVec *", 0, 0, (void*)&_wrap_class_LVec, 0};
-static swig_type_info _swigt__p_MFCC = {"_p_MFCC", "MFCC *", 0, 0, (void*)&_wrap_class_MFCC, 0};
-static swig_type_info _swigt__p_MelFilterBank = {"_p_MelFilterBank", "MelFilterBank *", 0, 0, (void*)&_wrap_class_MelFilterBank, 0};
-static swig_type_info _swigt__p_PhaseVocoder = {"_p_PhaseVocoder", "PhaseVocoder *", 0, 0, (void*)&_wrap_class_PhaseVocoder, 0};
-static swig_type_info _swigt__p_Pitch = {"_p_Pitch", "Pitch *", 0, 0, (void*)&_wrap_class_Pitch, 0};
-static swig_type_info _swigt__p_Resampler = {"_p_Resampler", "Resampler *", 0, 0, (void*)&_wrap_class_Resampler, 0};
-static swig_type_info _swigt__p_Sampler = {"_p_Sampler", "Sampler *", 0, 0, (void*)&_wrap_class_Sampler, 0};
-static swig_type_info _swigt__p_Sink = {"_p_Sink", "Sink *", 0, 0, (void*)&_wrap_class_Sink, 0};
-static swig_type_info _swigt__p_SourceSoundFile = {"_p_SourceSoundFile", "SourceSoundFile *", 0, 0, (void*)&_wrap_class_SourceSoundFile, 0};
-static swig_type_info _swigt__p_SpecDesc = {"_p_SpecDesc", "SpecDesc *", 0, 0, (void*)&_wrap_class_SpecDesc, 0};
-static swig_type_info _swigt__p_TSS = {"_p_TSS", "TSS *", 0, 0, (void*)&_wrap_class_TSS, 0};
-static swig_type_info _swigt__p_Tempo = {"_p_Tempo", "Tempo *", 0, 0, (void*)&_wrap_class_Tempo, 0};
+static swig_type_info _swigt__p_Aubio__AWeighting = {"_p_Aubio__AWeighting", "Aubio::AWeighting *", 0, 0, (void*)&_wrap_class_AWeighting, 0};
+static swig_type_info _swigt__p_Aubio__AWhitening = {"_p_Aubio__AWhitening", "Aubio::AWhitening *", 0, 0, (void*)&_wrap_class_AWhitening, 0};
+static swig_type_info _swigt__p_Aubio__BeatTrack = {"_p_Aubio__BeatTrack", "Aubio::BeatTrack *", 0, 0, (void*)&_wrap_class_BeatTrack, 0};
+static swig_type_info _swigt__p_Aubio__BiQuad = {"_p_Aubio__BiQuad", "Aubio::BiQuad *", 0, 0, (void*)&_wrap_class_BiQuad, 0};
+static swig_type_info _swigt__p_Aubio__BufferT_double_t = {"_p_Aubio__BufferT_double_t", "Aubio::Buffer< double > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Aubio__BufferT_float_t = {"_p_Aubio__BufferT_float_t", "Aubio::Buffer< float > *|Aubio::Buffer< Aubio::Sample > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Aubio__CVec = {"_p_Aubio__CVec", "Aubio::CVec *", 0, 0, (void*)&_wrap_class_CVec, 0};
+static swig_type_info _swigt__p_Aubio__CWeighting = {"_p_Aubio__CWeighting", "Aubio::CWeighting *", 0, 0, (void*)&_wrap_class_CWeighting, 0};
+static swig_type_info _swigt__p_Aubio__DCT = {"_p_Aubio__DCT", "Aubio::DCT *", 0, 0, (void*)&_wrap_class_DCT, 0};
+static swig_type_info _swigt__p_Aubio__FFT = {"_p_Aubio__FFT", "Aubio::FFT *", 0, 0, (void*)&_wrap_class_FFT, 0};
+static swig_type_info _swigt__p_Aubio__FMat = {"_p_Aubio__FMat", "Aubio::FMat *", 0, 0, (void*)&_wrap_class_FMat, 0};
+static swig_type_info _swigt__p_Aubio__FVec = {"_p_Aubio__FVec", "Aubio::FVec *", 0, 0, (void*)&_wrap_class_FVec, 0};
+static swig_type_info _swigt__p_Aubio__Filter = {"_p_Aubio__Filter", "Aubio::Filter *", 0, 0, (void*)&_wrap_class_Filter, 0};
+static swig_type_info _swigt__p_Aubio__FilterBank = {"_p_Aubio__FilterBank", "Aubio::FilterBank *", 0, 0, (void*)&_wrap_class_FilterBank, 0};
+static swig_type_info _swigt__p_Aubio__Histogram = {"_p_Aubio__Histogram", "Aubio::Histogram *", 0, 0, (void*)&_wrap_class_Histogram, 0};
+static swig_type_info _swigt__p_Aubio__LVec = {"_p_Aubio__LVec", "Aubio::LVec *", 0, 0, (void*)&_wrap_class_LVec, 0};
+static swig_type_info _swigt__p_Aubio__MFCC = {"_p_Aubio__MFCC", "Aubio::MFCC *", 0, 0, (void*)&_wrap_class_MFCC, 0};
+static swig_type_info _swigt__p_Aubio__MelFilterBank = {"_p_Aubio__MelFilterBank", "Aubio::MelFilterBank *", 0, 0, (void*)&_wrap_class_MelFilterBank, 0};
+static swig_type_info _swigt__p_Aubio__Notes = {"_p_Aubio__Notes", "Aubio::Notes *", 0, 0, (void*)&_wrap_class_Notes, 0};
+static swig_type_info _swigt__p_Aubio__Onset = {"_p_Aubio__Onset", "Aubio::Onset *", 0, 0, (void*)&_wrap_class_Onset, 0};
+static swig_type_info _swigt__p_Aubio__PeakPicker = {"_p_Aubio__PeakPicker", "Aubio::PeakPicker *", 0, 0, (void*)&_wrap_class_PeakPicker, 0};
+static swig_type_info _swigt__p_Aubio__PhaseVocoder = {"_p_Aubio__PhaseVocoder", "Aubio::PhaseVocoder *", 0, 0, (void*)&_wrap_class_PhaseVocoder, 0};
+static swig_type_info _swigt__p_Aubio__Pitch = {"_p_Aubio__Pitch", "Aubio::Pitch *", 0, 0, (void*)&_wrap_class_Pitch, 0};
+static swig_type_info _swigt__p_Aubio__PitchFComb = {"_p_Aubio__PitchFComb", "Aubio::PitchFComb *", 0, 0, (void*)&_wrap_class_PitchFComb, 0};
+static swig_type_info _swigt__p_Aubio__PitchMComb = {"_p_Aubio__PitchMComb", "Aubio::PitchMComb *", 0, 0, (void*)&_wrap_class_PitchMComb, 0};
+static swig_type_info _swigt__p_Aubio__PitchSchmitt = {"_p_Aubio__PitchSchmitt", "Aubio::PitchSchmitt *", 0, 0, (void*)&_wrap_class_PitchSchmitt, 0};
+static swig_type_info _swigt__p_Aubio__PitchSpecACF = {"_p_Aubio__PitchSpecACF", "Aubio::PitchSpecACF *", 0, 0, (void*)&_wrap_class_PitchSpecACF, 0};
+static swig_type_info _swigt__p_Aubio__PitchYin = {"_p_Aubio__PitchYin", "Aubio::PitchYin *", 0, 0, (void*)&_wrap_class_PitchYin, 0};
+static swig_type_info _swigt__p_Aubio__PitchYinFFT = {"_p_Aubio__PitchYinFFT", "Aubio::PitchYinFFT *", 0, 0, (void*)&_wrap_class_PitchYinFFT, 0};
+static swig_type_info _swigt__p_Aubio__PitchYinFast = {"_p_Aubio__PitchYinFast", "Aubio::PitchYinFast *", 0, 0, (void*)&_wrap_class_PitchYinFast, 0};
+static swig_type_info _swigt__p_Aubio__Resampler = {"_p_Aubio__Resampler", "Aubio::Resampler *", 0, 0, (void*)&_wrap_class_Resampler, 0};
+static swig_type_info _swigt__p_Aubio__SampleBufferT_double_t = {"_p_Aubio__SampleBufferT_double_t", "Aubio::SampleBuffer< double > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Aubio__SampleBufferT_float_t = {"_p_Aubio__SampleBufferT_float_t", "Aubio::SampleBuffer< float > *|Aubio::SampleBuffer< Aubio::Sample > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Aubio__Sampler = {"_p_Aubio__Sampler", "Aubio::Sampler *", 0, 0, (void*)&_wrap_class_Sampler, 0};
+static swig_type_info _swigt__p_Aubio__Sink = {"_p_Aubio__Sink", "Aubio::Sink *", 0, 0, (void*)&_wrap_class_Sink, 0};
+static swig_type_info _swigt__p_Aubio__SinkSoundFile = {"_p_Aubio__SinkSoundFile", "Aubio::SinkSoundFile *", 0, 0, (void*)&_wrap_class_SinkSoundFile, 0};
+static swig_type_info _swigt__p_Aubio__SinkWavWrite = {"_p_Aubio__SinkWavWrite", "Aubio::SinkWavWrite *", 0, 0, (void*)&_wrap_class_SinkWavWrite, 0};
+static swig_type_info _swigt__p_Aubio__Source = {"_p_Aubio__Source", "Aubio::Source *", 0, 0, (void*)&_wrap_class_Source, 0};
+static swig_type_info _swigt__p_Aubio__SourceSoundFile = {"_p_Aubio__SourceSoundFile", "Aubio::SourceSoundFile *", 0, 0, (void*)&_wrap_class_SourceSoundFile, 0};
+static swig_type_info _swigt__p_Aubio__SourceWavFile = {"_p_Aubio__SourceWavFile", "Aubio::SourceWavFile *", 0, 0, (void*)&_wrap_class_SourceWavFile, 0};
+static swig_type_info _swigt__p_Aubio__SpecDesc = {"_p_Aubio__SpecDesc", "Aubio::SpecDesc *", 0, 0, (void*)&_wrap_class_SpecDesc, 0};
+static swig_type_info _swigt__p_Aubio__TSS = {"_p_Aubio__TSS", "Aubio::TSS *", 0, 0, (void*)&_wrap_class_TSS, 0};
+static swig_type_info _swigt__p_Aubio__Tempo = {"_p_Aubio__Tempo", "Aubio::Tempo *", 0, 0, (void*)&_wrap_class_Tempo, 0};
 static swig_type_info _swigt__p_aubio_beattracking_t = {"_p_aubio_beattracking_t", "aubio_beattracking_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_aubio_dct_t = {"_p_aubio_dct_t", "aubio_dct_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_aubio_fft_t = {"_p_aubio_fft_t", "aubio_fft_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_aubio_filter_t = {"_p_aubio_filter_t", "aubio_filter_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_aubio_filterbank_t = {"_p_aubio_filterbank_t", "aubio_filterbank_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_aubio_hist_t = {"_p_aubio_hist_t", "aubio_hist_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_aubio_mfcc_t = {"_p_aubio_mfcc_t", "aubio_mfcc_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_aubio_notes_t = {"_p_aubio_notes_t", "aubio_notes_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_aubio_onset_t = {"_p_aubio_onset_t", "aubio_onset_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_aubio_peakpicker_t = {"_p_aubio_peakpicker_t", "aubio_peakpicker_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_aubio_pitch_t = {"_p_aubio_pitch_t", "aubio_pitch_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_aubio_pitchfcomb_t = {"_p_aubio_pitchfcomb_t", "aubio_pitchfcomb_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_aubio_pitchmcomb_t = {"_p_aubio_pitchmcomb_t", "aubio_pitchmcomb_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_aubio_pitchschmitt_t = {"_p_aubio_pitchschmitt_t", "aubio_pitchschmitt_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_aubio_pitchspecacf_t = {"_p_aubio_pitchspecacf_t", "aubio_pitchspecacf_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_aubio_pitchyin_t = {"_p_aubio_pitchyin_t", "aubio_pitchyin_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_aubio_pitchyinfast_t = {"_p_aubio_pitchyinfast_t", "aubio_pitchyinfast_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_aubio_pitchyinfft_t = {"_p_aubio_pitchyinfft_t", "aubio_pitchyinfft_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_aubio_pvoc_t = {"_p_aubio_pvoc_t", "aubio_pvoc_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_aubio_resampler_t = {"_p_aubio_resampler_t", "aubio_resampler_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_aubio_sampler_t = {"_p_aubio_sampler_t", "aubio_sampler_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_aubio_sink_sndfile_t = {"_p_aubio_sink_sndfile_t", "aubio_sink_sndfile_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_aubio_sink_t = {"_p_aubio_sink_t", "aubio_sink_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_aubio_sink_wavwrite_t = {"_p_aubio_sink_wavwrite_t", "aubio_sink_wavwrite_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_aubio_source_sndfile_t = {"_p_aubio_source_sndfile_t", "aubio_source_sndfile_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_aubio_source_t = {"_p_aubio_source_t", "aubio_source_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_aubio_source_wavread_t = {"_p_aubio_source_wavread_t", "aubio_source_wavread_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_aubio_specdesc_t = {"_p_aubio_specdesc_t", "aubio_specdesc_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_aubio_spectral_whitening_t = {"_p_aubio_spectral_whitening_t", "aubio_spectral_whitening_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_aubio_tempo_t = {"_p_aubio_tempo_t", "aubio_tempo_t *", 0, 0, (void*)0, 0};
@@ -12254,7 +17969,7 @@ static swig_type_info _swigt__p_char = {"_p_char", "char *|char_t *", 0, 0, (voi
 static swig_type_info _swigt__p_cvec_t = {"_p_cvec_t", "cvec_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_difference_type = {"_p_difference_type", "difference_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_double = {"_p_double", "double *|lsmp_t *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_float = {"_p_float", "float *|smpl_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_float = {"_p_float", "float *|smpl_t *|Aubio::Sample *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_fmat_t = {"_p_fmat_t", "fmat_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_fvec_t = {"_p_fvec_t", "fvec_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_int = {"_p_int", "intptr_t *|int *|int_least32_t *|int_fast32_t *|int32_t *|sint_t *|int_fast16_t *", 0, 0, (void*)0, 0};
@@ -12263,7 +17978,6 @@ static swig_type_info _swigt__p_lvec_t = {"_p_lvec_t", "lvec_t *", 0, 0, (void*)
 static swig_type_info _swigt__p_short = {"_p_short", "short *|int_least16_t *|int16_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_signed_char = {"_p_signed_char", "signed char *|int_least8_t *|int_fast8_t *|int8_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_size_type = {"_p_size_type", "size_type *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__vectorT_double_t = {"_p_std__vectorT_double_t", "std::vector< double > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_float_t = {"_p_std__vectorT_float_t", "std::vector< float > *", 0, 0, (void*)&_wrap_class_float_vector, 0};
 static swig_type_info _swigt__p_std__vectorT_std__vectorT_float_t_t = {"_p_std__vectorT_std__vectorT_float_t_t", "std::vector< std::vector< float > > *", 0, 0, (void*)&_wrap_class_float_matrix, 0};
 static swig_type_info _swigt__p_unsigned_char = {"_p_unsigned_char", "unsigned char *|uint_least8_t *|uint_fast8_t *|uint8_t *", 0, 0, (void*)0, 0};
@@ -12273,42 +17987,76 @@ static swig_type_info _swigt__p_unsigned_short = {"_p_unsigned_short", "unsigned
 static swig_type_info _swigt__p_value_type = {"_p_value_type", "value_type *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
-  &_swigt__p_AWeighting,
-  &_swigt__p_AWhitening,
-  &_swigt__p_BeatTrack,
-  &_swigt__p_BiQuad,
-  &_swigt__p_CVec,
-  &_swigt__p_CWeighting,
-  &_swigt__p_DCT,
-  &_swigt__p_FFT,
-  &_swigt__p_FMat,
-  &_swigt__p_FVec,
-  &_swigt__p_Filter,
-  &_swigt__p_FilterBank,
-  &_swigt__p_LVec,
-  &_swigt__p_MFCC,
-  &_swigt__p_MelFilterBank,
-  &_swigt__p_PhaseVocoder,
-  &_swigt__p_Pitch,
-  &_swigt__p_Resampler,
-  &_swigt__p_Sampler,
-  &_swigt__p_Sink,
-  &_swigt__p_SourceSoundFile,
-  &_swigt__p_SpecDesc,
-  &_swigt__p_TSS,
-  &_swigt__p_Tempo,
+  &_swigt__p_Aubio__AWeighting,
+  &_swigt__p_Aubio__AWhitening,
+  &_swigt__p_Aubio__BeatTrack,
+  &_swigt__p_Aubio__BiQuad,
+  &_swigt__p_Aubio__BufferT_double_t,
+  &_swigt__p_Aubio__BufferT_float_t,
+  &_swigt__p_Aubio__CVec,
+  &_swigt__p_Aubio__CWeighting,
+  &_swigt__p_Aubio__DCT,
+  &_swigt__p_Aubio__FFT,
+  &_swigt__p_Aubio__FMat,
+  &_swigt__p_Aubio__FVec,
+  &_swigt__p_Aubio__Filter,
+  &_swigt__p_Aubio__FilterBank,
+  &_swigt__p_Aubio__Histogram,
+  &_swigt__p_Aubio__LVec,
+  &_swigt__p_Aubio__MFCC,
+  &_swigt__p_Aubio__MelFilterBank,
+  &_swigt__p_Aubio__Notes,
+  &_swigt__p_Aubio__Onset,
+  &_swigt__p_Aubio__PeakPicker,
+  &_swigt__p_Aubio__PhaseVocoder,
+  &_swigt__p_Aubio__Pitch,
+  &_swigt__p_Aubio__PitchFComb,
+  &_swigt__p_Aubio__PitchMComb,
+  &_swigt__p_Aubio__PitchSchmitt,
+  &_swigt__p_Aubio__PitchSpecACF,
+  &_swigt__p_Aubio__PitchYin,
+  &_swigt__p_Aubio__PitchYinFFT,
+  &_swigt__p_Aubio__PitchYinFast,
+  &_swigt__p_Aubio__Resampler,
+  &_swigt__p_Aubio__SampleBufferT_double_t,
+  &_swigt__p_Aubio__SampleBufferT_float_t,
+  &_swigt__p_Aubio__Sampler,
+  &_swigt__p_Aubio__Sink,
+  &_swigt__p_Aubio__SinkSoundFile,
+  &_swigt__p_Aubio__SinkWavWrite,
+  &_swigt__p_Aubio__Source,
+  &_swigt__p_Aubio__SourceSoundFile,
+  &_swigt__p_Aubio__SourceWavFile,
+  &_swigt__p_Aubio__SpecDesc,
+  &_swigt__p_Aubio__TSS,
+  &_swigt__p_Aubio__Tempo,
   &_swigt__p_aubio_beattracking_t,
   &_swigt__p_aubio_dct_t,
   &_swigt__p_aubio_fft_t,
   &_swigt__p_aubio_filter_t,
   &_swigt__p_aubio_filterbank_t,
+  &_swigt__p_aubio_hist_t,
   &_swigt__p_aubio_mfcc_t,
+  &_swigt__p_aubio_notes_t,
+  &_swigt__p_aubio_onset_t,
+  &_swigt__p_aubio_peakpicker_t,
   &_swigt__p_aubio_pitch_t,
+  &_swigt__p_aubio_pitchfcomb_t,
+  &_swigt__p_aubio_pitchmcomb_t,
+  &_swigt__p_aubio_pitchschmitt_t,
+  &_swigt__p_aubio_pitchspecacf_t,
+  &_swigt__p_aubio_pitchyin_t,
+  &_swigt__p_aubio_pitchyinfast_t,
+  &_swigt__p_aubio_pitchyinfft_t,
   &_swigt__p_aubio_pvoc_t,
   &_swigt__p_aubio_resampler_t,
   &_swigt__p_aubio_sampler_t,
+  &_swigt__p_aubio_sink_sndfile_t,
   &_swigt__p_aubio_sink_t,
+  &_swigt__p_aubio_sink_wavwrite_t,
   &_swigt__p_aubio_source_sndfile_t,
+  &_swigt__p_aubio_source_t,
+  &_swigt__p_aubio_source_wavread_t,
   &_swigt__p_aubio_specdesc_t,
   &_swigt__p_aubio_spectral_whitening_t,
   &_swigt__p_aubio_tempo_t,
@@ -12326,7 +18074,6 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_short,
   &_swigt__p_signed_char,
   &_swigt__p_size_type,
-  &_swigt__p_std__vectorT_double_t,
   &_swigt__p_std__vectorT_float_t,
   &_swigt__p_std__vectorT_std__vectorT_float_t_t,
   &_swigt__p_unsigned_char,
@@ -12336,42 +18083,76 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_value_type,
 };
 
-static swig_cast_info _swigc__p_AWeighting[] = {  {&_swigt__p_AWeighting, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_AWhitening[] = {  {&_swigt__p_AWhitening, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_BeatTrack[] = {  {&_swigt__p_BeatTrack, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_BiQuad[] = {  {&_swigt__p_BiQuad, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_CVec[] = {  {&_swigt__p_CVec, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_CWeighting[] = {  {&_swigt__p_CWeighting, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_DCT[] = {  {&_swigt__p_DCT, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_FFT[] = {  {&_swigt__p_FFT, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_FMat[] = {  {&_swigt__p_FMat, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_FVec[] = {  {&_swigt__p_FVec, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_Filter[] = {  {&_swigt__p_Filter, 0, 0, 0},  {&_swigt__p_BiQuad, _p_BiQuadTo_p_Filter, 0, 0},  {&_swigt__p_AWeighting, _p_AWeightingTo_p_Filter, 0, 0},  {&_swigt__p_CWeighting, _p_CWeightingTo_p_Filter, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_FilterBank[] = {  {&_swigt__p_FilterBank, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_LVec[] = {  {&_swigt__p_LVec, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_MFCC[] = {  {&_swigt__p_MFCC, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_MelFilterBank[] = {  {&_swigt__p_MelFilterBank, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_PhaseVocoder[] = {  {&_swigt__p_PhaseVocoder, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_Pitch[] = {  {&_swigt__p_Pitch, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_Resampler[] = {  {&_swigt__p_Resampler, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_Sampler[] = {  {&_swigt__p_Sampler, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_Sink[] = {  {&_swigt__p_Sink, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_SourceSoundFile[] = {  {&_swigt__p_SourceSoundFile, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_SpecDesc[] = {  {&_swigt__p_SpecDesc, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_TSS[] = {  {&_swigt__p_TSS, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_Tempo[] = {  {&_swigt__p_Tempo, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__AWeighting[] = {  {&_swigt__p_Aubio__AWeighting, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__AWhitening[] = {  {&_swigt__p_Aubio__AWhitening, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__BeatTrack[] = {  {&_swigt__p_Aubio__BeatTrack, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__BiQuad[] = {  {&_swigt__p_Aubio__BiQuad, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__BufferT_double_t[] = {  {&_swigt__p_Aubio__BufferT_double_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__BufferT_float_t[] = {  {&_swigt__p_Aubio__BufferT_float_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__CVec[] = {  {&_swigt__p_Aubio__CVec, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__CWeighting[] = {  {&_swigt__p_Aubio__CWeighting, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__DCT[] = {  {&_swigt__p_Aubio__DCT, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__FFT[] = {  {&_swigt__p_Aubio__FFT, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__FMat[] = {  {&_swigt__p_Aubio__FMat, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__FVec[] = {  {&_swigt__p_Aubio__FVec, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__Filter[] = {  {&_swigt__p_Aubio__Filter, 0, 0, 0},  {&_swigt__p_Aubio__BiQuad, _p_Aubio__BiQuadTo_p_Aubio__Filter, 0, 0},  {&_swigt__p_Aubio__AWeighting, _p_Aubio__AWeightingTo_p_Aubio__Filter, 0, 0},  {&_swigt__p_Aubio__CWeighting, _p_Aubio__CWeightingTo_p_Aubio__Filter, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__FilterBank[] = {  {&_swigt__p_Aubio__FilterBank, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__Histogram[] = {  {&_swigt__p_Aubio__Histogram, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__LVec[] = {  {&_swigt__p_Aubio__LVec, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__MFCC[] = {  {&_swigt__p_Aubio__MFCC, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__MelFilterBank[] = {  {&_swigt__p_Aubio__MelFilterBank, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__Notes[] = {  {&_swigt__p_Aubio__Notes, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__Onset[] = {  {&_swigt__p_Aubio__Onset, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__PeakPicker[] = {  {&_swigt__p_Aubio__PeakPicker, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__PhaseVocoder[] = {  {&_swigt__p_Aubio__PhaseVocoder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__Pitch[] = {  {&_swigt__p_Aubio__Pitch, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__PitchFComb[] = {  {&_swigt__p_Aubio__PitchFComb, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__PitchMComb[] = {  {&_swigt__p_Aubio__PitchMComb, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__PitchSchmitt[] = {  {&_swigt__p_Aubio__PitchSchmitt, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__PitchSpecACF[] = {  {&_swigt__p_Aubio__PitchSpecACF, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__PitchYin[] = {  {&_swigt__p_Aubio__PitchYin, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__PitchYinFFT[] = {  {&_swigt__p_Aubio__PitchYinFFT, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__PitchYinFast[] = {  {&_swigt__p_Aubio__PitchYinFast, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__Resampler[] = {  {&_swigt__p_Aubio__Resampler, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__SampleBufferT_double_t[] = {  {&_swigt__p_Aubio__SampleBufferT_double_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__SampleBufferT_float_t[] = {  {&_swigt__p_Aubio__SampleBufferT_float_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__Sampler[] = {  {&_swigt__p_Aubio__Sampler, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__Sink[] = {  {&_swigt__p_Aubio__Sink, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__SinkSoundFile[] = {  {&_swigt__p_Aubio__SinkSoundFile, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__SinkWavWrite[] = {  {&_swigt__p_Aubio__SinkWavWrite, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__Source[] = {  {&_swigt__p_Aubio__Source, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__SourceSoundFile[] = {  {&_swigt__p_Aubio__SourceSoundFile, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__SourceWavFile[] = {  {&_swigt__p_Aubio__SourceWavFile, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__SpecDesc[] = {  {&_swigt__p_Aubio__SpecDesc, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__TSS[] = {  {&_swigt__p_Aubio__TSS, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Aubio__Tempo[] = {  {&_swigt__p_Aubio__Tempo, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_aubio_beattracking_t[] = {  {&_swigt__p_aubio_beattracking_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_aubio_dct_t[] = {  {&_swigt__p_aubio_dct_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_aubio_fft_t[] = {  {&_swigt__p_aubio_fft_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_aubio_filter_t[] = {  {&_swigt__p_aubio_filter_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_aubio_filterbank_t[] = {  {&_swigt__p_aubio_filterbank_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_aubio_hist_t[] = {  {&_swigt__p_aubio_hist_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_aubio_mfcc_t[] = {  {&_swigt__p_aubio_mfcc_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_aubio_notes_t[] = {  {&_swigt__p_aubio_notes_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_aubio_onset_t[] = {  {&_swigt__p_aubio_onset_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_aubio_peakpicker_t[] = {  {&_swigt__p_aubio_peakpicker_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_aubio_pitch_t[] = {  {&_swigt__p_aubio_pitch_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_aubio_pitchfcomb_t[] = {  {&_swigt__p_aubio_pitchfcomb_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_aubio_pitchmcomb_t[] = {  {&_swigt__p_aubio_pitchmcomb_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_aubio_pitchschmitt_t[] = {  {&_swigt__p_aubio_pitchschmitt_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_aubio_pitchspecacf_t[] = {  {&_swigt__p_aubio_pitchspecacf_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_aubio_pitchyin_t[] = {  {&_swigt__p_aubio_pitchyin_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_aubio_pitchyinfast_t[] = {  {&_swigt__p_aubio_pitchyinfast_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_aubio_pitchyinfft_t[] = {  {&_swigt__p_aubio_pitchyinfft_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_aubio_pvoc_t[] = {  {&_swigt__p_aubio_pvoc_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_aubio_resampler_t[] = {  {&_swigt__p_aubio_resampler_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_aubio_sampler_t[] = {  {&_swigt__p_aubio_sampler_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_aubio_sink_sndfile_t[] = {  {&_swigt__p_aubio_sink_sndfile_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_aubio_sink_t[] = {  {&_swigt__p_aubio_sink_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_aubio_sink_wavwrite_t[] = {  {&_swigt__p_aubio_sink_wavwrite_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_aubio_source_sndfile_t[] = {  {&_swigt__p_aubio_source_sndfile_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_aubio_source_t[] = {  {&_swigt__p_aubio_source_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_aubio_source_wavread_t[] = {  {&_swigt__p_aubio_source_wavread_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_aubio_specdesc_t[] = {  {&_swigt__p_aubio_specdesc_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_aubio_spectral_whitening_t[] = {  {&_swigt__p_aubio_spectral_whitening_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_aubio_tempo_t[] = {  {&_swigt__p_aubio_tempo_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -12389,7 +18170,6 @@ static swig_cast_info _swigc__p_lvec_t[] = {  {&_swigt__p_lvec_t, 0, 0, 0},{0, 0
 static swig_cast_info _swigc__p_short[] = {  {&_swigt__p_short, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_signed_char[] = {  {&_swigt__p_signed_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_size_type[] = {  {&_swigt__p_size_type, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__vectorT_double_t[] = {  {&_swigt__p_std__vectorT_double_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_float_t[] = {  {&_swigt__p_std__vectorT_float_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_std__vectorT_float_t_t[] = {  {&_swigt__p_std__vectorT_std__vectorT_float_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_char[] = {  {&_swigt__p_unsigned_char, 0, 0, 0},{0, 0, 0, 0}};
@@ -12399,42 +18179,76 @@ static swig_cast_info _swigc__p_unsigned_short[] = {  {&_swigt__p_unsigned_short
 static swig_cast_info _swigc__p_value_type[] = {  {&_swigt__p_value_type, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
-  _swigc__p_AWeighting,
-  _swigc__p_AWhitening,
-  _swigc__p_BeatTrack,
-  _swigc__p_BiQuad,
-  _swigc__p_CVec,
-  _swigc__p_CWeighting,
-  _swigc__p_DCT,
-  _swigc__p_FFT,
-  _swigc__p_FMat,
-  _swigc__p_FVec,
-  _swigc__p_Filter,
-  _swigc__p_FilterBank,
-  _swigc__p_LVec,
-  _swigc__p_MFCC,
-  _swigc__p_MelFilterBank,
-  _swigc__p_PhaseVocoder,
-  _swigc__p_Pitch,
-  _swigc__p_Resampler,
-  _swigc__p_Sampler,
-  _swigc__p_Sink,
-  _swigc__p_SourceSoundFile,
-  _swigc__p_SpecDesc,
-  _swigc__p_TSS,
-  _swigc__p_Tempo,
+  _swigc__p_Aubio__AWeighting,
+  _swigc__p_Aubio__AWhitening,
+  _swigc__p_Aubio__BeatTrack,
+  _swigc__p_Aubio__BiQuad,
+  _swigc__p_Aubio__BufferT_double_t,
+  _swigc__p_Aubio__BufferT_float_t,
+  _swigc__p_Aubio__CVec,
+  _swigc__p_Aubio__CWeighting,
+  _swigc__p_Aubio__DCT,
+  _swigc__p_Aubio__FFT,
+  _swigc__p_Aubio__FMat,
+  _swigc__p_Aubio__FVec,
+  _swigc__p_Aubio__Filter,
+  _swigc__p_Aubio__FilterBank,
+  _swigc__p_Aubio__Histogram,
+  _swigc__p_Aubio__LVec,
+  _swigc__p_Aubio__MFCC,
+  _swigc__p_Aubio__MelFilterBank,
+  _swigc__p_Aubio__Notes,
+  _swigc__p_Aubio__Onset,
+  _swigc__p_Aubio__PeakPicker,
+  _swigc__p_Aubio__PhaseVocoder,
+  _swigc__p_Aubio__Pitch,
+  _swigc__p_Aubio__PitchFComb,
+  _swigc__p_Aubio__PitchMComb,
+  _swigc__p_Aubio__PitchSchmitt,
+  _swigc__p_Aubio__PitchSpecACF,
+  _swigc__p_Aubio__PitchYin,
+  _swigc__p_Aubio__PitchYinFFT,
+  _swigc__p_Aubio__PitchYinFast,
+  _swigc__p_Aubio__Resampler,
+  _swigc__p_Aubio__SampleBufferT_double_t,
+  _swigc__p_Aubio__SampleBufferT_float_t,
+  _swigc__p_Aubio__Sampler,
+  _swigc__p_Aubio__Sink,
+  _swigc__p_Aubio__SinkSoundFile,
+  _swigc__p_Aubio__SinkWavWrite,
+  _swigc__p_Aubio__Source,
+  _swigc__p_Aubio__SourceSoundFile,
+  _swigc__p_Aubio__SourceWavFile,
+  _swigc__p_Aubio__SpecDesc,
+  _swigc__p_Aubio__TSS,
+  _swigc__p_Aubio__Tempo,
   _swigc__p_aubio_beattracking_t,
   _swigc__p_aubio_dct_t,
   _swigc__p_aubio_fft_t,
   _swigc__p_aubio_filter_t,
   _swigc__p_aubio_filterbank_t,
+  _swigc__p_aubio_hist_t,
   _swigc__p_aubio_mfcc_t,
+  _swigc__p_aubio_notes_t,
+  _swigc__p_aubio_onset_t,
+  _swigc__p_aubio_peakpicker_t,
   _swigc__p_aubio_pitch_t,
+  _swigc__p_aubio_pitchfcomb_t,
+  _swigc__p_aubio_pitchmcomb_t,
+  _swigc__p_aubio_pitchschmitt_t,
+  _swigc__p_aubio_pitchspecacf_t,
+  _swigc__p_aubio_pitchyin_t,
+  _swigc__p_aubio_pitchyinfast_t,
+  _swigc__p_aubio_pitchyinfft_t,
   _swigc__p_aubio_pvoc_t,
   _swigc__p_aubio_resampler_t,
   _swigc__p_aubio_sampler_t,
+  _swigc__p_aubio_sink_sndfile_t,
   _swigc__p_aubio_sink_t,
+  _swigc__p_aubio_sink_wavwrite_t,
   _swigc__p_aubio_source_sndfile_t,
+  _swigc__p_aubio_source_t,
+  _swigc__p_aubio_source_wavread_t,
   _swigc__p_aubio_specdesc_t,
   _swigc__p_aubio_spectral_whitening_t,
   _swigc__p_aubio_tempo_t,
@@ -12452,7 +18266,6 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_short,
   _swigc__p_signed_char,
   _swigc__p_size_type,
-  _swigc__p_std__vectorT_double_t,
   _swigc__p_std__vectorT_float_t,
   _swigc__p_std__vectorT_std__vectorT_float_t_t,
   _swigc__p_unsigned_char,
