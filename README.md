@@ -1,2 +1,2 @@
-# SoundWave-Analysis
+# LuaJIT-Analysis
 Analysis
