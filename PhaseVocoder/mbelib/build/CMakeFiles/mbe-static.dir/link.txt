@@ -1,0 +1,2 @@
+/usr/bin/ar qc libmbe.a "CMakeFiles/mbe-static.dir/ambe3600x2400.c.o" "CMakeFiles/mbe-static.dir/ambe3600x2450.c.o" "CMakeFiles/mbe-static.dir/ecc.c.o" "CMakeFiles/mbe-static.dir/imbe7100x4400.c.o" "CMakeFiles/mbe-static.dir/imbe7200x4400.c.o" "CMakeFiles/mbe-static.dir/mbelib.c.o" "CMakeFiles/mbe-static.dir/mbelib_wrap.c.o"
+/usr/bin/ranlib libmbe.a

@@ -1,0 +1,15 @@
+# This is a generated file and its contents are an internal implementation detail.
+# The download step will be re-executed if anything in this file changes.
+# No other meaning or use of this file is supported.
+
+method=git
+command=/usr/local/bin/cmake;-P;/home/quake/Projects/Spectral-Resonance/PhaseVocoder/phase-vocoder/build/_deps/gsl-subbuild/gsl-populate-prefix/tmp/gsl-populate-gitclone.cmake
+source_dir=/home/quake/Projects/Spectral-Resonance/PhaseVocoder/phase-vocoder/build/_deps/gsl-src
+work_dir=/home/quake/Projects/Spectral-Resonance/PhaseVocoder/phase-vocoder/build/_deps
+repository=https://github.com/microsoft/GSL
+remote=origin
+init_submodules=TRUE
+recurse_submodules=--recursive
+submodules=
+CMP0097=NEW
+

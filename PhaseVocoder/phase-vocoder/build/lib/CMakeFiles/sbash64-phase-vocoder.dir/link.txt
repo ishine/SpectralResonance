@@ -1,0 +1,2 @@
+/usr/bin/ar qc libsbash64-phase-vocoder.a "CMakeFiles/sbash64-phase-vocoder.dir/OverlapAdd.cpp.o" "CMakeFiles/sbash64-phase-vocoder.dir/OverlapAddFilter.cpp.o" "CMakeFiles/sbash64-phase-vocoder.dir/OverlapExtract.cpp.o" "CMakeFiles/sbash64-phase-vocoder.dir/InterpolateFrames.cpp.o" "CMakeFiles/sbash64-phase-vocoder.dir/SignalConverter.cpp.o" "CMakeFiles/sbash64-phase-vocoder.dir/HannWindow.cpp.o"
+/usr/bin/ranlib libsbash64-phase-vocoder.a
