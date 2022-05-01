@@ -1,0 +1,2 @@
+/usr/bin/ar qc libfft_impl.a CMakeFiles/fft_impl.dir/src/3rd/kissfft/kiss_fft.c.o CMakeFiles/fft_impl.dir/src/3rd/kissfft/tools/kiss_fftr.c.o
+/usr/bin/ranlib libfft_impl.a

@@ -1,0 +1,5 @@
+/home/quake/Projects/Spectral-Resonance/src/sdft/build/CMakeFiles/sdft.dir
+/home/quake/Projects/Spectral-Resonance/src/sdft/build/CMakeFiles/test_sdft.dir
+/home/quake/Projects/Spectral-Resonance/src/sdft/build/CMakeFiles/test.dir
+/home/quake/Projects/Spectral-Resonance/src/sdft/build/CMakeFiles/edit_cache.dir
+/home/quake/Projects/Spectral-Resonance/src/sdft/build/CMakeFiles/rebuild_cache.dir

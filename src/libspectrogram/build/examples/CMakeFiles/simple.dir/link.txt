@@ -1,0 +1,1 @@
+/usr/bin/cc -O3 -DNDEBUG CMakeFiles/simple.dir/simple.c.o -o simple  -Wl,-rpath,/home/quake/Projects/Spectral-Resonance/src/libspectrogram/build/src ../src/libspectrogram.so.0.1 /usr/lib/x86_64-linux-gnu/libfftw3.so /usr/lib/x86_64-linux-gnu/libfftw3f.so 

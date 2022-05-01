@@ -1,12 +1,6 @@
-%module audiofft
+%module fftconvolver
 %{
-#include "AudioFFT.h"
 #include "FFTConvolver.h"
-#include "TwoStageFFTConvolver.h"
 using namespace fftconvolver;
 %}
-
-%include "AudioFFT.h"
-#include "FFTConvolver.h"
-#include "TwoStageFFTConvolver.h"
-
+%include "FFTConvolver.h"

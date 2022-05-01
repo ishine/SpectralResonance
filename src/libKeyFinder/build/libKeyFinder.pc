@@ -1,0 +1,10 @@
+prefix=/usr/local
+includedir=${prefix}/include
+libdir=${prefix}/
+
+Name: libKeyFinder
+Description: libKeyFinder can be used to estimate the musical key of digital audio
+Version: 2.2.2
+URL: https://github.com/ibsh/libKeyFinder
+Libs: -L${libdir} -lkeyfinder
+Cflags: -I${includedir}

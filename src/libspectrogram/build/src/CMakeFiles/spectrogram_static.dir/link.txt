@@ -1,0 +1,2 @@
+/usr/bin/ar qc libspectrogram.a CMakeFiles/spectrogram_static.dir/spectrogram.cpp.o CMakeFiles/spectrogram_static.dir/stft.cpp.o
+/usr/bin/ranlib libspectrogram.a

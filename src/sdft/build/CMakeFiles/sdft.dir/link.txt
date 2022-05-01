@@ -1,0 +1,2 @@
+/usr/bin/ar qc libsdft.a CMakeFiles/sdft.dir/src/sdft.cpp.o
+/usr/bin/ranlib libsdft.a

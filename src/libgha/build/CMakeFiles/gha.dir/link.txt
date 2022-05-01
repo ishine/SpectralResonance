@@ -1,0 +1,2 @@
+/usr/bin/ar qc libgha.a CMakeFiles/gha.dir/src/gha.c.o CMakeFiles/gha.dir/src/sle.c.o
+/usr/bin/ranlib libgha.a

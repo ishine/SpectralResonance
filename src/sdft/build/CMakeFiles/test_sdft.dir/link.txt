@@ -1,0 +1,1 @@
+/usr/bin/c++ -O2 -fPIC -march=native -Wall -Wextra -Werror -rdynamic CMakeFiles/test_sdft.dir/test/main.c.o -o test_sdft  libsdft.a 

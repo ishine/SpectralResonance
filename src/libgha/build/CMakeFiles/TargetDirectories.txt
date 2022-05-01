@@ -1,0 +1,8 @@
+/home/quake/Projects/Spectral-Resonance/src/libgha/build/CMakeFiles/fft_impl.dir
+/home/quake/Projects/Spectral-Resonance/src/libgha/build/CMakeFiles/gha.dir
+/home/quake/Projects/Spectral-Resonance/src/libgha/build/CMakeFiles/main.dir
+/home/quake/Projects/Spectral-Resonance/src/libgha/build/CMakeFiles/dtmf.dir
+/home/quake/Projects/Spectral-Resonance/src/libgha/build/CMakeFiles/ut.dir
+/home/quake/Projects/Spectral-Resonance/src/libgha/build/CMakeFiles/test.dir
+/home/quake/Projects/Spectral-Resonance/src/libgha/build/CMakeFiles/edit_cache.dir
+/home/quake/Projects/Spectral-Resonance/src/libgha/build/CMakeFiles/rebuild_cache.dir

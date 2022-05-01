@@ -1,0 +1,1 @@
+/usr/bin/cc -rdynamic CMakeFiles/arss.dir/arss.c.o CMakeFiles/arss.dir/dsp.c.o CMakeFiles/arss.dir/util.c.o CMakeFiles/arss.dir/image_io.c.o CMakeFiles/arss.dir/sound_io.c.o -o arss  -lfftw3 -lm 

@@ -1,0 +1,1 @@
+/usr/bin/cc -rdynamic CMakeFiles/ut.dir/test/ut.c.o -o ut  libgha.a -lm libfft_impl.a 

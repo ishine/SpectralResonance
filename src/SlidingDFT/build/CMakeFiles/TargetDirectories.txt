@@ -1,0 +1,3 @@
+/home/quake/Projects/Spectral-Resonance/src/SlidingDFT/build/CMakeFiles/SlidingDFT_Test.dir
+/home/quake/Projects/Spectral-Resonance/src/SlidingDFT/build/CMakeFiles/edit_cache.dir
+/home/quake/Projects/Spectral-Resonance/src/SlidingDFT/build/CMakeFiles/rebuild_cache.dir

@@ -1,22 +1,16 @@
 %module aubio 
 %{
 #define AUBIO_UNSTABLE 1
-#include "ccaubio.h"
+#include "aubio.h"
+#include "stdlite.h"
 #include <cassert>
 #include <vector>
 
-using namespace std;
+using namespace Std;
 
 %}
 
-%include "stdint.i"
-%include "std_common.i"
-%include "std_vector.i"
-
-%include "types.h"
-
-%template (float_vector) std::vector<float>;
-%template (float_matrix) std::vector<std::vector<float>>;
+%include "stdlite.i"
 
 
 %constant const char * sdesc_complex = "complex";
@@ -55,9 +49,8 @@ using namespace std;
 %constant const char* pitch_specacf = "specacf";
 %constant const char* pitch_default = "default";
 
-%include "ccaubio.h"
-
-/*
+//%include "ccaubio.h"
+%include "types.h"
 %include "fvec.h"
 %include "cvec.h"
 %include "lvec.h"
@@ -85,13 +78,13 @@ using namespace std;
 %include "utils/log.h"
 %include "mathutils.h"
 %include "io/source_sndfile.h"
-%include "io/source_apple_audio.h"
+//%include "io/source_apple_audio.h"
 %include "io/source_avcodec.h"
 %include "io/source_wavread.h"
 %include "io/sink_sndfile.h"
-%include "io/sink_apple_audio.h"
+//%include "io/sink_apple_audio.h"
 %include "io/sink_wavwrite.h"
-%include "io/audio_unit.h"
+//%include "io/audio_unit.h"
 %include "onset/peakpicker.h"
 %include "pitch/pitchmcomb.h"
 %include "pitch/pitchyin.h"
@@ -105,5 +98,4 @@ using namespace std;
 %include "effects/timestretch.h"
 %include "utils/scale.h"
 %include "utils/hist.h"
-*/
 
