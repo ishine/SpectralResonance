@@ -1,10 +1,10 @@
 %module gist 
 %{
 #define USE_FFTW
-#include <Gist.h>    
+#include "Gist.h"    
 %}
 #define USE_FFTW
-%include <Gist.h>
+%include "Gist.h"
 
 %template (GistF) Gist<float>;
 

@@ -1,5 +1,6 @@
 #pragma once 
 
+#define AUBIO_UNSTABLE 1
 #include "aubio.h"
 #include <cstddef>
 #include <cstdlib>
@@ -1524,91 +1525,6 @@ namespace Aubio {
             aubio_hist_dyn_notnull(hist,input.pvec);
         }
     };
-
-    struct PitchShift
-    {
-        aubio_pitchshift_t * pitch;
-
-        PitchShift(Sample transpose, uint32_t hop, uint32_t sr) {
-            pitch = new_aubio_pitchshift("default",transpose,hop,sr);
-            assert(pitch != NULL);
-        }
-        ~PitchShift() {
-            if(pitch) del_aubio_pitchshift(pitch);
-        }
-
-        void process(const FVec & in, FVec & out) {
-            aubio_pitchshift_do(pitch,in.pvec,out.pvec);
-        }
-        
-        uint32_t get_latency() {
-            return aubio_pitchshift_get_latency(pitch);
-        }
-        uint32_t set_pitchscale(Sample scale) {
-            return aubio_pitchshift_set_pitchscale(pitch,scale);
-        }
-        Sample get_pitchscale() {
-            return aubio_pitchshift_get_pitchscale(pitch);
-        }
-        uint32_t set_transpose(Sample t) {
-            return aubio_pitchshift_set_transpose(pitch,t);
-        }
-        Sample get_transpose() {
-            return aubio_pitchshift_get_transpose(pitch);
-        }
-    };
-
-    struct TimeStretch
-    {
-        aubio_timestretch_t * time;
-
-        TimeStretch(Sample stretch, uint32_t hop, uint32_t sr) {
-            time = new_aubio_timestretch("default",stretch,hop,sr);
-            assert(time != NULL);
-        }
-        ~TimeStretch() {
-            if(time) del_aubio_timestretch(time);
-        }
-        void process(FVec & out, uint32_t & read) {
-            read = 0;
-            aubio_timestretch_do(time,out.pvec,&read);
-        }
-        uint32_t push(FVec & in, uint32_t len) {
-            return aubio_timestretch_push(time,in.pvec,len);
-        }
-        int32_t get_available() {
-            return aubio_timestretch_get_available(time);
-        }
-        uint32_t get_latency() {
-            return aubio_timestretch_get_latency(time);
-        }
-        uint32_t get_samplerate() {
-            return aubio_timestretch_get_latency(time);
-        }
-        Sample get_stretch() {
-            return aubio_timestretch_get_stretch(time);
-        }
-        uint32_t set_stretch(Sample stretch) {
-            return aubio_timestretch_set_stretch(time,stretch);
-        }
-        uint32_t set_pitchscale(Sample ps) {
-            return aubio_timestretch_set_pitchscale(time,ps);
-        }
-        Sample get_pitchscale() {
-            return aubio_timestretch_get_pitchscale(time);
-        }
-        uint32_t set_transpose(Sample t) {
-            return aubio_timestretch_set_transpose(time,t);
-        }
-        Sample get_transpose() {
-            return aubio_timestretch_get_transpose(time);
-        }
-        uint32_t reset() {
-            return aubio_timestretch_reset(time);
-        }
-    };
-
-
 
     inline Sample mean(FVec & s) { return fvec_mean(s.pvec); }
     inline Sample max(FVec & s) { return fvec_max(s.pvec); }

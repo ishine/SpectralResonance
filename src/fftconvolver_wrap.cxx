@@ -2697,8 +2697,8 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 
 /* -------- TYPES TABLE (BEGIN) -------- */
 
-#define SWIGTYPE_p_audiofft__AudioFFT swig_types[0]
-#define SWIGTYPE_p_float swig_types[1]
+#define SWIGTYPE_p_Sample swig_types[0]
+#define SWIGTYPE_p_fftconvolver__FFTConvolver swig_types[1]
 static swig_type_info *swig_types[3];
 static swig_module_info swig_module = {swig_types, 2, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
@@ -2706,32 +2706,30 @@ static swig_module_info swig_module = {swig_types, 2, 0, 0, 0, 0};
 
 /* -------- TYPES TABLE (END) -------- */
 
-#define SWIG_name      "audiofft"
-#define SWIG_init      luaopen_audiofft
-#define SWIG_init_user luaopen_audiofft_user
+#define SWIG_name      "fftconvolver"
+#define SWIG_init      luaopen_fftconvolver
+#define SWIG_init_user luaopen_fftconvolver_user
 
-#define SWIG_LUACODE   luaopen_audiofft_luacode
+#define SWIG_LUACODE   luaopen_fftconvolver_luacode
 
 namespace swig {
 typedef struct{} LANGUAGE_OBJ;
 }
 
 
-#include "AudioFFT.h"
 #include "FFTConvolver.h"
-#include "TwoStageFFTConvolver.h"
 using namespace fftconvolver;
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-static int _wrap_new_AudioFFT(lua_State* L) {
+static int _wrap_new_FFTConvolver(lua_State* L) {
   int SWIG_arg = 0;
-  audiofft::AudioFFT *result = 0 ;
+  fftconvolver::FFTConvolver *result = 0 ;
   
-  SWIG_check_num_args("audiofft::AudioFFT::AudioFFT",0,0)
-  result = (audiofft::AudioFFT *)new audiofft::AudioFFT();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_audiofft__AudioFFT,1); SWIG_arg++; 
+  SWIG_check_num_args("fftconvolver::FFTConvolver::FFTConvolver",0,0)
+  result = (fftconvolver::FFTConvolver *)new fftconvolver::FFTConvolver();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_fftconvolver__FFTConvolver,1); SWIG_arg++; 
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -2742,23 +2740,35 @@ fail:
 }
 
 
-static int _wrap_AudioFFT_init(lua_State* L) {
+static int _wrap_FFTConvolver_init(lua_State* L) {
   int SWIG_arg = 0;
-  audiofft::AudioFFT *arg1 = (audiofft::AudioFFT *) 0 ;
+  fftconvolver::FFTConvolver *arg1 = (fftconvolver::FFTConvolver *) 0 ;
   size_t arg2 ;
+  Sample *arg3 = (Sample *) 0 ;
+  size_t arg4 ;
+  bool result;
   
-  SWIG_check_num_args("audiofft::AudioFFT::init",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("audiofft::AudioFFT::init",1,"audiofft::AudioFFT *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("audiofft::AudioFFT::init",2,"size_t");
+  SWIG_check_num_args("fftconvolver::FFTConvolver::init",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("fftconvolver::FFTConvolver::init",1,"fftconvolver::FFTConvolver *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("fftconvolver::FFTConvolver::init",2,"size_t");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("fftconvolver::FFTConvolver::init",3,"Sample const *");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("fftconvolver::FFTConvolver::init",4,"size_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_audiofft__AudioFFT,0))){
-    SWIG_fail_ptr("AudioFFT_init",1,SWIGTYPE_p_audiofft__AudioFFT);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_fftconvolver__FFTConvolver,0))){
+    SWIG_fail_ptr("FFTConvolver_init",1,SWIGTYPE_p_fftconvolver__FFTConvolver);
   }
   
   SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
   arg2 = (size_t)lua_tonumber(L, 2);
-  (arg1)->init(arg2);
   
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Sample,0))){
+    SWIG_fail_ptr("FFTConvolver_init",3,SWIGTYPE_p_Sample);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,4)>=0),"number must not be negative");
+  arg4 = (size_t)lua_tonumber(L, 4);
+  result = (bool)(arg1)->init(arg2,(Sample const *)arg3,arg4);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -2769,39 +2779,36 @@ fail:
 }
 
 
-static int _wrap_AudioFFT_fft(lua_State* L) {
+static int _wrap_FFTConvolver_process(lua_State* L) {
   int SWIG_arg = 0;
-  audiofft::AudioFFT *arg1 = (audiofft::AudioFFT *) 0 ;
-  float *arg2 = (float *) 0 ;
-  float *arg3 = (float *) 0 ;
-  float *arg4 = (float *) 0 ;
+  fftconvolver::FFTConvolver *arg1 = (fftconvolver::FFTConvolver *) 0 ;
+  Sample *arg2 = (Sample *) 0 ;
+  Sample *arg3 = (Sample *) 0 ;
+  size_t arg4 ;
   
-  SWIG_check_num_args("audiofft::AudioFFT::fft",4,4)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("audiofft::AudioFFT::fft",1,"audiofft::AudioFFT *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("audiofft::AudioFFT::fft",2,"float const *");
-  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("audiofft::AudioFFT::fft",3,"float *");
-  if(!SWIG_isptrtype(L,4)) SWIG_fail_arg("audiofft::AudioFFT::fft",4,"float *");
+  SWIG_check_num_args("fftconvolver::FFTConvolver::process",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("fftconvolver::FFTConvolver::process",1,"fftconvolver::FFTConvolver *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("fftconvolver::FFTConvolver::process",2,"Sample const *");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("fftconvolver::FFTConvolver::process",3,"Sample *");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("fftconvolver::FFTConvolver::process",4,"size_t");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_audiofft__AudioFFT,0))){
-    SWIG_fail_ptr("AudioFFT_fft",1,SWIGTYPE_p_audiofft__AudioFFT);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_fftconvolver__FFTConvolver,0))){
+    SWIG_fail_ptr("FFTConvolver_process",1,SWIGTYPE_p_fftconvolver__FFTConvolver);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_float,0))){
-    SWIG_fail_ptr("AudioFFT_fft",2,SWIGTYPE_p_float);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Sample,0))){
+    SWIG_fail_ptr("FFTConvolver_process",2,SWIGTYPE_p_Sample);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_float,0))){
-    SWIG_fail_ptr("AudioFFT_fft",3,SWIGTYPE_p_float);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_Sample,0))){
+    SWIG_fail_ptr("FFTConvolver_process",3,SWIGTYPE_p_Sample);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,4,(void**)&arg4,SWIGTYPE_p_float,0))){
-    SWIG_fail_ptr("AudioFFT_fft",4,SWIGTYPE_p_float);
-  }
-  
-  (arg1)->fft((float const *)arg2,arg3,arg4);
+  SWIG_contract_assert((lua_tonumber(L,4)>=0),"number must not be negative");
+  arg4 = (size_t)lua_tonumber(L, 4);
+  (arg1)->process((Sample const *)arg2,arg3,arg4);
   
   return SWIG_arg;
   
@@ -2813,39 +2820,18 @@ fail:
 }
 
 
-static int _wrap_AudioFFT_ifft(lua_State* L) {
+static int _wrap_FFTConvolver_reset(lua_State* L) {
   int SWIG_arg = 0;
-  audiofft::AudioFFT *arg1 = (audiofft::AudioFFT *) 0 ;
-  float *arg2 = (float *) 0 ;
-  float *arg3 = (float *) 0 ;
-  float *arg4 = (float *) 0 ;
+  fftconvolver::FFTConvolver *arg1 = (fftconvolver::FFTConvolver *) 0 ;
   
-  SWIG_check_num_args("audiofft::AudioFFT::ifft",4,4)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("audiofft::AudioFFT::ifft",1,"audiofft::AudioFFT *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("audiofft::AudioFFT::ifft",2,"float *");
-  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("audiofft::AudioFFT::ifft",3,"float const *");
-  if(!SWIG_isptrtype(L,4)) SWIG_fail_arg("audiofft::AudioFFT::ifft",4,"float const *");
+  SWIG_check_num_args("fftconvolver::FFTConvolver::reset",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("fftconvolver::FFTConvolver::reset",1,"fftconvolver::FFTConvolver *");
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_audiofft__AudioFFT,0))){
-    SWIG_fail_ptr("AudioFFT_ifft",1,SWIGTYPE_p_audiofft__AudioFFT);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_fftconvolver__FFTConvolver,0))){
+    SWIG_fail_ptr("FFTConvolver_reset",1,SWIGTYPE_p_fftconvolver__FFTConvolver);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_float,0))){
-    SWIG_fail_ptr("AudioFFT_ifft",2,SWIGTYPE_p_float);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_float,0))){
-    SWIG_fail_ptr("AudioFFT_ifft",3,SWIGTYPE_p_float);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,4,(void**)&arg4,SWIGTYPE_p_float,0))){
-    SWIG_fail_ptr("AudioFFT_ifft",4,SWIGTYPE_p_float);
-  }
-  
-  (arg1)->ifft(arg2,(float const *)arg3,(float const *)arg4);
+  (arg1)->reset();
   
   return SWIG_arg;
   
@@ -2857,77 +2843,55 @@ fail:
 }
 
 
-static int _wrap_AudioFFT_ComplexSize(lua_State* L) {
-  int SWIG_arg = 0;
-  size_t arg1 ;
-  size_t result;
-  
-  SWIG_check_num_args("audiofft::AudioFFT::ComplexSize",1,1)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("audiofft::AudioFFT::ComplexSize",1,"size_t");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
-  arg1 = (size_t)lua_tonumber(L, 1);
-  result = audiofft::AudioFFT::ComplexSize(arg1);
-  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static void swig_delete_AudioFFT(void *obj) {
-audiofft::AudioFFT *arg1 = (audiofft::AudioFFT *) obj;
+static void swig_delete_FFTConvolver(void *obj) {
+fftconvolver::FFTConvolver *arg1 = (fftconvolver::FFTConvolver *) obj;
 delete arg1;
 }
-static int _proxy__wrap_new_AudioFFT(lua_State *L) {
+static int _proxy__wrap_new_FFTConvolver(lua_State *L) {
     assert(lua_istable(L,1));
-    lua_pushcfunction(L,_wrap_new_AudioFFT);
+    lua_pushcfunction(L,_wrap_new_FFTConvolver);
     assert(!lua_isnil(L,-1));
     lua_replace(L,1); /* replace our table with real constructor */
     lua_call(L,lua_gettop(L)-1,1);
     return 1;
 }
-static swig_lua_attribute swig_AudioFFT_attributes[] = {
+static swig_lua_attribute swig_FFTConvolver_attributes[] = {
     {0,0,0}
 };
-static swig_lua_method swig_AudioFFT_methods[]= {
-    { "init", _wrap_AudioFFT_init},
-    { "fft", _wrap_AudioFFT_fft},
-    { "ifft", _wrap_AudioFFT_ifft},
+static swig_lua_method swig_FFTConvolver_methods[]= {
+    { "init", _wrap_FFTConvolver_init},
+    { "process", _wrap_FFTConvolver_process},
+    { "reset", _wrap_FFTConvolver_reset},
     {0,0}
 };
-static swig_lua_method swig_AudioFFT_meta[] = {
+static swig_lua_method swig_FFTConvolver_meta[] = {
     {0,0}
 };
 
-static swig_lua_attribute swig_AudioFFT_Sf_SwigStatic_attributes[] = {
+static swig_lua_attribute swig_FFTConvolver_Sf_SwigStatic_attributes[] = {
     {0,0,0}
 };
-static swig_lua_const_info swig_AudioFFT_Sf_SwigStatic_constants[]= {
+static swig_lua_const_info swig_FFTConvolver_Sf_SwigStatic_constants[]= {
     {0,0,0,0,0,0}
 };
-static swig_lua_method swig_AudioFFT_Sf_SwigStatic_methods[]= {
-    { "ComplexSize", _wrap_AudioFFT_ComplexSize},
+static swig_lua_method swig_FFTConvolver_Sf_SwigStatic_methods[]= {
     {0,0}
 };
-static swig_lua_class* swig_AudioFFT_Sf_SwigStatic_classes[]= {
+static swig_lua_class* swig_FFTConvolver_Sf_SwigStatic_classes[]= {
     0
 };
 
-static swig_lua_namespace swig_AudioFFT_Sf_SwigStatic = {
-    "AudioFFT",
-    swig_AudioFFT_Sf_SwigStatic_methods,
-    swig_AudioFFT_Sf_SwigStatic_attributes,
-    swig_AudioFFT_Sf_SwigStatic_constants,
-    swig_AudioFFT_Sf_SwigStatic_classes,
+static swig_lua_namespace swig_FFTConvolver_Sf_SwigStatic = {
+    "FFTConvolver",
+    swig_FFTConvolver_Sf_SwigStatic_methods,
+    swig_FFTConvolver_Sf_SwigStatic_attributes,
+    swig_FFTConvolver_Sf_SwigStatic_constants,
+    swig_FFTConvolver_Sf_SwigStatic_classes,
     0
 };
-static swig_lua_class *swig_AudioFFT_bases[] = {0};
-static const char *swig_AudioFFT_base_names[] = {0};
-static swig_lua_class _wrap_class_AudioFFT = { "AudioFFT", "AudioFFT", &SWIGTYPE_p_audiofft__AudioFFT,_proxy__wrap_new_AudioFFT, swig_delete_AudioFFT, swig_AudioFFT_methods, swig_AudioFFT_attributes, &swig_AudioFFT_Sf_SwigStatic, swig_AudioFFT_meta, swig_AudioFFT_bases, swig_AudioFFT_base_names };
+static swig_lua_class *swig_FFTConvolver_bases[] = {0};
+static const char *swig_FFTConvolver_base_names[] = {0};
+static swig_lua_class _wrap_class_FFTConvolver = { "FFTConvolver", "FFTConvolver", &SWIGTYPE_p_fftconvolver__FFTConvolver,_proxy__wrap_new_FFTConvolver, swig_delete_FFTConvolver, swig_FFTConvolver_methods, swig_FFTConvolver_attributes, &swig_FFTConvolver_Sf_SwigStatic, swig_FFTConvolver_meta, swig_FFTConvolver_bases, swig_FFTConvolver_base_names };
 
 static swig_lua_attribute swig_SwigModule_attributes[] = {
     {0,0,0}
@@ -2936,11 +2900,10 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
     {0,0,0,0,0,0}
 };
 static swig_lua_method swig_SwigModule_methods[]= {
-    { "AudioFFT_ComplexSize", _wrap_AudioFFT_ComplexSize},
     {0,0}
 };
 static swig_lua_class* swig_SwigModule_classes[]= {
-&_wrap_class_AudioFFT,
+&_wrap_class_FFTConvolver,
     0
 };
 static swig_lua_namespace* swig_SwigModule_namespaces[] = {
@@ -2948,7 +2911,7 @@ static swig_lua_namespace* swig_SwigModule_namespaces[] = {
 };
 
 static swig_lua_namespace swig_SwigModule = {
-    "audiofft",
+    "fftconvolver",
     swig_SwigModule_methods,
     swig_SwigModule_attributes,
     swig_SwigModule_constants,
@@ -2961,20 +2924,20 @@ static swig_lua_namespace swig_SwigModule = {
 
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
-static swig_type_info _swigt__p_audiofft__AudioFFT = {"_p_audiofft__AudioFFT", "audiofft::AudioFFT *|audiofft::AudioFFTBase *", 0, 0, (void*)&_wrap_class_AudioFFT, 0};
-static swig_type_info _swigt__p_float = {"_p_float", "float *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Sample = {"_p_Sample", "Sample *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_fftconvolver__FFTConvolver = {"_p_fftconvolver__FFTConvolver", "fftconvolver::FFTConvolver *", 0, 0, (void*)&_wrap_class_FFTConvolver, 0};
 
 static swig_type_info *swig_type_initial[] = {
-  &_swigt__p_audiofft__AudioFFT,
-  &_swigt__p_float,
+  &_swigt__p_Sample,
+  &_swigt__p_fftconvolver__FFTConvolver,
 };
 
-static swig_cast_info _swigc__p_audiofft__AudioFFT[] = {  {&_swigt__p_audiofft__AudioFFT, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_float[] = {  {&_swigt__p_float, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Sample[] = {  {&_swigt__p_Sample, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_fftconvolver__FFTConvolver[] = {  {&_swigt__p_fftconvolver__FFTConvolver, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
-  _swigc__p_audiofft__AudioFFT,
-  _swigc__p_float,
+  _swigc__p_Sample,
+  _swigc__p_fftconvolver__FFTConvolver,
 };
 
 

@@ -1,3 +1,3 @@
-swig -lua -c++ -I/usr/include/aubio aubio.i
-gcc -O2 -fPIC -march=native -mavx2 -shared -I/usr/include/aubio -o aubio.so aubio_wrap.cxx -lstdc++ -lm -lluajit -laubio
+swig -lua -c++ -Isrc/aubio/src src/aubio.i
+gcc -fpermissive -O2 -fPIC -march=native -mavx2 -shared -Isrc/aubio/src -o aubio.so src/aubio_wrap.cxx lib/libaubio.a -lstdc++ -lm -lluajit -lsndfile -lavformat -lrubberband -lsamplerate
 

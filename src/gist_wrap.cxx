@@ -2720,7 +2720,7 @@ typedef struct{} LANGUAGE_OBJ;
 
 
 #define USE_FFTW
-#include <Gist.h>    
+#include "Gist.h"    
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,2 +1,2 @@
-swig -lua -c++ fftconvolver.i
-gcc -DAUDIOFFT_FFTW3 -O2 -march=native -fPIC -mavx2 -shared -offtconvolver.so fftconvolver_wrap.cxx AudioFFT.cpp FFTConvolver.cpp TwoStageFFTConvolver.cpp Utilities.cpp -lstdc++ -lm -lluajit -lfftw3 -lfftw3f
+swig -lua -c++ src/fftconvolver.i
+gcc -DAUDIOFFT_FFTW3 -O2 -march=native -fPIC -mavx2 -shared -o fftconvolver.so src/fftconvolver_wrap.cxx src/AudioFFT.cpp src/FFTConvolver.cpp src/TwoStageFFTConvolver.cpp src/Utilities.cpp -lstdc++ -lm -lluajit -lfftw3 -lfftw3f
