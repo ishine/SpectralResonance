@@ -1,0 +1,15 @@
+[submodule "src/pocketfft"]
+	path = src/pocketfft
+	url = https://github.com/hayguen/pocketfft
+[submodule "src/pocketfft-c"]
+	path = src/pocketfft-c
+	url = https://github.com/malfet/pocketfft
+[submodule "src/libdwt"]
+	path = src/libdwt
+	url = https://github.com/xbarin02/libdwt
+[submodule "src/libnsgt"]
+	path = src/libnsgt
+	url = https://github.com/mrgreywater/libnsgt
+[submodule "src/pffft"]
+	path = src/pffft
+	url = https://github.com/marton78/pffft
