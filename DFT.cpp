@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "Sample/SampleVector.h"
+#include "pocketfft.h"
 
 template<typename T>
 struct DFT 

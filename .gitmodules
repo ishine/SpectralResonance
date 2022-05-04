@@ -13,3 +13,15 @@
 [submodule "src/pffft"]
 	path = src/pffft
 	url = https://github.com/marton78/pffft
+[submodule "src/fastfilter"]
+	path = src/fastfilter
+	url = https://github.com/RedhawkSDR/fastfilter
+[submodule "src/FilterBank"]
+	path = src/FilterBank
+	url = https://github.com/Dirog/FilterBank
+[submodule "src/PolyphaseFilterBank"]
+	path = src/PolyphaseFilterBank
+	url = https://github.com/alexranaldi/PolyphaseFilterBank
+[submodule "src/pffft-blustein"]
+	path = src/pffft-blustein
+	url = https://github.com/cpuimage/pffft
