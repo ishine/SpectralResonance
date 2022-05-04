@@ -1,9 +1,6 @@
 # LuaJIT-Analysis
 Analysis
 
-# License
-* All swig wrappers as creative common, if it is somehow important to you.
-
 # Spectral Audio Signal Processing
 * https://ccrma.stanford.edu/~jos/sasp/
 
