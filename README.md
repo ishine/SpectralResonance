@@ -1,6 +1,30 @@
 # LuaJIT-Analysis
 Analysis
 
+# A smorgasborg of swig wrappers
+* all swig wrappers are WFTPL license
+
+# DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+
+<pre>
+The text of Version 2, the most current version of the license, written by Sam Hocevar:[4]
+
+           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+                   Version 2, December 2004
+ 
+Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
+
+Everyone is permitted to copy and distribute verbatim or modified
+copies of this license document, and changing it is allowed as long
+as the name is changed.
+ 
+           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+ 0. You just DO WHAT THE FUCK YOU WANT TO.
+
+</pr>
+
 # Theories
 * http://telit.etf.rs/download/An%20Introduction%20to%20Audio%20Content%20Analysis.pdf
 * https://www.cs.cmu.edu/~gtzan/work/pubs/thesis02gtzan.pdf
