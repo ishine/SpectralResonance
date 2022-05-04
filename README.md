@@ -25,9 +25,18 @@ as the name is changed.
 
 </pre>
 
+# Spectral Audio Signal Processing
+* https://ccrma.stanford.edu/~jos/sasp/
+
+# Spectral Descriptors
+* https://www.mathworks.com/help/audio/ug/spectral-descriptors.html
+* https://user.it.uu.se/~ps/SAS-new.pdf
+
 # Theories
 * http://telit.etf.rs/download/An%20Introduction%20to%20Audio%20Content%20Analysis.pdf
+* https://www.academia.edu/25584816/AUDIO_ANALYSIS_Introduction_to
 * https://www.cs.cmu.edu/~gtzan/work/pubs/thesis02gtzan.pdf
+* https://www.klingbeil.com/data/Klingbeil_Dissertation_web.pdf
 * https://cran.r-project.org/web/packages/seewave/vignettes/seewave_analysis.pdf
 * https://www.eumus.edu.uy/eme/ensenanza/electivas/dsp/presentaciones/PhaseVocoderTutorial.pdf
 * http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.437.9723&rep=rep1&type=pdf
