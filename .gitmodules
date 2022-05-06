@@ -25,3 +25,24 @@
 [submodule "src/pffft-blustein"]
 	path = src/pffft-blustein
 	url = https://github.com/cpuimage/pffft
+[submodule "sonic-visualiser"]
+	path = sonic-visualiser
+	url = https://github.com/sonic-visualiser/sonic-visualiser
+[submodule "tony"]
+	path = tony
+	url = https://github.com/sonic-visualiser/tony
+[submodule "loudia"]
+	path = loudia
+	url = https://github.com/rikrd/loudia
+[submodule "opensmile"]
+	path = opensmile
+	url = https://github.com/audeering/opensmile
+[submodule "openBliSSART"]
+	path = openBliSSART
+	url = https://github.com/openBliSSART/openBliSSART
+[submodule "audio_recognition"]
+	path = audio_recognition
+	url = https://github.com/JiahuiYu/audio_recognition
+[submodule "audioRecognition"]
+	path = audioRecognition
+	url = https://github.com/BitconFeng/audioRecognition

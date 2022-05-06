@@ -1,0 +1,21 @@
+Parallel 
+{
+  + harmonic = 3 
+  + detune = 0.0 
+  
+  israte = 44100.0
+  -> Series { 
+	-> src: AudioSource  
+	-> yin: AubioYin 
+	-> pitch: FlowToControl 
+    }
+
+  -> Series { 
+        -> SineSource { 
+	frequency = (/pitch/value */harmonic + /detune)
+        }
+        ->AudioSink 
+     }
+
+}
+
