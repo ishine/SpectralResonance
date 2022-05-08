@@ -21,3 +21,14 @@ Analysis
 * http://ijciras.com/PublishedPaper/IJCIRAS1582.pdf
 * https://www.ijitee.org/wp-content/uploads/papers/v8i7c2/G10460587C219.pdf
 * https://fau.digital.flvc.org/islandora/object/fau%3A3410/datastream/OBJ/download/Model-based_classification_of_speech_audio.pdf
+
+# Phase Vocoder
+* https://composersdesktop.com/pdf/phasevocoder.pdf
+* https://www.eumus.edu.uy/eme/ensenanza/electivas/dsp/presentaciones/PhaseVocoderTutorial.pdf
+* https://www.ee.columbia.edu/~dpwe/papers/LaroD99-pvoc.pdf
+* https://quod.lib.umich.edu/cgi/p/pod/dod-idx/sliding-phase-vocoder.pdf?c=icmc;idno=bbp2372.2007.198;format=pdf
+* http://pfister.ee.duke.edu/courses/ece485/filterbank.pdf
+* https://www.di.ens.fr/~mallat/papiers/Vocoder.pdf
+* http://www.mp3-tech.org/programmer/docs//roebel_transients.pdf
+* http://academics.wellesley.edu/Physics/brown/pubs/pvocWmiller00661475.pdf
+* 
