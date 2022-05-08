@@ -31,4 +31,4 @@ Analysis
 * https://www.di.ens.fr/~mallat/papiers/Vocoder.pdf
 * http://www.mp3-tech.org/programmer/docs//roebel_transients.pdf
 * http://academics.wellesley.edu/Physics/brown/pubs/pvocWmiller00661475.pdf
-* 
+* http://musicweb.ucsd.edu/~sdubnov/Mu172/Lectures/STFTXsynth.pdf
