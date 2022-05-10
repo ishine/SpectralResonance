@@ -1,0 +1,1 @@
+/usr/bin/c++ -std=c++11 -Wall -Wextra -fPIC -O3 -DNDEBUG -rdynamic "CMakeFiles/marsyas-run.dir/runner-app.cpp.o" -o ../../../bin/marsyas-run  -Wl,-rpath,/home/quake/Projects/audio-analysis/marsyas/build/lib: ../../../lib/libmarsyas.so -ljack -lasound -lpthread -lrt -lsndfile ../../../lib/liboscpack.a 

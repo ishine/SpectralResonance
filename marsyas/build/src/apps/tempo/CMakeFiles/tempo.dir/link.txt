@@ -1,0 +1,1 @@
+/usr/bin/c++ -std=c++11 -Wall -Wextra -fPIC -O3 -DNDEBUG -rdynamic CMakeFiles/tempo.dir/tempo.cpp.o -o ../../../bin/tempo  -Wl,-rpath,/home/quake/Projects/audio-analysis/marsyas/build/lib: ../../../lib/libmarsyas.so -ljack -lasound -lpthread -lrt -lsndfile ../../../lib/liboscpack.a 

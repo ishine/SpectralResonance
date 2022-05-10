@@ -4,8 +4,12 @@
 using namespace KeyFinder;
 %}
 
+%ignore KeyFinder::ChromaTransform::ChromaTransformWrapper;
+%ignore KeyFinder::LowPassFilter::LowPassFilterWrapper;
+%ignore KeyFinder::TemporalWindow::TemporalWindowWrapper;
+
 %include "constants.h"
-%include "exception.h"
+//%include "exception.h"
 %include "audiodata.h"
 %include "binode.h"
 %include "chromagram.h"

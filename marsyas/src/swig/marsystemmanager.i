@@ -14,6 +14,7 @@ namespace std {
         %template(Vector_String) vector<string>;
 };
 
+namespace Marsyas {
 class MarSystemManager {
         public:
                 MarSystemManager(); // Enable Constructor
@@ -38,5 +39,4 @@ class MarSystemManager {
                         }
                 };
 };
-
-
+}

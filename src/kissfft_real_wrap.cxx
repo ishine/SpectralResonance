@@ -2715,26 +2715,25 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 /* -------- TYPES TABLE (BEGIN) -------- */
 
 #define SWIGTYPE_p_KissFFTR swig_types[0]
-#define SWIGTYPE_p_difference_type swig_types[1]
-#define SWIGTYPE_p_float swig_types[2]
-#define SWIGTYPE_p_int swig_types[3]
-#define SWIGTYPE_p_kiss_fft_cpx swig_types[4]
-#define SWIGTYPE_p_kiss_fftr_state swig_types[5]
-#define SWIGTYPE_p_long_long swig_types[6]
-#define SWIGTYPE_p_short swig_types[7]
-#define SWIGTYPE_p_signed_char swig_types[8]
-#define SWIGTYPE_p_size_t swig_types[9]
-#define SWIGTYPE_p_size_type swig_types[10]
-#define SWIGTYPE_p_std__string swig_types[11]
-#define SWIGTYPE_p_std__vectorT_float_t swig_types[12]
-#define SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t swig_types[13]
+#define SWIGTYPE_p_float swig_types[1]
+#define SWIGTYPE_p_int swig_types[2]
+#define SWIGTYPE_p_kiss_fft_cpx swig_types[3]
+#define SWIGTYPE_p_kiss_fftr_state swig_types[4]
+#define SWIGTYPE_p_long_long swig_types[5]
+#define SWIGTYPE_p_short swig_types[6]
+#define SWIGTYPE_p_signed_char swig_types[7]
+#define SWIGTYPE_p_size_t swig_types[8]
+#define SWIGTYPE_p_std__string swig_types[9]
+#define SWIGTYPE_p_std__vectorT_float_t swig_types[10]
+#define SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t swig_types[11]
+#define SWIGTYPE_p_std__vector_iteratorT_float_t swig_types[12]
+#define SWIGTYPE_p_std__vector_iteratorT_kiss_fft_cpx_t swig_types[13]
 #define SWIGTYPE_p_unsigned_char swig_types[14]
 #define SWIGTYPE_p_unsigned_int swig_types[15]
 #define SWIGTYPE_p_unsigned_long_long swig_types[16]
 #define SWIGTYPE_p_unsigned_short swig_types[17]
-#define SWIGTYPE_p_value_type swig_types[18]
-static swig_type_info *swig_types[20];
-static swig_module_info swig_module = {swig_types, 19, 0, 0, 0, 0};
+static swig_type_info *swig_types[19];
+static swig_module_info swig_module = {swig_types, 18, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2780,8 +2779,63 @@ SWIGINTERN int SWIG_lua_isnilstring(lua_State *L, int idx) {
 }
 
 
+#include <algorithm>
 #include <vector>
+#include <map>
+#include <string>
+#include <cstdlib>
+#include <cstdio>
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <memory>
 
+
+namespace std {
+    template<typename T>
+    struct vector_iterator
+    {
+        typename std::vector<T>::iterator iter;
+        std::vector<T> v;
+
+        vector_iterator(const std::vector<T> & vec) {
+            v = vec;
+        }   
+        vector_iterator(const std::vector<T> & vec, const typename std::vector<T>::iterator & i) {
+            iter = i;
+            v = vec;
+        }
+
+        vector_iterator<T>& operator = (const T& val) {
+            *iter = val;
+            return *this;
+        }
+        vector_iterator<T>& operator = (const vector_iterator<T>& val) {
+            iter = val.iter;
+            v    = val.v;
+            return *this;;
+        }
+                
+        void next() {
+            if(iter != v.end()) iter++;
+        }
+        void prev() {
+            if(iter != v.begin()) iter--;
+        }
+        void forward(size_t i) {
+            iter += i;
+        }
+        void backward(size_t i) {
+            iter -= i;
+        }
+        void jump(size_t i) {
+            iter = i;
+        }
+        
+        T value() { return *iter; }
+        void set_value(const T& val) { *iter = val; }
+    };
+}
 
 #include <map>
 #include <algorithm>
@@ -2793,26 +2847,30 @@ SWIGINTERN int SWIG_lua_isnilstring(lua_State *L, int idx) {
 
 #include <stdint.h>		// Use the C99 official header
 
-SWIGINTERN float std_vector_Sl_float_Sg____getitem____SWIG(std::vector< float > *self,unsigned int idx){
-				if (idx>=self->size())
-					throw std::out_of_range("in vector::__getitem__()");
-				return (*self)[idx];
-			}
-SWIGINTERN void std_vector_Sl_float_Sg____setitem____SWIG(std::vector< float > *self,unsigned int idx,float val){
-				if (idx>=self->size())
-					throw std::out_of_range("in vector::__setitem__()");
-				(*self)[idx]=val;
-			}
-SWIGINTERN kiss_fft_cpx std_vector_Sl_kiss_fft_cpx_Sg____getitem____SWIG(std::vector< kiss_fft_cpx > *self,unsigned int idx){
-				if (idx>=self->size())
-					throw std::out_of_range("in vector::__getitem__()");
-				return (*self)[idx];
-			}
-SWIGINTERN void std_vector_Sl_kiss_fft_cpx_Sg____setitem____SWIG(std::vector< kiss_fft_cpx > *self,unsigned int idx,kiss_fft_cpx val){
-				if (idx>=self->size())
-					throw std::out_of_range("in vector::__setitem__()");
-				(*self)[idx]=val;
-			}
+SWIGINTERN float std_vector_Sl_float_Sg____getitem__SWIG(std::vector< float > *self,size_t i){ return (*self)[i-1]; }
+SWIGINTERN void std_vector_Sl_float_Sg____setitem__SWIG(std::vector< float > *self,size_t i,float val){ (*self)[i-1] = val; }
+SWIGINTERN std::vector_iterator< float > std_vector_Sl_float_Sg__begin__SWIG(std::vector< float > *self){
+                std::vector_iterator<float> r(*self,self->begin());                
+                return r;
+            }
+SWIGINTERN std::vector_iterator< float > std_vector_Sl_float_Sg__end__SWIG(std::vector< float > *self){
+                std::vector_iterator<float> r(*self,self->end());                
+                return r;
+            }
+SWIGINTERN void std_vector_Sl_float_Sg__erase__SWIG_0(std::vector< float > *self,size_t i){ self->erase(self->begin()+i-1); }
+SWIGINTERN void std_vector_Sl_float_Sg__erase__SWIG_1(std::vector< float > *self,size_t i,size_t n){ self->erase(self->begin()+i-1,self->begin()+n-1); }
+SWIGINTERN kiss_fft_cpx std_vector_Sl_kiss_fft_cpx_Sg____getitem__SWIG(std::vector< kiss_fft_cpx > *self,size_t i){ return (*self)[i-1]; }
+SWIGINTERN void std_vector_Sl_kiss_fft_cpx_Sg____setitem__SWIG(std::vector< kiss_fft_cpx > *self,size_t i,kiss_fft_cpx val){ (*self)[i-1] = val; }
+SWIGINTERN std::vector_iterator< kiss_fft_cpx > std_vector_Sl_kiss_fft_cpx_Sg__begin__SWIG(std::vector< kiss_fft_cpx > *self){
+                std::vector_iterator<kiss_fft_cpx> r(*self,self->begin());                
+                return r;
+            }
+SWIGINTERN std::vector_iterator< kiss_fft_cpx > std_vector_Sl_kiss_fft_cpx_Sg__end__SWIG(std::vector< kiss_fft_cpx > *self){
+                std::vector_iterator<kiss_fft_cpx> r(*self,self->end());                
+                return r;
+            }
+SWIGINTERN void std_vector_Sl_kiss_fft_cpx_Sg__erase__SWIG_0(std::vector< kiss_fft_cpx > *self,size_t i){ self->erase(self->begin()+i-1); }
+SWIGINTERN void std_vector_Sl_kiss_fft_cpx_Sg__erase__SWIG_1(std::vector< kiss_fft_cpx > *self,size_t i,size_t n){ self->erase(self->begin()+i-1,self->begin()+n-1); }
 
 struct KissFFTR
 {
@@ -3218,10 +3276,18 @@ fail:
 
 static int _wrap_new_real_vector__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
+  size_t arg1 ;
+  float *arg2 = 0 ;
+  float temp2 ;
   std::vector< float > *result = 0 ;
   
-  SWIG_check_num_args("std::vector< float >::vector",0,0)
-  result = (std::vector< float > *)new std::vector< float >();
+  SWIG_check_num_args("std::vector< float >::vector",2,2)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("std::vector< float >::vector",1,"size_t");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< float >::vector",2,"float const &");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (size_t)lua_tonumber(L, 1);
+  temp2=(float)lua_tonumber(L,2); arg2=&temp2;
+  result = (std::vector< float > *)new std::vector< float >(arg1,(float const &)*arg2);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_std__vectorT_float_t,1); SWIG_arg++; 
   return SWIG_arg;
   
@@ -3235,13 +3301,13 @@ fail:
 
 static int _wrap_new_real_vector__SWIG_1(lua_State* L) {
   int SWIG_arg = 0;
-  unsigned int arg1 ;
+  size_t arg1 ;
   std::vector< float > *result = 0 ;
   
   SWIG_check_num_args("std::vector< float >::vector",1,1)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("std::vector< float >::vector",1,"unsigned int");
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("std::vector< float >::vector",1,"size_t");
   SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
-  arg1 = (unsigned int)lua_tonumber(L, 1);
+  arg1 = (size_t)lua_tonumber(L, 1);
   result = (std::vector< float > *)new std::vector< float >(arg1);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_std__vectorT_float_t,1); SWIG_arg++; 
   return SWIG_arg;
@@ -3278,30 +3344,6 @@ fail:
 }
 
 
-static int _wrap_new_real_vector__SWIG_3(lua_State* L) {
-  int SWIG_arg = 0;
-  unsigned int arg1 ;
-  float arg2 ;
-  std::vector< float > *result = 0 ;
-  
-  SWIG_check_num_args("std::vector< float >::vector",2,2)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("std::vector< float >::vector",1,"unsigned int");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< float >::vector",2,"float");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
-  arg1 = (unsigned int)lua_tonumber(L, 1);
-  arg2 = (float)lua_tonumber(L, 2);
-  result = (std::vector< float > *)new std::vector< float >(arg1,arg2);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_std__vectorT_float_t,1); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_new_real_vector(lua_State* L) {
   int argc;
   int argv[3]={
@@ -3309,9 +3351,6 @@ static int _wrap_new_real_vector(lua_State* L) {
   };
   
   argc = lua_gettop(L);
-  if (argc == 0) {
-    return _wrap_new_real_vector__SWIG_0(L);
-  }
   if (argc == 1) {
     int _v = 0;
     {
@@ -3345,34 +3384,37 @@ static int _wrap_new_real_vector(lua_State* L) {
         _v = lua_isnumber(L,argv[1]);
       }
       if (_v) {
-        return _wrap_new_real_vector__SWIG_3(L);
+        return _wrap_new_real_vector__SWIG_0(L);
       }
     }
   }
   
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'new_real_vector'\n"
     "  Possible C/C++ prototypes are:\n"
-    "    std::vector< float >::vector()\n"
-    "    std::vector< float >::vector(unsigned int)\n"
-    "    std::vector< float >::vector(std::vector< float > const &)\n"
-    "    std::vector< float >::vector(unsigned int,float)\n");
+    "    std::vector< float >::vector(size_t,float const &)\n"
+    "    std::vector< float >::vector(size_t)\n"
+    "    std::vector< float >::vector(std::vector< float > const &)\n");
   lua_error(L);return 0;
 }
 
 
-static int _wrap_real_vector_size(lua_State* L) {
+static int _wrap_real_vector___getitem(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
-  unsigned int result;
+  size_t arg2 ;
+  float result;
   
-  SWIG_check_num_args("std::vector< float >::size",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::size",1,"std::vector< float > const *");
+  SWIG_check_num_args("std::vector< float >::__getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::__getitem",1,"std::vector< float > *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< float >::__getitem",2,"size_t");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
-    SWIG_fail_ptr("real_vector_size",1,SWIGTYPE_p_std__vectorT_float_t);
+    SWIG_fail_ptr("real_vector___getitem",1,SWIGTYPE_p_std__vectorT_float_t);
   }
   
-  result = (unsigned int)((std::vector< float > const *)arg1)->size();
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  result = (float)std_vector_Sl_float_Sg____getitem__SWIG(arg1,arg2);
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -3384,19 +3426,401 @@ fail:
 }
 
 
-static int _wrap_real_vector_max_size(lua_State* L) {
+static int _wrap_real_vector___setitem(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
-  unsigned int result;
+  size_t arg2 ;
+  float arg3 ;
   
-  SWIG_check_num_args("std::vector< float >::max_size",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::max_size",1,"std::vector< float > const *");
+  SWIG_check_num_args("std::vector< float >::__setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::__setitem",1,"std::vector< float > *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< float >::__setitem",2,"size_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("std::vector< float >::__setitem",3,"float");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
-    SWIG_fail_ptr("real_vector_max_size",1,SWIGTYPE_p_std__vectorT_float_t);
+    SWIG_fail_ptr("real_vector___setitem",1,SWIGTYPE_p_std__vectorT_float_t);
   }
   
-  result = (unsigned int)((std::vector< float > const *)arg1)->max_size();
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  arg3 = (float)lua_tonumber(L, 3);
+  std_vector_Sl_float_Sg____setitem__SWIG(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_real_vector_begin(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< float > *arg1 = (std::vector< float > *) 0 ;
+  SwigValueWrapper< std::vector_iterator< float > > result;
+  
+  SWIG_check_num_args("std::vector< float >::begin",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::begin",1,"std::vector< float > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
+    SWIG_fail_ptr("real_vector_begin",1,SWIGTYPE_p_std__vectorT_float_t);
+  }
+  
+  result = std_vector_Sl_float_Sg__begin__SWIG(arg1);
+  {
+    std::vector_iterator< float > * resultptr = new std::vector_iterator< float >((const std::vector_iterator< float > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_std__vector_iteratorT_float_t,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_real_vector_c_end(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< float > *arg1 = (std::vector< float > *) 0 ;
+  SwigValueWrapper< std::vector_iterator< float > > result;
+  
+  SWIG_check_num_args("std::vector< float >::end",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::end",1,"std::vector< float > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
+    SWIG_fail_ptr("real_vector_c_end",1,SWIGTYPE_p_std__vectorT_float_t);
+  }
+  
+  result = std_vector_Sl_float_Sg__end__SWIG(arg1);
+  {
+    std::vector_iterator< float > * resultptr = new std::vector_iterator< float >((const std::vector_iterator< float > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_std__vector_iteratorT_float_t,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_real_vector_erase__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< float > *arg1 = (std::vector< float > *) 0 ;
+  size_t arg2 ;
+  
+  SWIG_check_num_args("std::vector< float >::erase",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::erase",1,"std::vector< float > *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< float >::erase",2,"size_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
+    SWIG_fail_ptr("real_vector_erase",1,SWIGTYPE_p_std__vectorT_float_t);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  std_vector_Sl_float_Sg__erase__SWIG_0(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_real_vector_erase__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< float > *arg1 = (std::vector< float > *) 0 ;
+  size_t arg2 ;
+  size_t arg3 ;
+  
+  SWIG_check_num_args("std::vector< float >::erase",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::erase",1,"std::vector< float > *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< float >::erase",2,"size_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("std::vector< float >::erase",3,"size_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
+    SWIG_fail_ptr("real_vector_erase",1,SWIGTYPE_p_std__vectorT_float_t);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
+  arg3 = (size_t)lua_tonumber(L, 3);
+  std_vector_Sl_float_Sg__erase__SWIG_1(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_real_vector_erase(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v = 0;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_std__vectorT_float_t, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        return _wrap_real_vector_erase__SWIG_0(L);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v = 0;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_std__vectorT_float_t, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isnumber(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_real_vector_erase__SWIG_1(L);
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'real_vector_erase'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    std::vector< float >::erase(size_t)\n"
+    "    std::vector< float >::erase(size_t,size_t)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_real_vector_front(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< float > *arg1 = (std::vector< float > *) 0 ;
+  float *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< float >::front",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::front",1,"std::vector< float > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
+    SWIG_fail_ptr("real_vector_front",1,SWIGTYPE_p_std__vectorT_float_t);
+  }
+  
+  result = (float *) &(arg1)->front();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_float,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_real_vector_back(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< float > *arg1 = (std::vector< float > *) 0 ;
+  float *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< float >::back",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::back",1,"std::vector< float > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
+    SWIG_fail_ptr("real_vector_back",1,SWIGTYPE_p_std__vectorT_float_t);
+  }
+  
+  result = (float *) &(arg1)->back();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_float,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_real_vector_push_back(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< float > *arg1 = (std::vector< float > *) 0 ;
+  float *arg2 = 0 ;
+  float temp2 ;
+  
+  SWIG_check_num_args("std::vector< float >::push_back",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::push_back",1,"std::vector< float > *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< float >::push_back",2,"float const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
+    SWIG_fail_ptr("real_vector_push_back",1,SWIGTYPE_p_std__vectorT_float_t);
+  }
+  
+  temp2=(float)lua_tonumber(L,2); arg2=&temp2;
+  (arg1)->push_back((float const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_real_vector_pop_back(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< float > *arg1 = (std::vector< float > *) 0 ;
+  
+  SWIG_check_num_args("std::vector< float >::pop_back",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::pop_back",1,"std::vector< float > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
+    SWIG_fail_ptr("real_vector_pop_back",1,SWIGTYPE_p_std__vectorT_float_t);
+  }
+  
+  (arg1)->pop_back();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_real_vector_at(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< float > *arg1 = (std::vector< float > *) 0 ;
+  size_t arg2 ;
+  float *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< float >::at",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::at",1,"std::vector< float > *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< float >::at",2,"size_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
+    SWIG_fail_ptr("real_vector_at",1,SWIGTYPE_p_std__vectorT_float_t);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  result = (float *) &(arg1)->at(arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_float,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_real_vector_assign(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< float > *arg1 = (std::vector< float > *) 0 ;
+  size_t arg2 ;
+  float *arg3 = 0 ;
+  float temp3 ;
+  
+  SWIG_check_num_args("std::vector< float >::assign",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::assign",1,"std::vector< float > *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< float >::assign",2,"size_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("std::vector< float >::assign",3,"float const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
+    SWIG_fail_ptr("real_vector_assign",1,SWIGTYPE_p_std__vectorT_float_t);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  temp3=(float)lua_tonumber(L,3); arg3=&temp3;
+  (arg1)->assign(arg2,(float const &)*arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_real_vector_data(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< float > *arg1 = (std::vector< float > *) 0 ;
+  float *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< float >::data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::data",1,"std::vector< float > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
+    SWIG_fail_ptr("real_vector_data",1,SWIGTYPE_p_std__vectorT_float_t);
+  }
+  
+  result = (float *)(arg1)->data();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_float,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_real_vector_size(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< float > *arg1 = (std::vector< float > *) 0 ;
+  size_t result;
+  
+  SWIG_check_num_args("std::vector< float >::size",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::size",1,"std::vector< float > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
+    SWIG_fail_ptr("real_vector_size",1,SWIGTYPE_p_std__vectorT_float_t);
+  }
+  
+  result = (arg1)->size();
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -3432,6 +3856,33 @@ fail:
 }
 
 
+static int _wrap_real_vector_resize(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< float > *arg1 = (std::vector< float > *) 0 ;
+  size_t arg2 ;
+  
+  SWIG_check_num_args("std::vector< float >::resize",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::resize",1,"std::vector< float > *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< float >::resize",2,"size_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
+    SWIG_fail_ptr("real_vector_resize",1,SWIGTYPE_p_std__vectorT_float_t);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  (arg1)->resize(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_real_vector_clear(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
@@ -3455,21 +3906,25 @@ fail:
 }
 
 
-static int _wrap_real_vector_push_back(lua_State* L) {
+static int _wrap_real_vector_swap(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
-  float arg2 ;
+  std::vector< float > *arg2 = 0 ;
   
-  SWIG_check_num_args("std::vector< float >::push_back",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::push_back",1,"std::vector< float > *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< float >::push_back",2,"float");
+  SWIG_check_num_args("std::vector< float >::swap",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::swap",1,"std::vector< float > *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("std::vector< float >::swap",2,"std::vector< float > &");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
-    SWIG_fail_ptr("real_vector_push_back",1,SWIGTYPE_p_std__vectorT_float_t);
+    SWIG_fail_ptr("real_vector_swap",1,SWIGTYPE_p_std__vectorT_float_t);
   }
   
-  arg2 = (float)lua_tonumber(L, 2);
-  (arg1)->push_back(arg2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_std__vectorT_float_t,0))){
+    SWIG_fail_ptr("real_vector_swap",2,SWIGTYPE_p_std__vectorT_float_t);
+  }
+  
+  (arg1)->swap(*arg2);
   
   return SWIG_arg;
   
@@ -3481,18 +3936,18 @@ fail:
 }
 
 
-static int _wrap_real_vector_pop_back(lua_State* L) {
+static int _wrap_real_vector_shrink_to_fit(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   
-  SWIG_check_num_args("std::vector< float >::pop_back",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::pop_back",1,"std::vector< float > *");
+  SWIG_check_num_args("std::vector< float >::shrink_to_fit",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::shrink_to_fit",1,"std::vector< float > *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
-    SWIG_fail_ptr("real_vector_pop_back",1,SWIGTYPE_p_std__vectorT_float_t);
+    SWIG_fail_ptr("real_vector_shrink_to_fit",1,SWIGTYPE_p_std__vectorT_float_t);
   }
   
-  (arg1)->pop_back();
+  (arg1)->shrink_to_fit();
   
   return SWIG_arg;
   
@@ -3504,75 +3959,46 @@ fail:
 }
 
 
-static int _wrap_real_vector_front(lua_State* L) {
+static int _wrap_real_vector_reserve(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
-  float result;
+  size_t arg2 ;
   
-  SWIG_check_num_args("std::vector< float >::front",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::front",1,"std::vector< float > const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
-    SWIG_fail_ptr("real_vector_front",1,SWIGTYPE_p_std__vectorT_float_t);
-  }
-  
-  result = (float)((std::vector< float > const *)arg1)->front();
-  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_real_vector_back(lua_State* L) {
-  int SWIG_arg = 0;
-  std::vector< float > *arg1 = (std::vector< float > *) 0 ;
-  float result;
-  
-  SWIG_check_num_args("std::vector< float >::back",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::back",1,"std::vector< float > const *");
+  SWIG_check_num_args("std::vector< float >::reserve",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::reserve",1,"std::vector< float > *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< float >::reserve",2,"size_t");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
-    SWIG_fail_ptr("real_vector_back",1,SWIGTYPE_p_std__vectorT_float_t);
-  }
-  
-  result = (float)((std::vector< float > const *)arg1)->back();
-  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_real_vector___getitem(lua_State* L) {
-  int SWIG_arg = 0;
-  std::vector< float > *arg1 = (std::vector< float > *) 0 ;
-  unsigned int arg2 ;
-  float result;
-  
-  SWIG_check_num_args("std::vector< float >::__getitem__",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::__getitem__",1,"std::vector< float > *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< float >::__getitem__",2,"unsigned int");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
-    SWIG_fail_ptr("real_vector___getitem",1,SWIGTYPE_p_std__vectorT_float_t);
+    SWIG_fail_ptr("real_vector_reserve",1,SWIGTYPE_p_std__vectorT_float_t);
   }
   
   SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
-  arg2 = (unsigned int)lua_tonumber(L, 2);
-  try {
-    result = (float)std_vector_Sl_float_Sg____getitem____SWIG(arg1,arg2);
-  } catch(std::out_of_range &_e) {
-    SWIG_exception(SWIG_IndexError, (&_e)->what());
+  arg2 = (size_t)lua_tonumber(L, 2);
+  (arg1)->reserve(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_real_vector_max_size(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< float > *arg1 = (std::vector< float > *) 0 ;
+  size_t result;
+  
+  SWIG_check_num_args("std::vector< float >::max_size",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::max_size",1,"std::vector< float > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
+    SWIG_fail_ptr("real_vector_max_size",1,SWIGTYPE_p_std__vectorT_float_t);
   }
+  
+  result = (arg1)->max_size();
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -3584,30 +4010,20 @@ fail:
 }
 
 
-static int _wrap_real_vector___setitem(lua_State* L) {
+static int _wrap_real_vector_capacity(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
-  unsigned int arg2 ;
-  float arg3 ;
+  size_t result;
   
-  SWIG_check_num_args("std::vector< float >::__setitem__",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::__setitem__",1,"std::vector< float > *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< float >::__setitem__",2,"unsigned int");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("std::vector< float >::__setitem__",3,"float");
+  SWIG_check_num_args("std::vector< float >::capacity",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::capacity",1,"std::vector< float > *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
-    SWIG_fail_ptr("real_vector___setitem",1,SWIGTYPE_p_std__vectorT_float_t);
+    SWIG_fail_ptr("real_vector_capacity",1,SWIGTYPE_p_std__vectorT_float_t);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
-  arg2 = (unsigned int)lua_tonumber(L, 2);
-  arg3 = (float)lua_tonumber(L, 3);
-  try {
-    std_vector_Sl_float_Sg____setitem____SWIG(arg1,arg2,arg3);
-  } catch(std::out_of_range &_e) {
-    SWIG_exception(SWIG_IndexError, (&_e)->what());
-  }
-  
+  result = (arg1)->capacity();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -3634,16 +4050,27 @@ static swig_lua_attribute swig_real_vector_attributes[] = {
     {0,0,0}
 };
 static swig_lua_method swig_real_vector_methods[]= {
-    { "size", _wrap_real_vector_size},
-    { "max_size", _wrap_real_vector_max_size},
-    { "empty", _wrap_real_vector_empty},
-    { "clear", _wrap_real_vector_clear},
-    { "push_back", _wrap_real_vector_push_back},
-    { "pop_back", _wrap_real_vector_pop_back},
-    { "front", _wrap_real_vector_front},
-    { "back", _wrap_real_vector_back},
     { "__getitem", _wrap_real_vector___getitem},
     { "__setitem", _wrap_real_vector___setitem},
+    { "begin", _wrap_real_vector_begin},
+    { "c_end", _wrap_real_vector_c_end},
+    { "erase", _wrap_real_vector_erase},
+    { "front", _wrap_real_vector_front},
+    { "back", _wrap_real_vector_back},
+    { "push_back", _wrap_real_vector_push_back},
+    { "pop_back", _wrap_real_vector_pop_back},
+    { "at", _wrap_real_vector_at},
+    { "assign", _wrap_real_vector_assign},
+    { "data", _wrap_real_vector_data},
+    { "size", _wrap_real_vector_size},
+    { "empty", _wrap_real_vector_empty},
+    { "resize", _wrap_real_vector_resize},
+    { "clear", _wrap_real_vector_clear},
+    { "swap", _wrap_real_vector_swap},
+    { "shrink_to_fit", _wrap_real_vector_shrink_to_fit},
+    { "reserve", _wrap_real_vector_reserve},
+    { "max_size", _wrap_real_vector_max_size},
+    { "capacity", _wrap_real_vector_capacity},
     {0,0}
 };
 static swig_lua_method swig_real_vector_meta[] = {
@@ -3679,10 +4106,21 @@ static swig_lua_class _wrap_class_real_vector = { "real_vector", "real_vector", 
 
 static int _wrap_new_complex_vector__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
+  size_t arg1 ;
+  kiss_fft_cpx *arg2 = 0 ;
   std::vector< kiss_fft_cpx > *result = 0 ;
   
-  SWIG_check_num_args("std::vector< kiss_fft_cpx >::vector",0,0)
-  result = (std::vector< kiss_fft_cpx > *)new std::vector< kiss_fft_cpx >();
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::vector",2,2)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::vector",1,"size_t");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::vector",2,"kiss_fft_cpx const &");
+  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
+  arg1 = (size_t)lua_tonumber(L, 1);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_kiss_fft_cpx,0))){
+    SWIG_fail_ptr("new_complex_vector",2,SWIGTYPE_p_kiss_fft_cpx);
+  }
+  
+  result = (std::vector< kiss_fft_cpx > *)new std::vector< kiss_fft_cpx >(arg1,(kiss_fft_cpx const &)*arg2);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,1); SWIG_arg++; 
   return SWIG_arg;
   
@@ -3696,13 +4134,13 @@ fail:
 
 static int _wrap_new_complex_vector__SWIG_1(lua_State* L) {
   int SWIG_arg = 0;
-  unsigned int arg1 ;
+  size_t arg1 ;
   std::vector< kiss_fft_cpx > *result = 0 ;
   
   SWIG_check_num_args("std::vector< kiss_fft_cpx >::vector",1,1)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::vector",1,"unsigned int");
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::vector",1,"size_t");
   SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
-  arg1 = (unsigned int)lua_tonumber(L, 1);
+  arg1 = (size_t)lua_tonumber(L, 1);
   result = (std::vector< kiss_fft_cpx > *)new std::vector< kiss_fft_cpx >(arg1);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,1); SWIG_arg++; 
   return SWIG_arg;
@@ -3739,36 +4177,6 @@ fail:
 }
 
 
-static int _wrap_new_complex_vector__SWIG_3(lua_State* L) {
-  int SWIG_arg = 0;
-  unsigned int arg1 ;
-  kiss_fft_cpx arg2 ;
-  kiss_fft_cpx *argp2 ;
-  std::vector< kiss_fft_cpx > *result = 0 ;
-  
-  SWIG_check_num_args("std::vector< kiss_fft_cpx >::vector",2,2)
-  if(!lua_isnumber(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::vector",1,"unsigned int");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::vector",2,"kiss_fft_cpx");
-  SWIG_contract_assert((lua_tonumber(L,1)>=0),"number must not be negative");
-  arg1 = (unsigned int)lua_tonumber(L, 1);
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_kiss_fft_cpx,0))){
-    SWIG_fail_ptr("new_complex_vector",2,SWIGTYPE_p_kiss_fft_cpx);
-  }
-  arg2 = *argp2;
-  
-  result = (std::vector< kiss_fft_cpx > *)new std::vector< kiss_fft_cpx >(arg1,arg2);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,1); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_new_complex_vector(lua_State* L) {
   int argc;
   int argv[3]={
@@ -3776,9 +4184,6 @@ static int _wrap_new_complex_vector(lua_State* L) {
   };
   
   argc = lua_gettop(L);
-  if (argc == 0) {
-    return _wrap_new_complex_vector__SWIG_0(L);
-  }
   if (argc == 1) {
     int _v = 0;
     {
@@ -3817,35 +4222,41 @@ static int _wrap_new_complex_vector(lua_State* L) {
         }
       }
       if (_v) {
-        return _wrap_new_complex_vector__SWIG_3(L);
+        return _wrap_new_complex_vector__SWIG_0(L);
       }
     }
   }
   
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'new_complex_vector'\n"
     "  Possible C/C++ prototypes are:\n"
-    "    std::vector< kiss_fft_cpx >::vector()\n"
-    "    std::vector< kiss_fft_cpx >::vector(unsigned int)\n"
-    "    std::vector< kiss_fft_cpx >::vector(std::vector< kiss_fft_cpx > const &)\n"
-    "    std::vector< kiss_fft_cpx >::vector(unsigned int,kiss_fft_cpx)\n");
+    "    std::vector< kiss_fft_cpx >::vector(size_t,kiss_fft_cpx const &)\n"
+    "    std::vector< kiss_fft_cpx >::vector(size_t)\n"
+    "    std::vector< kiss_fft_cpx >::vector(std::vector< kiss_fft_cpx > const &)\n");
   lua_error(L);return 0;
 }
 
 
-static int _wrap_complex_vector_size(lua_State* L) {
+static int _wrap_complex_vector___getitem(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
-  unsigned int result;
+  size_t arg2 ;
+  kiss_fft_cpx result;
   
-  SWIG_check_num_args("std::vector< kiss_fft_cpx >::size",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::size",1,"std::vector< kiss_fft_cpx > const *");
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::__getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::__getitem",1,"std::vector< kiss_fft_cpx > *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::__getitem",2,"size_t");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
-    SWIG_fail_ptr("complex_vector_size",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+    SWIG_fail_ptr("complex_vector___getitem",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
   }
   
-  result = (unsigned int)((std::vector< kiss_fft_cpx > const *)arg1)->size();
-  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  result = std_vector_Sl_kiss_fft_cpx_Sg____getitem__SWIG(arg1,arg2);
+  {
+    kiss_fft_cpx * resultptr = new kiss_fft_cpx((const kiss_fft_cpx &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_kiss_fft_cpx,1); SWIG_arg++;
+  }
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -3856,19 +4267,413 @@ fail:
 }
 
 
-static int _wrap_complex_vector_max_size(lua_State* L) {
+static int _wrap_complex_vector___setitem(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
-  unsigned int result;
+  size_t arg2 ;
+  kiss_fft_cpx arg3 ;
+  kiss_fft_cpx *argp3 ;
   
-  SWIG_check_num_args("std::vector< kiss_fft_cpx >::max_size",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::max_size",1,"std::vector< kiss_fft_cpx > const *");
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::__setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::__setitem",1,"std::vector< kiss_fft_cpx > *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::__setitem",2,"size_t");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::__setitem",3,"kiss_fft_cpx");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
-    SWIG_fail_ptr("complex_vector_max_size",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+    SWIG_fail_ptr("complex_vector___setitem",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
   }
   
-  result = (unsigned int)((std::vector< kiss_fft_cpx > const *)arg1)->max_size();
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_kiss_fft_cpx,0))){
+    SWIG_fail_ptr("complex_vector___setitem",3,SWIGTYPE_p_kiss_fft_cpx);
+  }
+  arg3 = *argp3;
+  
+  std_vector_Sl_kiss_fft_cpx_Sg____setitem__SWIG(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_vector_begin(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
+  SwigValueWrapper< std::vector_iterator< kiss_fft_cpx > > result;
+  
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::begin",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::begin",1,"std::vector< kiss_fft_cpx > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
+    SWIG_fail_ptr("complex_vector_begin",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+  }
+  
+  result = std_vector_Sl_kiss_fft_cpx_Sg__begin__SWIG(arg1);
+  {
+    std::vector_iterator< kiss_fft_cpx > * resultptr = new std::vector_iterator< kiss_fft_cpx >((const std::vector_iterator< kiss_fft_cpx > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_std__vector_iteratorT_kiss_fft_cpx_t,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_vector_c_end(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
+  SwigValueWrapper< std::vector_iterator< kiss_fft_cpx > > result;
+  
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::end",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::end",1,"std::vector< kiss_fft_cpx > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
+    SWIG_fail_ptr("complex_vector_c_end",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+  }
+  
+  result = std_vector_Sl_kiss_fft_cpx_Sg__end__SWIG(arg1);
+  {
+    std::vector_iterator< kiss_fft_cpx > * resultptr = new std::vector_iterator< kiss_fft_cpx >((const std::vector_iterator< kiss_fft_cpx > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_std__vector_iteratorT_kiss_fft_cpx_t,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_vector_erase__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
+  size_t arg2 ;
+  
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::erase",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::erase",1,"std::vector< kiss_fft_cpx > *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::erase",2,"size_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
+    SWIG_fail_ptr("complex_vector_erase",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  std_vector_Sl_kiss_fft_cpx_Sg__erase__SWIG_0(arg1,arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_vector_erase__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
+  size_t arg2 ;
+  size_t arg3 ;
+  
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::erase",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::erase",1,"std::vector< kiss_fft_cpx > *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::erase",2,"size_t");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::erase",3,"size_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
+    SWIG_fail_ptr("complex_vector_erase",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  SWIG_contract_assert((lua_tonumber(L,3)>=0),"number must not be negative");
+  arg3 = (size_t)lua_tonumber(L, 3);
+  std_vector_Sl_kiss_fft_cpx_Sg__erase__SWIG_1(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_vector_erase(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v = 0;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        return _wrap_complex_vector_erase__SWIG_0(L);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v = 0;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isnumber(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_complex_vector_erase__SWIG_1(L);
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'complex_vector_erase'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    std::vector< kiss_fft_cpx >::erase(size_t)\n"
+    "    std::vector< kiss_fft_cpx >::erase(size_t,size_t)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_complex_vector_front(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
+  kiss_fft_cpx *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::front",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::front",1,"std::vector< kiss_fft_cpx > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
+    SWIG_fail_ptr("complex_vector_front",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+  }
+  
+  result = (kiss_fft_cpx *) &(arg1)->front();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_kiss_fft_cpx,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_vector_back(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
+  kiss_fft_cpx *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::back",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::back",1,"std::vector< kiss_fft_cpx > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
+    SWIG_fail_ptr("complex_vector_back",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+  }
+  
+  result = (kiss_fft_cpx *) &(arg1)->back();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_kiss_fft_cpx,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_vector_push_back(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
+  kiss_fft_cpx *arg2 = 0 ;
+  
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::push_back",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::push_back",1,"std::vector< kiss_fft_cpx > *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::push_back",2,"kiss_fft_cpx const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
+    SWIG_fail_ptr("complex_vector_push_back",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_kiss_fft_cpx,0))){
+    SWIG_fail_ptr("complex_vector_push_back",2,SWIGTYPE_p_kiss_fft_cpx);
+  }
+  
+  (arg1)->push_back((kiss_fft_cpx const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_vector_pop_back(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
+  
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::pop_back",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::pop_back",1,"std::vector< kiss_fft_cpx > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
+    SWIG_fail_ptr("complex_vector_pop_back",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+  }
+  
+  (arg1)->pop_back();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_vector_at(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
+  size_t arg2 ;
+  kiss_fft_cpx *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::at",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::at",1,"std::vector< kiss_fft_cpx > *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::at",2,"size_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
+    SWIG_fail_ptr("complex_vector_at",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  result = (kiss_fft_cpx *) &(arg1)->at(arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_kiss_fft_cpx,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_vector_assign(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
+  size_t arg2 ;
+  kiss_fft_cpx *arg3 = 0 ;
+  
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::assign",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::assign",1,"std::vector< kiss_fft_cpx > *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::assign",2,"size_t");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::assign",3,"kiss_fft_cpx const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
+    SWIG_fail_ptr("complex_vector_assign",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_kiss_fft_cpx,0))){
+    SWIG_fail_ptr("complex_vector_assign",3,SWIGTYPE_p_kiss_fft_cpx);
+  }
+  
+  (arg1)->assign(arg2,(kiss_fft_cpx const &)*arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_vector_data(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
+  kiss_fft_cpx *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::data",1,"std::vector< kiss_fft_cpx > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
+    SWIG_fail_ptr("complex_vector_data",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+  }
+  
+  result = (kiss_fft_cpx *)(arg1)->data();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_kiss_fft_cpx,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_vector_size(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
+  size_t result;
+  
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::size",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::size",1,"std::vector< kiss_fft_cpx > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
+    SWIG_fail_ptr("complex_vector_size",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+  }
+  
+  result = (arg1)->size();
   lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
@@ -3904,6 +4709,33 @@ fail:
 }
 
 
+static int _wrap_complex_vector_resize(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
+  size_t arg2 ;
+  
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::resize",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::resize",1,"std::vector< kiss_fft_cpx > *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::resize",2,"size_t");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
+    SWIG_fail_ptr("complex_vector_resize",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
+  arg2 = (size_t)lua_tonumber(L, 2);
+  (arg1)->resize(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_complex_vector_clear(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
@@ -3927,27 +4759,25 @@ fail:
 }
 
 
-static int _wrap_complex_vector_push_back(lua_State* L) {
+static int _wrap_complex_vector_swap(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
-  kiss_fft_cpx arg2 ;
-  kiss_fft_cpx *argp2 ;
+  std::vector< kiss_fft_cpx > *arg2 = 0 ;
   
-  SWIG_check_num_args("std::vector< kiss_fft_cpx >::push_back",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::push_back",1,"std::vector< kiss_fft_cpx > *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::push_back",2,"kiss_fft_cpx");
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::swap",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::swap",1,"std::vector< kiss_fft_cpx > *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::swap",2,"std::vector< kiss_fft_cpx > &");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
-    SWIG_fail_ptr("complex_vector_push_back",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+    SWIG_fail_ptr("complex_vector_swap",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_kiss_fft_cpx,0))){
-    SWIG_fail_ptr("complex_vector_push_back",2,SWIGTYPE_p_kiss_fft_cpx);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
+    SWIG_fail_ptr("complex_vector_swap",2,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
   }
-  arg2 = *argp2;
   
-  (arg1)->push_back(arg2);
+  (arg1)->swap(*arg2);
   
   return SWIG_arg;
   
@@ -3959,18 +4789,18 @@ fail:
 }
 
 
-static int _wrap_complex_vector_pop_back(lua_State* L) {
+static int _wrap_complex_vector_shrink_to_fit(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
   
-  SWIG_check_num_args("std::vector< kiss_fft_cpx >::pop_back",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::pop_back",1,"std::vector< kiss_fft_cpx > *");
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::shrink_to_fit",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::shrink_to_fit",1,"std::vector< kiss_fft_cpx > *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
-    SWIG_fail_ptr("complex_vector_pop_back",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+    SWIG_fail_ptr("complex_vector_shrink_to_fit",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
   }
   
-  (arg1)->pop_back();
+  (arg1)->shrink_to_fit();
   
   return SWIG_arg;
   
@@ -3982,85 +4812,23 @@ fail:
 }
 
 
-static int _wrap_complex_vector_front(lua_State* L) {
+static int _wrap_complex_vector_reserve(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
-  kiss_fft_cpx result;
+  size_t arg2 ;
   
-  SWIG_check_num_args("std::vector< kiss_fft_cpx >::front",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::front",1,"std::vector< kiss_fft_cpx > const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
-    SWIG_fail_ptr("complex_vector_front",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
-  }
-  
-  result = ((std::vector< kiss_fft_cpx > const *)arg1)->front();
-  {
-    kiss_fft_cpx * resultptr = new kiss_fft_cpx((const kiss_fft_cpx &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_kiss_fft_cpx,1); SWIG_arg++;
-  }
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_complex_vector_back(lua_State* L) {
-  int SWIG_arg = 0;
-  std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
-  kiss_fft_cpx result;
-  
-  SWIG_check_num_args("std::vector< kiss_fft_cpx >::back",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::back",1,"std::vector< kiss_fft_cpx > const *");
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::reserve",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::reserve",1,"std::vector< kiss_fft_cpx > *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::reserve",2,"size_t");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
-    SWIG_fail_ptr("complex_vector_back",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
-  }
-  
-  result = ((std::vector< kiss_fft_cpx > const *)arg1)->back();
-  {
-    kiss_fft_cpx * resultptr = new kiss_fft_cpx((const kiss_fft_cpx &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_kiss_fft_cpx,1); SWIG_arg++;
-  }
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_complex_vector___getitem(lua_State* L) {
-  int SWIG_arg = 0;
-  std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
-  unsigned int arg2 ;
-  kiss_fft_cpx result;
-  
-  SWIG_check_num_args("std::vector< kiss_fft_cpx >::__getitem__",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::__getitem__",1,"std::vector< kiss_fft_cpx > *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::__getitem__",2,"unsigned int");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
-    SWIG_fail_ptr("complex_vector___getitem",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+    SWIG_fail_ptr("complex_vector_reserve",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
   }
   
   SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
-  arg2 = (unsigned int)lua_tonumber(L, 2);
-  try {
-    result = std_vector_Sl_kiss_fft_cpx_Sg____getitem____SWIG(arg1,arg2);
-  } catch(std::out_of_range &_e) {
-    SWIG_exception(SWIG_IndexError, (&_e)->what());
-  }
-  {
-    kiss_fft_cpx * resultptr = new kiss_fft_cpx((const kiss_fft_cpx &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_kiss_fft_cpx,1); SWIG_arg++;
-  }
+  arg2 = (size_t)lua_tonumber(L, 2);
+  (arg1)->reserve(arg2);
+  
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -4071,36 +4839,44 @@ fail:
 }
 
 
-static int _wrap_complex_vector___setitem(lua_State* L) {
+static int _wrap_complex_vector_max_size(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
-  unsigned int arg2 ;
-  kiss_fft_cpx arg3 ;
-  kiss_fft_cpx *argp3 ;
+  size_t result;
   
-  SWIG_check_num_args("std::vector< kiss_fft_cpx >::__setitem__",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::__setitem__",1,"std::vector< kiss_fft_cpx > *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::__setitem__",2,"unsigned int");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::__setitem__",3,"kiss_fft_cpx");
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::max_size",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::max_size",1,"std::vector< kiss_fft_cpx > *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
-    SWIG_fail_ptr("complex_vector___setitem",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
+    SWIG_fail_ptr("complex_vector_max_size",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
   }
   
-  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative");
-  arg2 = (unsigned int)lua_tonumber(L, 2);
+  result = (arg1)->max_size();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_kiss_fft_cpx,0))){
-    SWIG_fail_ptr("complex_vector___setitem",3,SWIGTYPE_p_kiss_fft_cpx);
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_vector_capacity(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< kiss_fft_cpx > *arg1 = (std::vector< kiss_fft_cpx > *) 0 ;
+  size_t result;
+  
+  SWIG_check_num_args("std::vector< kiss_fft_cpx >::capacity",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< kiss_fft_cpx >::capacity",1,"std::vector< kiss_fft_cpx > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t,0))){
+    SWIG_fail_ptr("complex_vector_capacity",1,SWIGTYPE_p_std__vectorT_kiss_fft_cpx_t);
   }
-  arg3 = *argp3;
   
-  try {
-    std_vector_Sl_kiss_fft_cpx_Sg____setitem____SWIG(arg1,arg2,arg3);
-  } catch(std::out_of_range &_e) {
-    SWIG_exception(SWIG_IndexError, (&_e)->what());
-  }
-  
+  result = (arg1)->capacity();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -4127,16 +4903,27 @@ static swig_lua_attribute swig_complex_vector_attributes[] = {
     {0,0,0}
 };
 static swig_lua_method swig_complex_vector_methods[]= {
-    { "size", _wrap_complex_vector_size},
-    { "max_size", _wrap_complex_vector_max_size},
-    { "empty", _wrap_complex_vector_empty},
-    { "clear", _wrap_complex_vector_clear},
-    { "push_back", _wrap_complex_vector_push_back},
-    { "pop_back", _wrap_complex_vector_pop_back},
-    { "front", _wrap_complex_vector_front},
-    { "back", _wrap_complex_vector_back},
     { "__getitem", _wrap_complex_vector___getitem},
     { "__setitem", _wrap_complex_vector___setitem},
+    { "begin", _wrap_complex_vector_begin},
+    { "c_end", _wrap_complex_vector_c_end},
+    { "erase", _wrap_complex_vector_erase},
+    { "front", _wrap_complex_vector_front},
+    { "back", _wrap_complex_vector_back},
+    { "push_back", _wrap_complex_vector_push_back},
+    { "pop_back", _wrap_complex_vector_pop_back},
+    { "at", _wrap_complex_vector_at},
+    { "assign", _wrap_complex_vector_assign},
+    { "data", _wrap_complex_vector_data},
+    { "size", _wrap_complex_vector_size},
+    { "empty", _wrap_complex_vector_empty},
+    { "resize", _wrap_complex_vector_resize},
+    { "clear", _wrap_complex_vector_clear},
+    { "swap", _wrap_complex_vector_swap},
+    { "shrink_to_fit", _wrap_complex_vector_shrink_to_fit},
+    { "reserve", _wrap_complex_vector_reserve},
+    { "max_size", _wrap_complex_vector_max_size},
+    { "capacity", _wrap_complex_vector_capacity},
     {0,0}
 };
 static swig_lua_method swig_complex_vector_meta[] = {
@@ -4462,7 +5249,6 @@ static swig_lua_namespace swig_SwigModule = {
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
 static swig_type_info _swigt__p_KissFFTR = {"_p_KissFFTR", "KissFFTR *", 0, 0, (void*)&_wrap_class_KissFFTR, 0};
-static swig_type_info _swigt__p_difference_type = {"_p_difference_type", "difference_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_float = {"_p_float", "float *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_int = {"_p_int", "intptr_t *|int *|int_least32_t *|int_fast32_t *|int32_t *|int_fast16_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_kiss_fft_cpx = {"_p_kiss_fft_cpx", "kiss_fft_cpx *", 0, 0, (void*)0, 0};
@@ -4471,19 +5257,18 @@ static swig_type_info _swigt__p_long_long = {"_p_long_long", "int_least64_t *|in
 static swig_type_info _swigt__p_short = {"_p_short", "short *|int_least16_t *|int16_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_signed_char = {"_p_signed_char", "signed char *|int_least8_t *|int_fast8_t *|int8_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_size_t = {"_p_size_t", "size_t *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_size_type = {"_p_size_type", "size_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__string = {"_p_std__string", "std::string *", 0, 0, (void*)&_wrap_class_string, 0};
 static swig_type_info _swigt__p_std__vectorT_float_t = {"_p_std__vectorT_float_t", "std::vector< float > *", 0, 0, (void*)&_wrap_class_real_vector, 0};
 static swig_type_info _swigt__p_std__vectorT_kiss_fft_cpx_t = {"_p_std__vectorT_kiss_fft_cpx_t", "std::vector< kiss_fft_cpx > *", 0, 0, (void*)&_wrap_class_complex_vector, 0};
+static swig_type_info _swigt__p_std__vector_iteratorT_float_t = {"_p_std__vector_iteratorT_float_t", "std::vector_iterator< float > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vector_iteratorT_kiss_fft_cpx_t = {"_p_std__vector_iteratorT_kiss_fft_cpx_t", "std::vector_iterator< kiss_fft_cpx > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_char = {"_p_unsigned_char", "unsigned char *|uint_least8_t *|uint_fast8_t *|uint8_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_int = {"_p_unsigned_int", "uintptr_t *|uint_least32_t *|uint_fast32_t *|uint32_t *|unsigned int *|uint_fast16_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_long_long = {"_p_unsigned_long_long", "uint_least64_t *|uint_fast64_t *|uint64_t *|unsigned long long *|uintmax_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_short = {"_p_unsigned_short", "unsigned short *|uint_least16_t *|uint16_t *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_value_type = {"_p_value_type", "value_type *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_KissFFTR,
-  &_swigt__p_difference_type,
   &_swigt__p_float,
   &_swigt__p_int,
   &_swigt__p_kiss_fft_cpx,
@@ -4492,19 +5277,18 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_short,
   &_swigt__p_signed_char,
   &_swigt__p_size_t,
-  &_swigt__p_size_type,
   &_swigt__p_std__string,
   &_swigt__p_std__vectorT_float_t,
   &_swigt__p_std__vectorT_kiss_fft_cpx_t,
+  &_swigt__p_std__vector_iteratorT_float_t,
+  &_swigt__p_std__vector_iteratorT_kiss_fft_cpx_t,
   &_swigt__p_unsigned_char,
   &_swigt__p_unsigned_int,
   &_swigt__p_unsigned_long_long,
   &_swigt__p_unsigned_short,
-  &_swigt__p_value_type,
 };
 
 static swig_cast_info _swigc__p_KissFFTR[] = {  {&_swigt__p_KissFFTR, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_difference_type[] = {  {&_swigt__p_difference_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_float[] = {  {&_swigt__p_float, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_int[] = {  {&_swigt__p_int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_kiss_fft_cpx[] = {  {&_swigt__p_kiss_fft_cpx, 0, 0, 0},{0, 0, 0, 0}};
@@ -4513,19 +5297,18 @@ static swig_cast_info _swigc__p_long_long[] = {  {&_swigt__p_long_long, 0, 0, 0}
 static swig_cast_info _swigc__p_short[] = {  {&_swigt__p_short, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_signed_char[] = {  {&_swigt__p_signed_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_size_t[] = {  {&_swigt__p_size_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_size_type[] = {  {&_swigt__p_size_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__string[] = {  {&_swigt__p_std__string, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_float_t[] = {  {&_swigt__p_std__vectorT_float_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_kiss_fft_cpx_t[] = {  {&_swigt__p_std__vectorT_kiss_fft_cpx_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__vector_iteratorT_float_t[] = {  {&_swigt__p_std__vector_iteratorT_float_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__vector_iteratorT_kiss_fft_cpx_t[] = {  {&_swigt__p_std__vector_iteratorT_kiss_fft_cpx_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_char[] = {  {&_swigt__p_unsigned_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_int[] = {  {&_swigt__p_unsigned_int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_long_long[] = {  {&_swigt__p_unsigned_long_long, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_short[] = {  {&_swigt__p_unsigned_short, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_value_type[] = {  {&_swigt__p_value_type, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_KissFFTR,
-  _swigc__p_difference_type,
   _swigc__p_float,
   _swigc__p_int,
   _swigc__p_kiss_fft_cpx,
@@ -4534,15 +5317,15 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_short,
   _swigc__p_signed_char,
   _swigc__p_size_t,
-  _swigc__p_size_type,
   _swigc__p_std__string,
   _swigc__p_std__vectorT_float_t,
   _swigc__p_std__vectorT_kiss_fft_cpx_t,
+  _swigc__p_std__vector_iteratorT_float_t,
+  _swigc__p_std__vector_iteratorT_kiss_fft_cpx_t,
   _swigc__p_unsigned_char,
   _swigc__p_unsigned_int,
   _swigc__p_unsigned_long_long,
   _swigc__p_unsigned_short,
-  _swigc__p_value_type,
 };
 
 

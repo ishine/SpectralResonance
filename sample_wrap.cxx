@@ -2725,39 +2725,42 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 #define SWIGTYPE_p_SoundWave__ScalarT_float_t swig_types[8]
 #define SWIGTYPE_p_SoundWave__VectorT_float_t swig_types[9]
 #define SWIGTYPE_p_difference_type swig_types[10]
-#define SWIGTYPE_p_float swig_types[11]
-#define SWIGTYPE_p_int swig_types[12]
-#define SWIGTYPE_p_long_long swig_types[13]
-#define SWIGTYPE_p_p_float swig_types[14]
-#define SWIGTYPE_p_p_p_float swig_types[15]
-#define SWIGTYPE_p_short swig_types[16]
-#define SWIGTYPE_p_signed_char swig_types[17]
-#define SWIGTYPE_p_size_type swig_types[18]
-#define SWIGTYPE_p_std__complexT_double_t swig_types[19]
-#define SWIGTYPE_p_std__complexT_float_t swig_types[20]
-#define SWIGTYPE_p_std__vectorT_SoundWave__ArrayVectorT_float_t_t swig_types[21]
-#define SWIGTYPE_p_std__vectorT_SoundWave__SampleVectorT_float_t_t swig_types[22]
-#define SWIGTYPE_p_std__vectorT_double_t swig_types[23]
-#define SWIGTYPE_p_std__vectorT_float_p_t swig_types[24]
-#define SWIGTYPE_p_std__vectorT_float_t swig_types[25]
-#define SWIGTYPE_p_std__vectorT_int_t swig_types[26]
-#define SWIGTYPE_p_std__vectorT_long_t swig_types[27]
-#define SWIGTYPE_p_std__vectorT_short_t swig_types[28]
-#define SWIGTYPE_p_std__vectorT_signed_char_t swig_types[29]
-#define SWIGTYPE_p_std__vectorT_std__complexT_double_t_t swig_types[30]
-#define SWIGTYPE_p_std__vectorT_std__complexT_float_t_t swig_types[31]
-#define SWIGTYPE_p_std__vectorT_std__vectorT_float_t_t swig_types[32]
-#define SWIGTYPE_p_std__vectorT_unsigned_char_t swig_types[33]
-#define SWIGTYPE_p_std__vectorT_unsigned_int_t swig_types[34]
-#define SWIGTYPE_p_std__vectorT_unsigned_long_t swig_types[35]
-#define SWIGTYPE_p_std__vectorT_unsigned_short_t swig_types[36]
-#define SWIGTYPE_p_unsigned_char swig_types[37]
-#define SWIGTYPE_p_unsigned_int swig_types[38]
-#define SWIGTYPE_p_unsigned_long_long swig_types[39]
-#define SWIGTYPE_p_unsigned_short swig_types[40]
-#define SWIGTYPE_p_value_type swig_types[41]
-static swig_type_info *swig_types[43];
-static swig_module_info swig_module = {swig_types, 42, 0, 0, 0, 0};
+#define SWIGTYPE_p_double swig_types[11]
+#define SWIGTYPE_p_float swig_types[12]
+#define SWIGTYPE_p_int swig_types[13]
+#define SWIGTYPE_p_long swig_types[14]
+#define SWIGTYPE_p_long_long swig_types[15]
+#define SWIGTYPE_p_p_float swig_types[16]
+#define SWIGTYPE_p_p_p_float swig_types[17]
+#define SWIGTYPE_p_short swig_types[18]
+#define SWIGTYPE_p_signed_char swig_types[19]
+#define SWIGTYPE_p_size_type swig_types[20]
+#define SWIGTYPE_p_std__complexT_double_t swig_types[21]
+#define SWIGTYPE_p_std__complexT_float_t swig_types[22]
+#define SWIGTYPE_p_std__vectorT_SoundWave__ArrayVectorT_float_t_t swig_types[23]
+#define SWIGTYPE_p_std__vectorT_SoundWave__SampleVectorT_float_t_t swig_types[24]
+#define SWIGTYPE_p_std__vectorT_double_t swig_types[25]
+#define SWIGTYPE_p_std__vectorT_float_p_t swig_types[26]
+#define SWIGTYPE_p_std__vectorT_float_t swig_types[27]
+#define SWIGTYPE_p_std__vectorT_int_t swig_types[28]
+#define SWIGTYPE_p_std__vectorT_long_t swig_types[29]
+#define SWIGTYPE_p_std__vectorT_short_t swig_types[30]
+#define SWIGTYPE_p_std__vectorT_signed_char_t swig_types[31]
+#define SWIGTYPE_p_std__vectorT_std__complexT_double_t_t swig_types[32]
+#define SWIGTYPE_p_std__vectorT_std__complexT_float_t_t swig_types[33]
+#define SWIGTYPE_p_std__vectorT_std__vectorT_float_t_t swig_types[34]
+#define SWIGTYPE_p_std__vectorT_unsigned_char_t swig_types[35]
+#define SWIGTYPE_p_std__vectorT_unsigned_int_t swig_types[36]
+#define SWIGTYPE_p_std__vectorT_unsigned_long_t swig_types[37]
+#define SWIGTYPE_p_std__vectorT_unsigned_short_t swig_types[38]
+#define SWIGTYPE_p_unsigned_char swig_types[39]
+#define SWIGTYPE_p_unsigned_int swig_types[40]
+#define SWIGTYPE_p_unsigned_long swig_types[41]
+#define SWIGTYPE_p_unsigned_long_long swig_types[42]
+#define SWIGTYPE_p_unsigned_short swig_types[43]
+#define SWIGTYPE_p_value_type swig_types[44]
+static swig_type_info *swig_types[46];
+static swig_module_info swig_module = {swig_types, 45, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -4615,6 +4618,30 @@ fail:
 }
 
 
+static int _wrap_float_vector_data(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< float > *arg1 = (std::vector< float > *) 0 ;
+  float *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< float >::data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< float >::data",1,"std::vector< float > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_float_t,0))){
+    SWIG_fail_ptr("float_vector_data",1,SWIGTYPE_p_std__vectorT_float_t);
+  }
+  
+  result = (float *)(arg1)->data();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_float,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_float_vector_front(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
@@ -4751,6 +4778,7 @@ static swig_lua_method swig_float_vector_methods[]= {
     { "clear", _wrap_float_vector_clear},
     { "push_back", _wrap_float_vector_push_back},
     { "pop_back", _wrap_float_vector_pop_back},
+    { "data", _wrap_float_vector_data},
     { "front", _wrap_float_vector_front},
     { "back", _wrap_float_vector_back},
     { "__getitem", _wrap_float_vector___getitem},
@@ -5076,6 +5104,30 @@ fail:
 }
 
 
+static int _wrap_double_vector_data(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  double *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< double >::data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< double >::data",1,"std::vector< double > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_double_t,0))){
+    SWIG_fail_ptr("double_vector_data",1,SWIGTYPE_p_std__vectorT_double_t);
+  }
+  
+  result = (double *)(arg1)->data();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_double,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_double_vector_front(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< double > *arg1 = (std::vector< double > *) 0 ;
@@ -5212,6 +5264,7 @@ static swig_lua_method swig_double_vector_methods[]= {
     { "clear", _wrap_double_vector_clear},
     { "push_back", _wrap_double_vector_push_back},
     { "pop_back", _wrap_double_vector_pop_back},
+    { "data", _wrap_double_vector_data},
     { "front", _wrap_double_vector_front},
     { "back", _wrap_double_vector_back},
     { "__getitem", _wrap_double_vector___getitem},
@@ -5554,6 +5607,30 @@ fail:
 }
 
 
+static int _wrap_fcomplex_vector_data(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< std::complex< float > > *arg1 = (std::vector< std::complex< float > > *) 0 ;
+  std::complex< float > *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< std::complex< float > >::data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< std::complex< float > >::data",1,"std::vector< std::complex< float > > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_std__complexT_float_t_t,0))){
+    SWIG_fail_ptr("fcomplex_vector_data",1,SWIGTYPE_p_std__vectorT_std__complexT_float_t_t);
+  }
+  
+  result = (std::complex< float > *)(arg1)->data();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_std__complexT_float_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_fcomplex_vector_front(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< std::complex< float > > *arg1 = (std::vector< std::complex< float > > *) 0 ;
@@ -5705,6 +5782,7 @@ static swig_lua_method swig_fcomplex_vector_methods[]= {
     { "clear", _wrap_fcomplex_vector_clear},
     { "push_back", _wrap_fcomplex_vector_push_back},
     { "pop_back", _wrap_fcomplex_vector_pop_back},
+    { "data", _wrap_fcomplex_vector_data},
     { "front", _wrap_fcomplex_vector_front},
     { "back", _wrap_fcomplex_vector_back},
     { "__getitem", _wrap_fcomplex_vector___getitem},
@@ -6047,6 +6125,30 @@ fail:
 }
 
 
+static int _wrap_zcomplex_vector_data(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< std::complex< double > > *arg1 = (std::vector< std::complex< double > > *) 0 ;
+  std::complex< double > *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< std::complex< double > >::data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< std::complex< double > >::data",1,"std::vector< std::complex< double > > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_std__complexT_double_t_t,0))){
+    SWIG_fail_ptr("zcomplex_vector_data",1,SWIGTYPE_p_std__vectorT_std__complexT_double_t_t);
+  }
+  
+  result = (std::complex< double > *)(arg1)->data();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_std__complexT_double_t,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_zcomplex_vector_front(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< std::complex< double > > *arg1 = (std::vector< std::complex< double > > *) 0 ;
@@ -6198,6 +6300,7 @@ static swig_lua_method swig_zcomplex_vector_methods[]= {
     { "clear", _wrap_zcomplex_vector_clear},
     { "push_back", _wrap_zcomplex_vector_push_back},
     { "pop_back", _wrap_zcomplex_vector_pop_back},
+    { "data", _wrap_zcomplex_vector_data},
     { "front", _wrap_zcomplex_vector_front},
     { "back", _wrap_zcomplex_vector_back},
     { "__getitem", _wrap_zcomplex_vector___getitem},
@@ -6523,6 +6626,30 @@ fail:
 }
 
 
+static int _wrap_int8_vector_data(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< signed char > *arg1 = (std::vector< signed char > *) 0 ;
+  signed char *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< signed char >::data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< signed char >::data",1,"std::vector< signed char > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_signed_char_t,0))){
+    SWIG_fail_ptr("int8_vector_data",1,SWIGTYPE_p_std__vectorT_signed_char_t);
+  }
+  
+  result = (signed char *)(arg1)->data();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_signed_char,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_int8_vector_front(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< signed char > *arg1 = (std::vector< signed char > *) 0 ;
@@ -6659,6 +6786,7 @@ static swig_lua_method swig_int8_vector_methods[]= {
     { "clear", _wrap_int8_vector_clear},
     { "push_back", _wrap_int8_vector_push_back},
     { "pop_back", _wrap_int8_vector_pop_back},
+    { "data", _wrap_int8_vector_data},
     { "front", _wrap_int8_vector_front},
     { "back", _wrap_int8_vector_back},
     { "__getitem", _wrap_int8_vector___getitem},
@@ -6986,6 +7114,30 @@ fail:
 }
 
 
+static int _wrap_uint8_vector_data(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< unsigned char > *arg1 = (std::vector< unsigned char > *) 0 ;
+  unsigned char *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< unsigned char >::data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< unsigned char >::data",1,"std::vector< unsigned char > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_unsigned_char_t,0))){
+    SWIG_fail_ptr("uint8_vector_data",1,SWIGTYPE_p_std__vectorT_unsigned_char_t);
+  }
+  
+  result = (unsigned char *)(arg1)->data();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_unsigned_char,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uint8_vector_front(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< unsigned char > *arg1 = (std::vector< unsigned char > *) 0 ;
@@ -7123,6 +7275,7 @@ static swig_lua_method swig_uint8_vector_methods[]= {
     { "clear", _wrap_uint8_vector_clear},
     { "push_back", _wrap_uint8_vector_push_back},
     { "pop_back", _wrap_uint8_vector_pop_back},
+    { "data", _wrap_uint8_vector_data},
     { "front", _wrap_uint8_vector_front},
     { "back", _wrap_uint8_vector_back},
     { "__getitem", _wrap_uint8_vector___getitem},
@@ -7448,6 +7601,30 @@ fail:
 }
 
 
+static int _wrap_int16_vector_data(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< short > *arg1 = (std::vector< short > *) 0 ;
+  short *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< short >::data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< short >::data",1,"std::vector< short > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_short_t,0))){
+    SWIG_fail_ptr("int16_vector_data",1,SWIGTYPE_p_std__vectorT_short_t);
+  }
+  
+  result = (short *)(arg1)->data();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_short,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_int16_vector_front(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< short > *arg1 = (std::vector< short > *) 0 ;
@@ -7584,6 +7761,7 @@ static swig_lua_method swig_int16_vector_methods[]= {
     { "clear", _wrap_int16_vector_clear},
     { "push_back", _wrap_int16_vector_push_back},
     { "pop_back", _wrap_int16_vector_pop_back},
+    { "data", _wrap_int16_vector_data},
     { "front", _wrap_int16_vector_front},
     { "back", _wrap_int16_vector_back},
     { "__getitem", _wrap_int16_vector___getitem},
@@ -7911,6 +8089,30 @@ fail:
 }
 
 
+static int _wrap_uint16_vector_data(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< unsigned short > *arg1 = (std::vector< unsigned short > *) 0 ;
+  unsigned short *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< unsigned short >::data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< unsigned short >::data",1,"std::vector< unsigned short > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_unsigned_short_t,0))){
+    SWIG_fail_ptr("uint16_vector_data",1,SWIGTYPE_p_std__vectorT_unsigned_short_t);
+  }
+  
+  result = (unsigned short *)(arg1)->data();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_unsigned_short,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uint16_vector_front(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< unsigned short > *arg1 = (std::vector< unsigned short > *) 0 ;
@@ -8048,6 +8250,7 @@ static swig_lua_method swig_uint16_vector_methods[]= {
     { "clear", _wrap_uint16_vector_clear},
     { "push_back", _wrap_uint16_vector_push_back},
     { "pop_back", _wrap_uint16_vector_pop_back},
+    { "data", _wrap_uint16_vector_data},
     { "front", _wrap_uint16_vector_front},
     { "back", _wrap_uint16_vector_back},
     { "__getitem", _wrap_uint16_vector___getitem},
@@ -8373,6 +8576,30 @@ fail:
 }
 
 
+static int _wrap_int32_vector_data(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< int > *arg1 = (std::vector< int > *) 0 ;
+  int *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< int >::data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< int >::data",1,"std::vector< int > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_int_t,0))){
+    SWIG_fail_ptr("int32_vector_data",1,SWIGTYPE_p_std__vectorT_int_t);
+  }
+  
+  result = (int *)(arg1)->data();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_int,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_int32_vector_front(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< int > *arg1 = (std::vector< int > *) 0 ;
@@ -8509,6 +8736,7 @@ static swig_lua_method swig_int32_vector_methods[]= {
     { "clear", _wrap_int32_vector_clear},
     { "push_back", _wrap_int32_vector_push_back},
     { "pop_back", _wrap_int32_vector_pop_back},
+    { "data", _wrap_int32_vector_data},
     { "front", _wrap_int32_vector_front},
     { "back", _wrap_int32_vector_back},
     { "__getitem", _wrap_int32_vector___getitem},
@@ -8836,6 +9064,30 @@ fail:
 }
 
 
+static int _wrap_uint32_vector_data(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< unsigned int > *arg1 = (std::vector< unsigned int > *) 0 ;
+  unsigned int *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< unsigned int >::data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< unsigned int >::data",1,"std::vector< unsigned int > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_unsigned_int_t,0))){
+    SWIG_fail_ptr("uint32_vector_data",1,SWIGTYPE_p_std__vectorT_unsigned_int_t);
+  }
+  
+  result = (unsigned int *)(arg1)->data();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_unsigned_int,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uint32_vector_front(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< unsigned int > *arg1 = (std::vector< unsigned int > *) 0 ;
@@ -8973,6 +9225,7 @@ static swig_lua_method swig_uint32_vector_methods[]= {
     { "clear", _wrap_uint32_vector_clear},
     { "push_back", _wrap_uint32_vector_push_back},
     { "pop_back", _wrap_uint32_vector_pop_back},
+    { "data", _wrap_uint32_vector_data},
     { "front", _wrap_uint32_vector_front},
     { "back", _wrap_uint32_vector_back},
     { "__getitem", _wrap_uint32_vector___getitem},
@@ -9298,6 +9551,30 @@ fail:
 }
 
 
+static int _wrap_int64_vector_data(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< long > *arg1 = (std::vector< long > *) 0 ;
+  long *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< long >::data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< long >::data",1,"std::vector< long > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_long_t,0))){
+    SWIG_fail_ptr("int64_vector_data",1,SWIGTYPE_p_std__vectorT_long_t);
+  }
+  
+  result = (long *)(arg1)->data();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_long,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_int64_vector_front(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< long > *arg1 = (std::vector< long > *) 0 ;
@@ -9434,6 +9711,7 @@ static swig_lua_method swig_int64_vector_methods[]= {
     { "clear", _wrap_int64_vector_clear},
     { "push_back", _wrap_int64_vector_push_back},
     { "pop_back", _wrap_int64_vector_pop_back},
+    { "data", _wrap_int64_vector_data},
     { "front", _wrap_int64_vector_front},
     { "back", _wrap_int64_vector_back},
     { "__getitem", _wrap_int64_vector___getitem},
@@ -9761,6 +10039,30 @@ fail:
 }
 
 
+static int _wrap_uint64_vector_data(lua_State* L) {
+  int SWIG_arg = 0;
+  std::vector< unsigned long > *arg1 = (std::vector< unsigned long > *) 0 ;
+  unsigned long *result = 0 ;
+  
+  SWIG_check_num_args("std::vector< unsigned long >::data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("std::vector< unsigned long >::data",1,"std::vector< unsigned long > *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_std__vectorT_unsigned_long_t,0))){
+    SWIG_fail_ptr("uint64_vector_data",1,SWIGTYPE_p_std__vectorT_unsigned_long_t);
+  }
+  
+  result = (unsigned long *)(arg1)->data();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_unsigned_long,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_uint64_vector_front(lua_State* L) {
   int SWIG_arg = 0;
   std::vector< unsigned long > *arg1 = (std::vector< unsigned long > *) 0 ;
@@ -9898,6 +10200,7 @@ static swig_lua_method swig_uint64_vector_methods[]= {
     { "clear", _wrap_uint64_vector_clear},
     { "push_back", _wrap_uint64_vector_push_back},
     { "pop_back", _wrap_uint64_vector_pop_back},
+    { "data", _wrap_uint64_vector_data},
     { "front", _wrap_uint64_vector_front},
     { "back", _wrap_uint64_vector_back},
     { "__getitem", _wrap_uint64_vector___getitem},
@@ -29998,8 +30301,10 @@ static swig_type_info _swigt__p_SoundWave__SampleVectorT_float_t = {"_p_SoundWav
 static swig_type_info _swigt__p_SoundWave__ScalarT_float_t = {"_p_SoundWave__ScalarT_float_t", "SoundWave::Scalar< float > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_SoundWave__VectorT_float_t = {"_p_SoundWave__VectorT_float_t", "SoundWave::Vector< float > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_difference_type = {"_p_difference_type", "difference_type *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_double = {"_p_double", "double *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_float = {"_p_float", "SoundWave::SampleType *|float *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_int = {"_p_int", "intptr_t *|int *|int_least32_t *|int_fast32_t *|int32_t *|int_fast16_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_long = {"_p_long", "long *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_long_long = {"_p_long_long", "int_least64_t *|int_fast64_t *|int64_t *|long long *|intmax_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_float = {"_p_p_float", "float **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_p_float = {"_p_p_p_float", "float ***", 0, 0, (void*)0, 0};
@@ -30026,6 +30331,7 @@ static swig_type_info _swigt__p_std__vectorT_unsigned_long_t = {"_p_std__vectorT
 static swig_type_info _swigt__p_std__vectorT_unsigned_short_t = {"_p_std__vectorT_unsigned_short_t", "std::vector< unsigned short > *", 0, 0, (void*)&_wrap_class_uint16_vector, 0};
 static swig_type_info _swigt__p_unsigned_char = {"_p_unsigned_char", "unsigned char *|uint_least8_t *|uint_fast8_t *|uint8_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_int = {"_p_unsigned_int", "uintptr_t *|uint_least32_t *|uint_fast32_t *|uint32_t *|unsigned int *|uint_fast16_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_unsigned_long = {"_p_unsigned_long", "unsigned long *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_long_long = {"_p_unsigned_long_long", "uint_least64_t *|uint_fast64_t *|uint64_t *|unsigned long long *|uintmax_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_short = {"_p_unsigned_short", "unsigned short *|uint_least16_t *|uint16_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_value_type = {"_p_value_type", "value_type *", 0, 0, (void*)0, 0};
@@ -30042,8 +30348,10 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_SoundWave__ScalarT_float_t,
   &_swigt__p_SoundWave__VectorT_float_t,
   &_swigt__p_difference_type,
+  &_swigt__p_double,
   &_swigt__p_float,
   &_swigt__p_int,
+  &_swigt__p_long,
   &_swigt__p_long_long,
   &_swigt__p_p_float,
   &_swigt__p_p_p_float,
@@ -30070,6 +30378,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_std__vectorT_unsigned_short_t,
   &_swigt__p_unsigned_char,
   &_swigt__p_unsigned_int,
+  &_swigt__p_unsigned_long,
   &_swigt__p_unsigned_long_long,
   &_swigt__p_unsigned_short,
   &_swigt__p_value_type,
@@ -30086,8 +30395,10 @@ static swig_cast_info _swigc__p_SoundWave__SampleVectorT_float_t[] = {  {&_swigt
 static swig_cast_info _swigc__p_SoundWave__ScalarT_float_t[] = {  {&_swigt__p_SoundWave__ScalarT_float_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_SoundWave__VectorT_float_t[] = {  {&_swigt__p_SoundWave__VectorT_float_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_difference_type[] = {  {&_swigt__p_difference_type, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_float[] = {  {&_swigt__p_float, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_int[] = {  {&_swigt__p_int, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_long[] = {  {&_swigt__p_long, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_long_long[] = {  {&_swigt__p_long_long, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_float[] = {  {&_swigt__p_p_float, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_p_float[] = {  {&_swigt__p_p_p_float, 0, 0, 0},{0, 0, 0, 0}};
@@ -30114,6 +30425,7 @@ static swig_cast_info _swigc__p_std__vectorT_unsigned_long_t[] = {  {&_swigt__p_
 static swig_cast_info _swigc__p_std__vectorT_unsigned_short_t[] = {  {&_swigt__p_std__vectorT_unsigned_short_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_char[] = {  {&_swigt__p_unsigned_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_int[] = {  {&_swigt__p_unsigned_int, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_unsigned_long[] = {  {&_swigt__p_unsigned_long, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_long_long[] = {  {&_swigt__p_unsigned_long_long, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_short[] = {  {&_swigt__p_unsigned_short, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_value_type[] = {  {&_swigt__p_value_type, 0, 0, 0},{0, 0, 0, 0}};
@@ -30130,8 +30442,10 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_SoundWave__ScalarT_float_t,
   _swigc__p_SoundWave__VectorT_float_t,
   _swigc__p_difference_type,
+  _swigc__p_double,
   _swigc__p_float,
   _swigc__p_int,
+  _swigc__p_long,
   _swigc__p_long_long,
   _swigc__p_p_float,
   _swigc__p_p_p_float,
@@ -30158,6 +30472,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_std__vectorT_unsigned_short_t,
   _swigc__p_unsigned_char,
   _swigc__p_unsigned_int,
+  _swigc__p_unsigned_long,
   _swigc__p_unsigned_long_long,
   _swigc__p_unsigned_short,
   _swigc__p_value_type,

@@ -13,6 +13,7 @@ namespace std {
         %template(Map_String_MarControlPtr) map<string,MarControlPtr>;
 }
 
+namespace Marsyas {
 /* Class description for MarSystems */
 class MarSystem {
         protected:
@@ -62,3 +63,4 @@ class MarSystem {
                 /* Listing of all controls & current values */
                 std::map<std::string,MarControlPtr> getControls();
 };
+}

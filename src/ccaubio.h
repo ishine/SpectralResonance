@@ -27,7 +27,7 @@ namespace Aubio {
             len = n;
         }
         virtual ~BufferBase() {
-            
+            if(buffer) free(buffer);
         }
 
         T& operator[](size_t i) { return buffer[i]; }    

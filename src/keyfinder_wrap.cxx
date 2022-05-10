@@ -2703,24 +2703,23 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 #define SWIGTYPE_p_KeyFinder__ChromaTransform swig_types[3]
 #define SWIGTYPE_p_KeyFinder__ChromaTransformFactory swig_types[4]
 #define SWIGTYPE_p_KeyFinder__Chromagram swig_types[5]
-#define SWIGTYPE_p_KeyFinder__Exception swig_types[6]
-#define SWIGTYPE_p_KeyFinder__FftAdapter swig_types[7]
-#define SWIGTYPE_p_KeyFinder__InverseFftAdapter swig_types[8]
-#define SWIGTYPE_p_KeyFinder__KeyClassifier swig_types[9]
-#define SWIGTYPE_p_KeyFinder__LowPassFilter swig_types[10]
-#define SWIGTYPE_p_KeyFinder__LowPassFilterFactory swig_types[11]
-#define SWIGTYPE_p_KeyFinder__SpectrumAnalyser swig_types[12]
-#define SWIGTYPE_p_KeyFinder__TemporalWindowFactory swig_types[13]
-#define SWIGTYPE_p_KeyFinder__ToneProfile swig_types[14]
-#define SWIGTYPE_p_KeyFinder__WindowFunction swig_types[15]
-#define SWIGTYPE_p_KeyFinder__Workspace swig_types[16]
-#define SWIGTYPE_p_LowPassFilter swig_types[17]
-#define SWIGTYPE_p_TemporalWindowFactory swig_types[18]
-#define SWIGTYPE_p_Workspace swig_types[19]
-#define SWIGTYPE_p_std__vectorT_double_t swig_types[20]
-#define SWIGTYPE_p_void swig_types[21]
-static swig_type_info *swig_types[23];
-static swig_module_info swig_module = {swig_types, 22, 0, 0, 0, 0};
+#define SWIGTYPE_p_KeyFinder__FftAdapter swig_types[6]
+#define SWIGTYPE_p_KeyFinder__InverseFftAdapter swig_types[7]
+#define SWIGTYPE_p_KeyFinder__KeyClassifier swig_types[8]
+#define SWIGTYPE_p_KeyFinder__LowPassFilter swig_types[9]
+#define SWIGTYPE_p_KeyFinder__LowPassFilterFactory swig_types[10]
+#define SWIGTYPE_p_KeyFinder__SpectrumAnalyser swig_types[11]
+#define SWIGTYPE_p_KeyFinder__TemporalWindowFactory swig_types[12]
+#define SWIGTYPE_p_KeyFinder__ToneProfile swig_types[13]
+#define SWIGTYPE_p_KeyFinder__WindowFunction swig_types[14]
+#define SWIGTYPE_p_KeyFinder__Workspace swig_types[15]
+#define SWIGTYPE_p_LowPassFilter swig_types[16]
+#define SWIGTYPE_p_TemporalWindowFactory swig_types[17]
+#define SWIGTYPE_p_Workspace swig_types[18]
+#define SWIGTYPE_p_std__vectorT_double_t swig_types[19]
+#define SWIGTYPE_p_void swig_types[20]
+static swig_type_info *swig_types[22];
+static swig_module_info swig_module = {swig_types, 21, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2739,14 +2738,6 @@ typedef struct{} LANGUAGE_OBJ;
 
 #include "keyfinder.h"
 using namespace KeyFinder;
-
-
-SWIGINTERN int SWIG_lua_isnilstring(lua_State *L, int idx) {
-  int ret = lua_isstring(L, idx);
-  if (!ret)
-   ret = lua_isnil(L, idx);
-  return ret;
-}
 
 #ifdef __cplusplus
 extern "C" {
@@ -2822,73 +2813,6 @@ fail:
   return SWIG_arg;
 }
 
-
-static int _wrap_new_Exception(lua_State* L) {
-  int SWIG_arg = 0;
-  char *arg1 = (char *) 0 ;
-  KeyFinder::Exception *result = 0 ;
-  
-  SWIG_check_num_args("KeyFinder::Exception::Exception",1,1)
-  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("KeyFinder::Exception::Exception",1,"char const *");
-  arg1 = (char *)lua_tostring(L, 1);
-  result = (KeyFinder::Exception *)new KeyFinder::Exception((char const *)arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_KeyFinder__Exception,1); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static void swig_delete_Exception(void *obj) {
-KeyFinder::Exception *arg1 = (KeyFinder::Exception *) obj;
-delete arg1;
-}
-static int _proxy__wrap_new_Exception(lua_State *L) {
-    assert(lua_istable(L,1));
-    lua_pushcfunction(L,_wrap_new_Exception);
-    assert(!lua_isnil(L,-1));
-    lua_replace(L,1); /* replace our table with real constructor */
-    lua_call(L,lua_gettop(L)-1,1);
-    return 1;
-}
-static swig_lua_attribute swig_Exception_attributes[] = {
-    {0,0,0}
-};
-static swig_lua_method swig_Exception_methods[]= {
-    {0,0}
-};
-static swig_lua_method swig_Exception_meta[] = {
-    {0,0}
-};
-
-static swig_lua_attribute swig_Exception_Sf_SwigStatic_attributes[] = {
-    {0,0,0}
-};
-static swig_lua_const_info swig_Exception_Sf_SwigStatic_constants[]= {
-    {0,0,0,0,0,0}
-};
-static swig_lua_method swig_Exception_Sf_SwigStatic_methods[]= {
-    {0,0}
-};
-static swig_lua_class* swig_Exception_Sf_SwigStatic_classes[]= {
-    0
-};
-
-static swig_lua_namespace swig_Exception_Sf_SwigStatic = {
-    "Exception",
-    swig_Exception_Sf_SwigStatic_methods,
-    swig_Exception_Sf_SwigStatic_attributes,
-    swig_Exception_Sf_SwigStatic_constants,
-    swig_Exception_Sf_SwigStatic_classes,
-    0
-};
-static swig_lua_class *swig_Exception_bases[] = {0};
-static const char *swig_Exception_base_names[] = {0};
-static swig_lua_class _wrap_class_Exception = { "Exception", "Exception", &SWIGTYPE_p_KeyFinder__Exception,_proxy__wrap_new_Exception, swig_delete_Exception, swig_Exception_methods, swig_Exception_attributes, &swig_Exception_Sf_SwigStatic, swig_Exception_meta, swig_Exception_bases, swig_Exception_base_names };
 
 static int _wrap_new_AudioData(lua_State* L) {
   int SWIG_arg = 0;
@@ -6127,7 +6051,6 @@ static swig_lua_method swig_SwigModule_methods[]= {
     {0,0}
 };
 static swig_lua_class* swig_SwigModule_classes[]= {
-&_wrap_class_Exception,
 &_wrap_class_AudioData,
 &_wrap_class_Chromagram,
 &_wrap_class_ChromaTransformFactory,
@@ -6168,7 +6091,6 @@ static swig_type_info _swigt__p_KeyFinder__AudioData = {"_p_KeyFinder__AudioData
 static swig_type_info _swigt__p_KeyFinder__ChromaTransform = {"_p_KeyFinder__ChromaTransform", "KeyFinder::ChromaTransform *", 0, 0, (void*)&_wrap_class_ChromaTransform, 0};
 static swig_type_info _swigt__p_KeyFinder__ChromaTransformFactory = {"_p_KeyFinder__ChromaTransformFactory", "KeyFinder::ChromaTransformFactory *", 0, 0, (void*)&_wrap_class_ChromaTransformFactory, 0};
 static swig_type_info _swigt__p_KeyFinder__Chromagram = {"_p_KeyFinder__Chromagram", "KeyFinder::Chromagram *", 0, 0, (void*)&_wrap_class_Chromagram, 0};
-static swig_type_info _swigt__p_KeyFinder__Exception = {"_p_KeyFinder__Exception", "KeyFinder::Exception *", 0, 0, (void*)&_wrap_class_Exception, 0};
 static swig_type_info _swigt__p_KeyFinder__FftAdapter = {"_p_KeyFinder__FftAdapter", "KeyFinder::FftAdapter *", 0, 0, (void*)&_wrap_class_FftAdapter, 0};
 static swig_type_info _swigt__p_KeyFinder__InverseFftAdapter = {"_p_KeyFinder__InverseFftAdapter", "KeyFinder::InverseFftAdapter *", 0, 0, (void*)&_wrap_class_InverseFftAdapter, 0};
 static swig_type_info _swigt__p_KeyFinder__KeyClassifier = {"_p_KeyFinder__KeyClassifier", "KeyFinder::KeyClassifier *", 0, 0, (void*)&_wrap_class_KeyClassifier, 0};
@@ -6192,7 +6114,6 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_KeyFinder__ChromaTransform,
   &_swigt__p_KeyFinder__ChromaTransformFactory,
   &_swigt__p_KeyFinder__Chromagram,
-  &_swigt__p_KeyFinder__Exception,
   &_swigt__p_KeyFinder__FftAdapter,
   &_swigt__p_KeyFinder__InverseFftAdapter,
   &_swigt__p_KeyFinder__KeyClassifier,
@@ -6216,7 +6137,6 @@ static swig_cast_info _swigc__p_KeyFinder__AudioData[] = {  {&_swigt__p_KeyFinde
 static swig_cast_info _swigc__p_KeyFinder__ChromaTransform[] = {  {&_swigt__p_KeyFinder__ChromaTransform, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_KeyFinder__ChromaTransformFactory[] = {  {&_swigt__p_KeyFinder__ChromaTransformFactory, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_KeyFinder__Chromagram[] = {  {&_swigt__p_KeyFinder__Chromagram, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_KeyFinder__Exception[] = {  {&_swigt__p_KeyFinder__Exception, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_KeyFinder__FftAdapter[] = {  {&_swigt__p_KeyFinder__FftAdapter, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_KeyFinder__InverseFftAdapter[] = {  {&_swigt__p_KeyFinder__InverseFftAdapter, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_KeyFinder__KeyClassifier[] = {  {&_swigt__p_KeyFinder__KeyClassifier, 0, 0, 0},{0, 0, 0, 0}};
@@ -6240,7 +6160,6 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_KeyFinder__ChromaTransform,
   _swigc__p_KeyFinder__ChromaTransformFactory,
   _swigc__p_KeyFinder__Chromagram,
-  _swigc__p_KeyFinder__Exception,
   _swigc__p_KeyFinder__FftAdapter,
   _swigc__p_KeyFinder__InverseFftAdapter,
   _swigc__p_KeyFinder__KeyClassifier,
