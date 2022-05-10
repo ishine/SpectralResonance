@@ -1,12 +1,6 @@
 # LuaJIT-Analysis
 Analysis
 
-# I don't need all this kaka
-* I collect it in here to experiment and evaluate with it
-* Then I make another repo for the individual stuff
-* Then I merge it back in here for experiment
-* It is just my analysis lab 
-
 # Spectral Audio Signal Processing
 * https://ccrma.stanford.edu/~jos/sasp/
 
