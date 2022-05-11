@@ -1,9 +1,121 @@
+// very basic resizeable array with slice
 %{
 #include <valarray>
+#include <algorithm>
 %}
 
 namespace std 
 {
+    
+    class gslice
+    {
+        gslice();
+        gslice(size_t,const valarray<size_t>&,const valarray<size_t>&);
+        gslice(const gslice &);
+        
+        size_t start() const;
+        size_t size() const;
+        size_t stride() const;
+    };
+
+    
+    class slice
+    {
+        slice();
+        slice(size_t,const valarray<size_t>&,const valarray<size_t>&);
+        slice(const slice &);
+        
+        size_t start() const;
+        size_t size() const;
+        size_t stride() const;
+    };
+
+    template <class T> class gslice_array {
+    public:
+        typedef T value_type;
+        void operator=   (const valarray<T>&) const;
+        void operator*=  (const valarray<T>&) const;
+        void operator/=  (const valarray<T>&) const;
+        void operator%=  (const valarray<T>&) const;
+        void operator+=  (const valarray<T>&) const;
+        void operator-=  (const valarray<T>&) const;
+        void operator^=  (const valarray<T>&) const;
+        void operator&=  (const valarray<T>&) const;
+        void operator|=  (const valarray<T>&) const;
+        void operator<<= (const valarray<T>&) const;
+        void operator>>= (const valarray<T>&) const;
+        void operator=(const T&) const;
+        
+        gslice_array(const gslice_array&);
+        const gslice_array& operator= (const gslice_array&) const;
+        ~gslice_array();
+    };
+    template <class T> class indirect_array {
+    public:
+        typedef T value_type;
+        void operator=   (const valarray<T>&) const;
+        void operator*=  (const valarray<T>&) const;
+        void operator/=  (const valarray<T>&) const;
+        void operator%=  (const valarray<T>&) const;
+        void operator+=  (const valarray<T>&) const;
+        void operator-=  (const valarray<T>&) const;
+        void operator^=  (const valarray<T>&) const;
+        void operator&=  (const valarray<T>&) const;
+        void operator|=  (const valarray<T>&) const;
+        void operator<<= (const valarray<T>&) const;
+        void operator>>= (const valarray<T>&) const;
+        void operator=(const T&);
+
+        indirect_array(const gslice_array&);
+        const indirect_array& operator= (const indirect_array&) const;
+        ~indirect_array();
+    };
+
+        
+    template <class T> class mask_array {
+    public:
+        typedef T value_type;
+        void operator=   (const valarray<T>&) const;
+        void operator*=  (const valarray<T>&) const;
+        void operator/=  (const valarray<T>&) const;
+        void operator%=  (const valarray<T>&) const;
+        void operator+=  (const valarray<T>&) const;
+        void operator-=  (const valarray<T>&) const;
+        void operator^=  (const valarray<T>&) const;
+        void operator&=  (const valarray<T>&) const;
+        void operator|=  (const valarray<T>&) const;
+        void operator<<= (const valarray<T>&) const;
+        void operator>>= (const valarray<T>&) const;
+        void operator=(const T&) const;
+
+        mask_array(const mask_array&);
+        const mask_array& operator= (const mask_array&) const;
+        ~mask_array();
+    };
+
+    template <class T> class slice_array {
+    public:
+        typedef T value_type;
+        void operator=   (const valarray<T>&) const;
+        void operator*=  (const valarray<T>&) const;
+        void operator/=  (const valarray<T>&) const;
+        void operator%=  (const valarray<T>&) const;
+        void operator+=  (const valarray<T>&) const;
+        void operator-=  (const valarray<T>&) const;
+        void operator^=  (const valarray<T>&) const;
+        void operator&=  (const valarray<T>&) const;
+        void operator|=  (const valarray<T>&) const;
+        void operator<<= (const valarray<T>&) const;
+        void operator>>= (const valarray<T>&) const;
+        void operator=(const T&) const;
+
+        slice_array(const slice_array&);
+        const slice_array& operator= (const slice_array&) const;
+        ~slice_array();
+    };
+
+        
+
     template<typename T>
     class valarray {
     public:
@@ -16,15 +128,20 @@ namespace std
         valarray(const std::gslice_array<T> &ga);
         valarray(const std::mask_array<T> & ma);
         valarray(const std::indirect_array<T> & ia);
-        
-        
-
+    
         valarray<T>& operator =  (const valarray<T> & other);
 
         %extend {
 
-            T __getitem(size_t i) { return (*$self)[i]; }
-            void __setitem(size_t i, const T& v) { (*$self)[i] = v; }
+            // lua starts at 1 like fortran
+            T       __getitem__(size_t i) { return (*$self)[i-1]; }
+            void    __setitem__(size_t i, const T& v) { (*$self)[i-1] = v; }
+
+            valarray       __getitem__(const gslice& i) { return (*$self)[i]; }
+            void    __setitem__(const gslice& i, const T& v) { (*$self)[i] = v; }
+
+            valarray       __getitem__(const slice& i) { return (*$self)[i]; }
+            void    __setitem__(const slice& i, const T& v) { (*$self)[i] = v; }
 
             valarray<T> __add__(const valarray<T> & b) { return *$self + b; }
             valarray<T> __sub__(const valarray<T> & b) { return *$self - b; }

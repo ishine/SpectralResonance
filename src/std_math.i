@@ -2,6 +2,7 @@
 %{
 #include <complex>
 #include <valarray>
+#include <fenv.h>
 %}
 
 %include "std_complex.i"
@@ -269,7 +270,7 @@
 %constant int fe_invalid = FE_INVALID;
 %constant int fe_overflow = FE_OVERFLOW;
 %constant int fe_underflow = FE_UNDERFLOW;
-%constant int fe_all_except = FW_ALL_EXCEPT;
+%constant int fe_all_except = FE_ALL_EXCEPT;
 %constant int fe_downward = FE_DOWNWARD;
 %constant int fe_tonearest = FE_TONEAREST;
 %constant int fe_towardzero = FE_TOWARDZERO;
@@ -277,6 +278,7 @@
 %constant int fe_dfl_env = FE_DFL_ENV;
 
 
+/*
 %inline %{
 typedef struct
   {
@@ -300,6 +302,7 @@ typedef struct
 
   typedef unsigned short int fexcept_t;
 %}
+*/
 // fenv.h
 int  feclearexcept(int);
 int  fegetexceptflag(fexcept_t *, int);

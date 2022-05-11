@@ -37,31 +37,31 @@ namespace std
     template<typename T> T abs(const complex<T> & z);
     template<typename T> T arg(const complex<T> & z);
     template<typename T> T norm(const complex<T> & z);
-    template<typename T> T proj(const complex<T> & z);
-    template<typename T> T polar(const complex<T> * r, const T& theta=T());
+    template<typename T> complex<T> proj(const complex<T> & z);
+    template<typename T> complex<T> polar(const T& r, const T& theta=T());
 
-    template<typename T> T exp(const complex<T> & z);
-    template<typename T> T log(const complex<T> & z);
-    template<typename T> T log10(const complex<T> & z);
-    template<typename T> T pow(const complex<T>& x, const complex<T> & z);
-    template<typename T> T pow(const complex<T>& x, const T& z);
-    template<typename T> T pow(const T& x, const complex<T> & z);
+    template<typename T> complex<T> exp(const complex<T> & z);
+    template<typename T> complex<T> log(const complex<T> & z);
+    template<typename T> complex<T> log10(const complex<T> & z);
+    template<typename T> complex<T> pow(const complex<T>& x, const complex<T> & z);
+    template<typename T> complex<T> pow(const complex<T>& x, const T& z);
+    template<typename T> complex<T> pow(const T& x, const complex<T> & z);
 
-    template<typename T> T sqrt(const complex<T> & z);
+    template<typename T> complex<T> sqrt(const complex<T> & z);
     
-    template<typename T> T sin(const complex<T> & z);
-    template<typename T> T cos(const complex<T> & z);
-    template<typename T> T tan(const complex<T> & z);
+    template<typename T> complex<T> sin(const complex<T> & z);
+    template<typename T> complex<T> cos(const complex<T> & z);
+    template<typename T> complex<T> tan(const complex<T> & z);
 
-    template<typename T> T asin(const complex<T> & z);
-    template<typename T> T acos(const complex<T> & z);
-    template<typename T> T atan(const complex<T> & z);
+    template<typename T> complex<T> asin(const complex<T> & z);
+    template<typename T> complex<T> acos(const complex<T> & z);
+    template<typename T> complex<T> atan(const complex<T> & z);
 
-    template<typename T> T sinh(const complex<T> & z);
-    template<typename T> T cosh(const complex<T> & z);
-    template<typename T> T tanh(const complex<T> & z);
+    template<typename T> complex<T> sinh(const complex<T> & z);
+    template<typename T> complex<T> cosh(const complex<T> & z);
+    template<typename T> complex<T> tanh(const complex<T> & z);
 
-    template<typename T> T asinh(const complex<T> & z);
-    template<typename T> T acosh(const complex<T> & z);
-    template<typename T> T atanh(const complex<T> & z);
+    template<typename T> complex<T> asinh(const complex<T> & z);
+    template<typename T> complex<T> acosh(const complex<T> & z);
+    template<typename T> complex<T> atanh(const complex<T> & z);
 };

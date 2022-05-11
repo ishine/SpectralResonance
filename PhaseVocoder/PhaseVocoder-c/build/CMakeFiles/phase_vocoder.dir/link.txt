@@ -1,0 +1,1 @@
+/usr/bin/cc -O2 -fPIC -march=native -mavx2 -rdynamic CMakeFiles/phase_vocoder.dir/pv_example.c.o CMakeFiles/phase_vocoder.dir/phase_vocoder.c.o -o phase_vocoder  -lm 
