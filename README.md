@@ -56,3 +56,4 @@ Analysis
 * http://english.ioa.cas.cn/rh/as/201409/W020140905537044221255.pdf
 * http://www.acad.bg/rismim/itc/sub/archiv/Paper4_3_2012.pdf
 * https://arxiv.org/pdf/2106.03167v2.pdf
+* https://smartech.gatech.edu/bitstream/handle/1853/15869/hammett_jack_c_197105_phd_257474.pdf
