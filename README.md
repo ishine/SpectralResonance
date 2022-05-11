@@ -57,3 +57,36 @@ Analysis
 * http://www.acad.bg/rismim/itc/sub/archiv/Paper4_3_2012.pdf
 * https://arxiv.org/pdf/2106.03167v2.pdf
 * https://smartech.gatech.edu/bitstream/handle/1853/15869/hammett_jack_c_197105_phd_257474.pdf
+
+# Introduction
+* https://ccrma.stanford.edu/~jos/Intro421/Introduction_Audio_Spectrum_Analysis.html
+
+# Audio Content and Synthesis
+* https://onlinelibrary.wiley.com/doi/pdf/10.1002/9781118393550.fmatter
+* https://soundlab.cs.princeton.edu/publications/2001_amta_aadwt.pdf
+* https://link.springer.com/content/pdf/bfm%3A978-3-319-70163-9%2F1.pdf
+* https://cs.gmu.edu/~sean/book/synthesis/Synthesis.pdf
+* https://www.zhdk.ch/file/live/12/1253cbdc4679c70f0617b94877b80ffe9203764d/digital_sound_generation_1.pdf
+
+# Radio
+* https://staffweb.itsligo.ie/staff/pflynn/Telecoms%201/Radio%20Spectrum.pdf
+* https://www.phys.hawaii.edu/~anita/new/papers/militaryHandbook/freqspec.pdf
+
+# Physics
+* https://homepages.wmich.edu/~hillenbr/206/ac.pdf
+
+# Noise and Distortion
+* https://www.roma1.infn.it/exp/cuore/pdfnew/ch02.pdf
+
+# MASTERS OF THE SPECTRUM
+* https://faculty.cc.gatech.edu/~vempala/spectralbook.pdf
+* https://training.dewesoft.com/storage/pro/courses/fft-spectral-analysis.pdf
+* https://user.it.uu.se/~ps/SAS-new.pdf
+* https://cdn.rohde-schwarz.com/pws/dl_downloads/dl_application/application_notes/1ef77/1EF77_3e_Real-time_Spectrum_Analysis.pdf
+* https://www.uio.no/studier/emner/matnat/math/nedlagte-emner/MAT-INF2360/v14/kompendiumpart1and2.pdf
+* https://library.oapen.org/bitstream/id/3eb04f39-67d7-4b4d-8569-3185fbefd944/1005624.pdf
+* https://perso.uclouvain.be/paul.vandooren/PVDnotes.pdf
+* https://cnx.org/exports/037514b9-80e0-4f2a-8c4e-770950181202@5.2.pdf/basic-vector-space-methods-in-signal-and-systems-theory-5.2.pdf
+
+# WITH DSP YOU CAN CONTROL THE WORLD
+* Digital Reality
