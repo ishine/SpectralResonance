@@ -49,3 +49,15 @@
 [submodule "src/CAMEL-A-Framework-for-Audio-Analysis"]
 	path = src/CAMEL-A-Framework-for-Audio-Analysis
 	url = https://github.com/cbefus/CAMEL-A-Framework-for-Audio-Analysis
+[submodule "PhaseVocoder/PhaseVocoder"]
+	path = PhaseVocoder/PhaseVocoder
+	url = https://github.com/ybdarrenwang/PhaseVocoder
+[submodule "PhaseVocoder/Shifter"]
+	path = PhaseVocoder/Shifter
+	url = https://github.com/ljtrevor/PhaseVocoder
+[submodule "PhaseVocoder/SpeedPitch"]
+	path = PhaseVocoder/SpeedPitch
+	url = https://github.com/ybdarrenwang/PhaseVocoder
+[submodule "PhaseVocoder/cpuimage-pv"]
+	path = PhaseVocoder/cpuimage-pv
+	url = https://github.com/cpuimage/PhaseVocoder
