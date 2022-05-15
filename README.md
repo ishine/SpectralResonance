@@ -6,3 +6,15 @@ Analysis
 * Phase Vocoder
 * Vocoder filters
 
+# Essentia
+* Alot of algorithms
+
+# Loris
+* Both analyzer and synthesizer that does spectral morphing
+
+# Marsyas
+* Has alot of algorithms for everything
+
+# Loudia
+* Has alot of algorithms but I can't build it
+
