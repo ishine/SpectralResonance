@@ -6,6 +6,9 @@ Analysis
 * Phase Vocoder
 * Vocoder filters
 
+# Qm-Dsp
+* a real pita to build it but has all the things like aubio
+
 # Essentia
 * Alot of algorithms
 
