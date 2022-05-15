@@ -18,3 +18,8 @@ Analysis
 # Loudia
 * Has alot of algorithms but I can't build it
 
+# openBliSSART 
+* Can do source seperate
+
+# opensmile
+* does all the feature extraction math for machine learners
