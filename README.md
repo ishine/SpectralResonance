@@ -44,6 +44,9 @@ Spectrum Skywalker
 # CSound
 * has alot of algorithms for making sounds
 
+# Aquila
+* has some useful stuff in it
+
 # Qm-DSP
 * Has all these algorithms we can try to use 
 
