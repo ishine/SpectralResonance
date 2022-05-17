@@ -34,6 +34,9 @@ Spectrum Skywalker
 # Loris
 * use it to morph sounds
 
+# Marsyas
+* It has alot of the useful algorithms in it and it is a pro library 
+
 # Faust
 * A functional audio stream
 
@@ -41,10 +44,10 @@ Spectrum Skywalker
 * has alot of algorithms for making sounds
 
 # Aquila
-* has some useful stuff in it
+* has some useful stuff in it but it's not pro
 
 # Qm-DSP
-* Has all these algorithms we can try to use 
+* Has all these algorithms that will be cool
 
 # Aubio
 * It is similar to Qm-DSP but has source/sink and more useable
