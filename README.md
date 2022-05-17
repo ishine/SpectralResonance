@@ -36,6 +36,11 @@ Spectrum Skywalker
 # Loris
 * use it to morph sounds
 
+# Faust
+* A functional audio stream
+* Can generate all kinds of targets like C++ 
+* Can be used with LLVM http://www.ifc18.uni-mainz.de/papers/fober.pdf
+
 # CSound
 * has alot of algorithms for making sounds
 
