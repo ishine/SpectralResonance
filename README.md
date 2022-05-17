@@ -1,4 +1,4 @@
-# Couatl
+# SpectralResonance (srQ)
 Spectrum Skywalker
 
 # There are two kinds of sounds
