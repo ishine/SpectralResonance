@@ -20,8 +20,6 @@ Spectrum Skywalker
 * Octave/Matlab
 * CSound
 
-
-
 # FFTW
 * Essentail Fourier Maths
 * All the algorithms of the fouriers
@@ -38,8 +36,6 @@ Spectrum Skywalker
 
 # Faust
 * A functional audio stream
-* Can generate all kinds of targets like C++ 
-* Can be used with LLVM http://www.ifc18.uni-mainz.de/papers/fober.pdf
 
 # CSound
 * has alot of algorithms for making sounds
