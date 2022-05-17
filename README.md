@@ -8,6 +8,14 @@ Spectrum Skywalker
 # If it is imaginary yet you hear it
 * Then it has to be physics somehow
 
+# We need a way to do the theories
+* Python
+* C/C++
+* LuaJIT 
+* Octave/Matlab
+* CSound
+
+
 # FFTW
 * Essentail Fourier Maths
 * All the algorithms of the fouriers
