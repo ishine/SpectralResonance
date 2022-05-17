@@ -8,6 +8,11 @@ Spectrum Skywalker
 # If it is imaginary yet you hear it
 * Then it has to be physics somehow
 
+# All thing physics are convergent
+* If it is not convergent it is imaginary?
+* It is not zero
+* There is no samples
+
 # We need a way to do the theories
 * Python
 * C/C++
