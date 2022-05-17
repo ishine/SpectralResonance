@@ -15,10 +15,11 @@ Spectrum Skywalker
 
 # We need a way to do the theories
 * Python
-* C/C++
 * LuaJIT 
+* Faust
 * Octave/Matlab
 * CSound
+
 
 
 # FFTW
