@@ -38,6 +38,12 @@ Spectrum Skywalker
 # CSound
 * has alot of algorithms for making sounds
 
+# Qm-DSP
+* Has all these algorithms we can try to use 
+
+# Aubio
+* It is similar to Qm-DSP but has source/sink and more useable
+
 # Octave
 * MATrix LABoratory Compatible 
 
