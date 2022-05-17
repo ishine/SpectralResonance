@@ -1,28 +1,34 @@
-# LuaJIT-Analysis
-Analysis
+# Couatl
+Spectrum Skywalker
 
-# Spectrum Codes
-* Fourier FFT 
-* Phase Vocoder
-* Vocoder filters
+# There are two kinds of sounds
+* That which is real and physics
+* That which is imaginary and is or is not physics
 
-# Qm-Dsp
-* a real pita to build it but has all the things like aubio
+# If it is imaginary yet you hear it
+* Then it has to be physics somehow
+
+# FFTW
+* Essentail Fourier Maths
+* All the algorithms of the fouriers
+
+# AudioFFT
+* FFTW Real fft
+* FFTW Convolution
 
 # Essentia
-* Alot of algorithms
+* use it to make the spectral algorithms
 
 # Loris
-* Both analyzer and synthesizer that does spectral morphing
+* use it to morph sounds
 
-# Marsyas
-* Has alot of algorithms for everything
+# CSound
+* has alot of algorithms for making sounds
 
-# Loudia
-* Has alot of algorithms but I can't build it
+# Octave
+* MATrix LABoratory Compatible 
 
-# openBliSSART 
-* Can do source seperate
+# There alot of others codes
+* I find them and collect them
 
-# opensmile
-* does all the feature extraction math for machine learners
+
